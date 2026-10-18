@@ -6,7 +6,8 @@
   function updateMotion() {
     document.body.classList.toggle('motion-paused', paused);
     motionButton.setAttribute('aria-pressed', String(paused));
-    motionButton.textContent = paused ? 'Motion paused ▷' : 'Pause motion Ⅱ';
+    motionButton.disabled = reducedMotion.matches;
+    motionButton.textContent = reducedMotion.matches ? 'Reduced motion on' : paused ? 'Resume motion' : 'Pause motion';
   }
   motionButton.addEventListener('click', () => { paused = !paused; updateMotion(); });
   reducedMotion.addEventListener('change', e => { paused = e.matches; updateMotion(); });
@@ -27,7 +28,7 @@
     fields.forEach((id,i) => { document.getElementById(id).textContent = stages[index][i]; });
     document.getElementById('step-count').textContent = String(index + 1).padStart(2,'0') + ' — 06';
     steps.forEach((button,i) => { button.classList.toggle('active',i===index); button.setAttribute('aria-pressed',String(i===index)); });
-    document.querySelector('.next-step').innerHTML = index===5 ? 'Back to useful work <span aria-hidden="true">↺</span>' : 'Next stage <span aria-hidden="true">→</span>';
+    document.querySelector('.next-step').innerHTML = index===5 ? 'Back to useful work <span aria-hidden="true">←</span>' : 'Next stage <span aria-hidden="true">→</span>';
   }
   steps.forEach((button,i) => button.addEventListener('click', () => selectStep(i)));
   document.querySelector('.next-step').addEventListener('click', () => selectStep((active+1)%6));
@@ -49,7 +50,7 @@
     failed = !failed;
     document.querySelector('.replica-demo').classList.toggle('failed',failed);
     replicaButton.setAttribute('aria-pressed',String(failed));
-    replicaButton.textContent = failed ? 'Restore primary ↺' : 'Simulate primary dropout ↗';
+    replicaButton.textContent = failed ? 'Restore primary ←' : 'Simulate primary dropout →';
     document.querySelector('.primary-replica .replica-status').textContent = failed ? '× OFFLINE' : '● ONLINE';
     document.querySelector('.backup-replica .replica-status').textContent = failed ? '● SERVING' : '○ STANDBY';
     document.getElementById('replica-message').textContent = failed ? 'The identical backup takes over. Same expert version, same computation.' : 'The primary serves the request. An identical backup is ready.';
