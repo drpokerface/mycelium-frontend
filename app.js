@@ -1,58 +1,125 @@
-'use strict';
 (() => {
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const motionButton = document.getElementById('motion-toggle');
-  let paused = reducedMotion.matches;
-  function updateMotion() {
-    document.body.classList.toggle('motion-paused', paused);
-    motionButton.setAttribute('aria-pressed', String(paused));
-    motionButton.disabled = reducedMotion.matches;
-    motionButton.textContent = reducedMotion.matches ? 'Reduced motion on' : paused ? 'Resume motion' : 'Pause motion';
-  }
-  motionButton.addEventListener('click', () => { paused = !paused; updateMotion(); });
-  reducedMotion.addEventListener('change', e => { paused = e.matches; updateMotion(); });
-  updateMotion();
-  const stages = [
-    ['FOREGROUND / USEFUL MISSIONS','MISSION','Research','Create','Review','A useful, checked result','Make something worth keeping.','Mushrooms are AI workers. They divide a mission, produce artifacts and check results. Think research, content production or software maintenance, with people setting the scope and permissions.','Useful output comes first. Training is a separate decision.'],
-    ['OBSERVATION / FIND A SHORTCOMING','REAL WORK','Broken code','Weak sources','Missed rules','A specific, recurring gap','Notice what keeps falling short.','Failed checks and reviewed outcomes reveal possible capability gaps. A worker’s reflection can point toward a problem, but the model’s opinion about itself is not evidence that training is needed.','A suspected weakness is a lead, not a verdict.'],
-    ['VALIDATION / INDEPENDENT CHECKS','PROPOSED GAP','Fresh tasks','Objective tests','Review','A gap worth investigating','Make the problem prove itself.','Use fresh examples and objective checks to establish a real shortcoming. Separate creation from review, and explicitly authorize the data before a bounded training experiment.','Independent validation is a requirement. Local reviewer identities alone cannot establish it.'],
-    ['EXPERIMENT / BOUNDED TRAINING','VALIDATED GAP','New expert','Token router','Frozen base','One versioned candidate','Grow capacity where it may help.','Train a compatible neural specialist and its token router, initially keeping the rest of the shared backbone frozen. Bind weights, data lineage and resource limits into a reproducible candidate.','A smaller training loss is a signal to investigate, never a release decision.'],
-    ['EVALUATION / THE WHOLE MODEL','CANDIDATE VS BASELINE','Target tasks','Other skills','Resources','Fresh, cross-domain evidence','Test the system, not just the skill.','Compare the complete candidate against the stable model on fresh tasks. Check target improvement, regressions, latency, memory and failure recovery. An isolated expert score is not enough.','Better at one task must not conceal worse performance elsewhere.'],
-    ['DECISION / SELECTIVE GROWTH','RELEASE GATES','Promote','Retain','Archive','Stable release + rollback','Keep only what earns its place.','Promote candidates only when the agreed checks pass. Preserve promising experiments, archive weak ones, evaluate pruning, and keep a versioned rollback path. Then return to useful work.','Growth is selective. A rejected experiment is a valid outcome.']
+  'use strict';
+  document.body.classList.add('js-ready');
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const demo = document.getElementById('loop-demo');
+  const stageButtons = [...document.querySelectorAll('button[data-stage]')];
+  const captions = [
+    'Define success and limits before any work begins.',
+    'Try distinct strategies independently. Checked partials can help later attempts.',
+    'Check each result. Agreement alone is not proof; failed paths are rejected.',
+    'A good result is a start. New learning must pass its own tests.'
   ];
-  const fields = ['step-category','visual-origin','visual-a','visual-b','visual-c','visual-result','step-title','step-copy','step-rule'];
-  let active = 0;
-  const steps = [...document.querySelectorAll('.step')];
-  function selectStep(index) {
-    active = index;
-    fields.forEach((id,i) => { document.getElementById(id).textContent = stages[index][i]; });
-    document.getElementById('step-count').textContent = String(index + 1).padStart(2,'0') + ' — 06';
-    steps.forEach((button,i) => { button.classList.toggle('active',i===index); button.setAttribute('aria-pressed',String(i===index)); });
-    document.querySelector('.next-step').innerHTML = index===5 ? 'Back to useful work <span aria-hidden="true">←</span>' : 'Next stage <span aria-hidden="true">→</span>';
-  }
-  steps.forEach((button,i) => button.addEventListener('click', () => selectStep(i)));
-  document.querySelector('.next-step').addEventListener('click', () => selectStep((active+1)%6));
-  let token = 0;
-  const selections = [[0,1],[1,2],[0,2]];
-  document.getElementById('route-token').addEventListener('click', () => {
-    token++;
-    const selected = selections[token%3];
-    document.querySelectorAll('.expert').forEach((expert,i) => {
-      const isSelected = selected.includes(i);
-      expert.classList.toggle('selected',isSelected);
-      expert.querySelector('small').textContent = isSelected ? 'Selected' : 'Not selected';
+  const playback = document.getElementById('motion-toggle');
+  const announcement = document.getElementById('loop-announcement');
+  let stage = motion.matches ? 3 : 0;
+  let playing = !motion.matches;
+  let timer = null;
+  let inView = true;
+
+  function render(announce = false) {
+    demo.dataset.stage = String(stage);
+    document.getElementById('stage-number').textContent = `0${stage + 1} / 04`;
+    document.getElementById('stage-caption').textContent = captions[stage];
+    document.querySelector('.checks').setAttribute('aria-label', stage < 2 ? 'Results are not checked yet.' : 'Illustrative results: path A verified, path B rejected, path C verified');
+    document.querySelectorAll('.checks > span').forEach((check, i) => {
+      check.textContent = stage < 2 ? 'Not checked' : i === 1 ? '× Rejected' : '✓ Verified';
     });
-    document.getElementById('route-caption').textContent = 'Token ' + String(token+1).padStart(2,'0') + ' → Experts ' + selected.map(i=>['A','B','C'][i]).join(' + ') + '. Their weighted outputs return to the same model.';
+    stageButtons.forEach((button, i) => button.setAttribute('aria-pressed', String(i === stage)));
+    playback.textContent = playing ? 'Pause' : stage === 3 ? 'Play again' : 'Play';
+    playback.setAttribute('aria-label', playing ? 'Pause learning illustration' : 'Play learning illustration');
+    if (announce) announcement.textContent = `Step ${stage + 1} of 4. ${captions[stage]}`;
+  }
+  function schedule() {
+    clearTimeout(timer);
+    timer = null;
+    if (!playing || !inView || document.hidden) return;
+    timer = setTimeout(() => {
+      if (stage < 3) stage += 1;
+      if (stage === 3) playing = false;
+      render();
+      schedule();
+    }, 2800);
+  }
+  function selectStage(next) {
+    stage = next;
+    playing = false;
+    render(true);
+    schedule();
+  }
+  stageButtons.forEach((button, i) => button.addEventListener('click', () => selectStage(i)));
+  playback.addEventListener('click', () => {
+    playing = !playing;
+    if (playing && stage === 3) stage = 0;
+    render(true);
+    schedule();
   });
-  let failed = false;
-  const replicaButton = document.getElementById('replica-toggle');
-  replicaButton.addEventListener('click', () => {
-    failed = !failed;
-    document.querySelector('.replica-demo').classList.toggle('failed',failed);
-    replicaButton.setAttribute('aria-pressed',String(failed));
-    replicaButton.textContent = failed ? 'Restore primary ←' : 'Simulate primary dropout →';
-    document.querySelector('.primary-replica .replica-status').textContent = failed ? '× OFFLINE' : '● ONLINE';
-    document.querySelector('.backup-replica .replica-status').textContent = failed ? '● SERVING' : '○ STANDBY';
-    document.getElementById('replica-message').textContent = failed ? 'The identical backup takes over. Same expert version, same computation.' : 'The primary serves the request. An identical backup is ready.';
+  document.getElementById('replay').addEventListener('click', () => {
+    stage = 0;
+    playing = !motion.matches;
+    render(true);
+    schedule();
+  });
+  motion.addEventListener('change', () => {
+    if (motion.matches) {
+      stage = 3;
+      playing = false;
+      render();
+      schedule();
+    }
+  });
+  document.addEventListener('visibilitychange', schedule);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(entries => {
+      inView = entries[0].isIntersecting;
+      schedule();
+    }, {threshold: 0.15}).observe(demo);
+  }
+  render();
+  schedule();
+
+  const releaseDemo = document.querySelector('.release-demo');
+  const stableVersion = document.getElementById('stable-version');
+  const candidateLabel = document.getElementById('candidate-label');
+  const candidateSymbol = document.getElementById('candidate-symbol');
+  const releaseStatus = document.getElementById('release-status');
+  const rollback = document.getElementById('rollback');
+  let releaseTimer = null;
+  let stable = 1;
+  function testCandidate(passes) {
+    clearTimeout(releaseTimer);
+    const candidate = stable + 1;
+    candidateLabel.textContent = `Candidate v${candidate}`;
+    candidateSymbol.textContent = '◇';
+    releaseDemo.dataset.result = 'testing';
+    rollback.disabled = true;
+    releaseStatus.textContent = `Testing candidate v${candidate} separately. Stable v${stable} keeps serving new requests.`;
+    releaseTimer = setTimeout(() => {
+      if (passes) {
+        stable = candidate;
+        stableVersion.textContent = `v${stable}`;
+        candidateSymbol.textContent = '✓';
+        releaseDemo.dataset.result = 'pass';
+        releaseStatus.textContent = `Illustrative pass: fresh, regression, and resource checks plus release approval succeeded. Stable v${stable} now serves new requests; v1 is retained.`;
+      } else {
+        candidateSymbol.textContent = '×';
+        releaseDemo.dataset.result = 'fail';
+        releaseStatus.textContent = `Illustrative failure: candidate v${candidate} did not pass the checks. Rejected. Stable v${stable} keeps serving new requests.`;
+      }
+      rollback.disabled = stable === 1;
+    }, motion.matches ? 0 : 750);
+  }
+  document.querySelectorAll('[data-release]').forEach(button => {
+    button.addEventListener('click', () => testCandidate(button.dataset.release === 'pass'));
+  });
+  rollback.addEventListener('click', () => {
+    clearTimeout(releaseTimer);
+    stable = 1;
+    stableVersion.textContent = 'v1';
+    candidateLabel.textContent = 'Previous releases retained';
+    candidateSymbol.textContent = '↻';
+    releaseDemo.dataset.result = 'rollback';
+    releaseStatus.textContent = 'Rolled back to the complete v1 bundle for new requests. Past results are preserved, not rewritten.';
+    rollback.disabled = true;
   });
 })();
