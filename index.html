@@ -1,95 +1,1382 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#152c25">
-  <title>Mycelium — Progress that earns its place.</title>
-  <meta name="description" content="One goal. Many approaches. Mycelium explores an AI learning network that verifies results and keeps only improvements that pass fresh tests. Explore the MVP3 pilot.">
-  <meta property="og:title" content="Mycelium — Progress that earns its place.">
-  <meta property="og:description" content="Explore independently. Verify carefully. Keep what works. A clear look inside the MVP3 learning-network pilot.">
-  <meta property="og:type" content="website">
-  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./styles.css?v=mvp3-20261029">
-  <script src="./app.js?v=mvp3-20261029" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mycelium — Try many ways. Keep what works.</title>
+<meta name="description" content="Mycelium is an AI research pilot. It sends many workers at one goal, checks every result against real evidence, and keeps only improvements that pass fresh tests.">
+<meta property="og:title" content="Mycelium — Try many ways. Keep what works.">
+<meta property="og:description" content="Many attempts, honest checks, and only tested improvements kept. A quick look inside the MVP3 learning-network pilot.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1b1410">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231b1410'/%3E%3Cg fill='none' stroke='%23f3ece1' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M16 16C13 12 10 10 6 10'/%3E%3Cpath d='M16 16c3-3 5-7 5-11'/%3E%3Cpath d='M16 16c4 1 7 4 9 8'/%3E%3Cpath d='M16 16c-1 4-4 7-8 9'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3.6' fill='%23f2b650'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --loam:#1b1410;
+  --loam-2:#241b15;
+  --loam-3:#30251d;
+  --line:#47392d;
+  --line-soft:#33281f;
+  --hypha:#f3ece1;
+  --hypha-2:#cbbfae;
+  --hypha-3:#988b7a;
+  --honey:#f2b650;
+  --honey-2:#ffd890;
+  --honey-ink:#2a1b05;
+  --wither:#6e6259;
+  --display:"Funnel Display","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --text:"Funnel Sans","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --r-xl:28px;
+  --r-lg:20px;
+  --r-md:14px;
+  --r-sm:8px;
+  --ease:cubic-bezier(.4,0,.2,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:68px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--loam);color:var(--hypha);font:400 17px/1.6 var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.045;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+:focus-visible{outline:2px solid var(--honey);outline-offset:3px;border-radius:6px}
+h1,h2,h3,h4,p{margin:0}
+.wrap{width:min(1240px,calc(100% - 48px));margin-inline:auto}
+.skip{position:absolute;left:16px;top:-80px;z-index:200;background:var(--honey);color:var(--honey-ink);padding:10px 16px;border-radius:99px;font-weight:600}
+.skip:focus{top:12px}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border-radius:99px;font:600 15px/1 var(--text);border:1px solid transparent;transition:background .2s,border-color .2s,color .2s;white-space:nowrap}
+.btn-primary{background:var(--honey);color:var(--honey-ink)}
+.btn-primary:hover{background:var(--honey-2)}
+.btn-ghost{border-color:var(--line);color:var(--hypha)}
+.btn-ghost:hover{border-color:var(--hypha-3);background:var(--loam-2)}
+
+/* ---------- Header ---------- */
+.top{position:sticky;top:0;z-index:50;background:rgba(27,20,16,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
+.top.scrolled{border-bottom-color:var(--line-soft)}
+.top-in{display:flex;align-items:center;gap:28px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;font:600 21px/1 var(--display);letter-spacing:-.02em}
+.brand svg{width:30px;height:30px}
+.tag{font:500 12px/1 var(--text);color:var(--hypha-3);border:1px solid var(--line);padding:6px 10px;border-radius:99px}
+.links{display:flex;gap:2px;margin-left:auto}
+.links a{padding:9px 13px;border-radius:99px;font-size:14px;color:var(--hypha-2);transition:color .2s,background .2s}
+.links a:hover{color:var(--hypha);background:var(--loam-2)}
+.top .btn{min-height:40px;padding:0 18px;font-size:14px}
+
+/* ---------- Hero (screen 1) ---------- */
+.hero{position:relative;padding:56px 0 72px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.06fr);gap:32px;align-items:center;min-height:min(640px,calc(100svh - 140px))}
+.hero h1{font-family:var(--display);font-size:clamp(46px,5.1vw,74px);line-height:1;letter-spacing:-.035em;margin-bottom:28px}
+.hero h1 .l{display:block;transition:opacity .7s var(--ease)}
+.hero h1.fit .l{width:max-content;white-space:nowrap}
+.hero h1 .l1{font-weight:300}
+.hero h1 .l2{font-weight:500}
+.hero h1 .l3{font-weight:800}
+.hero.anim[data-phase="0"] .l2,.hero.anim[data-phase="0"] .l3,
+.hero.anim[data-phase="1"] .l1,.hero.anim[data-phase="1"] .l3,
+.hero.anim[data-phase="2"] .l1,.hero.anim[data-phase="2"] .l2{opacity:.36}
+.lead{font-size:19px;line-height:1.55;color:var(--hypha-2);max-width:44ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.pilot-note{margin-top:28px;font-size:14px;color:var(--hypha-3);display:flex;align-items:center;gap:10px}
+.pilot-note::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--honey);box-shadow:0 0 0 4px rgba(242,182,79,.15);flex:none}
+.net{position:relative;height:clamp(380px,44vw,600px)}
+.net canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.net-lbl{position:absolute;font:600 13px/1 var(--text);color:var(--hypha-3);transform:translateX(-50%);transition:color .5s;white-space:nowrap}
+.net-lbl.goal{left:7%;top:calc(50% + 22px)}
+.net-lbl.check{left:66%;top:0}
+.net-lbl.kept{left:92%;top:calc(50% + 26px)}
+.hero.anim[data-phase="1"] .net-lbl.check,.hero.anim[data-phase="2"] .net-lbl.kept{color:var(--honey)}
+.legend{position:absolute;left:0;right:0;bottom:-8px;display:flex;justify-content:center;gap:22px;font-size:13px;color:var(--hypha-3)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:18px;height:2px;border-radius:2px;background:var(--hypha-2)}
+.legend .lg-pass i{background:var(--honey);box-shadow:0 0 6px var(--honey)}
+.legend .lg-fail i{background:var(--wither)}
+
+/* ---------- Shared screen frame ---------- */
+.screen{min-height:calc(100svh - 68px);display:flex;align-items:center;padding:48px 0}
+.screen>.wrap{width:min(1240px,calc(100% - 48px))}
+.band{background:var(--loam-2);border-block:1px solid var(--line-soft)}
+.s-head h2{font:600 clamp(30px,3.4vw,46px)/1.04 var(--display);letter-spacing:-.03em;margin-bottom:8px;text-wrap:balance}
+.s-head p{font-size:17px;color:var(--hypha-2);max-width:60ch}
+.s-head .note{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:13px;color:var(--hypha-3)}
+.s-head .note svg{width:14px;height:14px;flex:none}
+
+/* ---------- Screen 2: mycelium example ---------- */
+.ex-top{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;margin-bottom:22px}
+.ex-top .s-head{flex:1;min-width:0}
+.ex-top .s-head p{max-width:none}
+.ex-top .s-head h2{font-size:clamp(30px,3vw,42px)}
+.ex-ctl{display:flex;align-items:stretch;gap:8px;flex:none}
+.rounds{list-style:none;margin:0;padding:0;display:flex;gap:8px}
+.rounds li{display:flex;flex:1 1 0}
+.round{position:relative;overflow:hidden;display:block;width:100%;min-width:146px;text-align:left;padding:9px 14px 11px;border-radius:var(--r-md);border:1px solid var(--line);background:var(--loam);transition:border-color .3s}
+.round .fill{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--honey);box-shadow:0 0 8px rgba(242,182,79,.6)}
+.round .n{display:block;font:600 12px/1.2 var(--text);color:var(--hypha-3)}
+.round .t{display:block;font:600 15px/1.25 var(--display);color:var(--hypha-2)}
+.round.cur{border-color:rgba(242,182,79,.6)}
+.round.cur .n{color:var(--honey)}
+.round.cur .t,.round.done .t{color:var(--hypha)}
+.round:hover{border-color:var(--hypha-3)}
+.play{display:inline-grid;place-items:center;width:52px;border-radius:var(--r-md);border:1px solid var(--line);background:var(--loam);color:var(--hypha-2)}
+.play:hover{color:var(--hypha);border-color:var(--hypha-3)}
+.play[hidden]{display:none}
+.play svg{width:14px;height:14px}
+.play .i-play{display:none}
+.play[aria-pressed="false"] .i-play{display:block}
+.play[aria-pressed="false"] .i-pause{display:none}
+
+.ex-body{display:grid;grid-template-columns:minmax(0,1fr) 296px;gap:16px}
+.myc-note{position:absolute;right:14px;top:12px;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--hypha-3);background:rgba(27,20,16,.8);padding:5px 10px;border-radius:99px;border:1px solid var(--line-soft);pointer-events:none;z-index:1}
+.myc-note svg{width:13px;height:13px;flex:none}
+.myc{position:relative;height:clamp(380px,calc(100svh - 300px),560px);border-radius:var(--r-xl);background:var(--loam);border:1px solid var(--line-soft);overflow:hidden}
+.myc canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.myc-legend{position:absolute;left:16px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--hypha-3);pointer-events:none}
+.myc-legend span{display:inline-flex;align-items:center;gap:7px}
+.lg-node{width:10px;height:10px;border-radius:50%;background:var(--honey);box-shadow:0 0 6px var(--honey)}
+.lg-x{font-style:normal;font-weight:700;color:var(--hypha-3);line-height:1}
+.lg-dash{width:18px;height:0;border-top:1.5px dashed var(--hypha-3)}
+.lg-thick{width:22px;height:5px;border-radius:3px;background:linear-gradient(90deg,var(--honey) 0 30%,transparent 30% 38%,var(--honey) 38%);clip-path:polygon(0 35%,30% 35%,30% 0,100% 0,100% 100%,30% 100%,30% 65%,0 65%)}
+
+.ex-panel{display:grid;grid-template-rows:auto auto auto 1fr;border-radius:var(--r-xl);background:var(--loam);border:1px solid var(--line-soft);overflow:hidden}
+.pb{padding:15px 18px;border-top:1px solid var(--line-soft)}
+.pb:first-child{border-top:0}
+.pk{display:block;font:600 12px/1.2 var(--text);color:var(--hypha-3);margin-bottom:6px}
+.goal-b b{display:block;font:600 16px/1.25 var(--display)}
+.goal-b span{display:block;font-size:13px;line-height:1.4;color:var(--hypha-2);margin-top:2px}
+.subs-row{display:flex;justify-content:space-between;align-items:center}
+.subs-row .pk{margin:0}
+.ver{font:600 12px/1 var(--text);padding:5px 9px;border-radius:99px;background:var(--honey);color:var(--honey-ink)}
+.ver.bump{animation:pop .4s both}
+.big{display:block;font:700 34px/1.1 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:4px}
+.hit{display:grid;grid-template-columns:58px minmax(0,1fr) 36px;align-items:center;gap:8px;font-size:12px;color:var(--hypha-3);margin-top:5px}
+.hit i{position:relative;height:8px;border-radius:4px;background:var(--loam-3);overflow:hidden}
+.hit i b{position:absolute;inset:0 auto 0 0;width:0;border-radius:4px;background:var(--honey);transition:width 1s var(--ease)}
+.hit em{font:700 13px/1 var(--display);font-style:normal;color:var(--hypha);text-align:right;opacity:0;transition:opacity .4s .5s;font-variant-numeric:tabular-nums}
+.hit.on b{width:var(--w)}
+.hit.on em{opacity:1}
+.hit.on span{color:var(--hypha-2)}
+.kept-l{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.kr{position:relative;padding:8px 10px;border-radius:var(--r-sm);border:1px dashed var(--line);min-height:52px;transition:background .4s,border-color .4s}
+.kr>*{visibility:hidden}
+.kr.on{border:1px solid var(--line-soft);background:var(--loam-3)}
+.kr.on>*{visibility:visible}
+.kr.bump{animation:bump .9s var(--ease)}
+@keyframes bump{0%{box-shadow:0 0 0 0 rgba(242,182,79,.6);border-color:var(--honey)}100%{box-shadow:0 0 0 8px rgba(242,182,79,0)}}
+.kr .tg{float:right;font:600 10.5px/1 var(--text);color:var(--honey);border:1px solid rgba(242,182,79,.4);border-radius:99px;padding:3px 7px;margin-left:6px}
+.kr b{display:block;font:600 14px/1.25 var(--display)}
+.kr .s{display:block;font-size:12px;line-height:1.3;color:var(--hypha-2)}
+.kept-empty{position:absolute;left:12px;top:15px;font-size:12px;color:var(--hypha-3)}
+.kept-b{position:relative}
+.kept-b .kept-empty{left:28px;top:44px}
+.kept-b.has .kept-empty{display:none}
+
+.ex-foot{display:flex;align-items:center;gap:22px;margin-top:16px}
+.phases{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:6px;flex:none}
+.phases li{position:relative;font:600 13px/1 var(--text);color:var(--hypha-3);padding:8px 12px;border-radius:99px;border:1px solid var(--line-soft);transition:background .3s,color .3s,border-color .3s}
+.phases li+li::before{content:"";position:absolute;left:-7px;top:50%;width:6px;height:1px;background:var(--line)}
+.phases li.done{color:var(--hypha-2);border-color:var(--line)}
+.phases li.on{background:var(--honey);border-color:var(--honey);color:var(--honey-ink)}
+.ph-tune{display:none}
+[data-round="3"] .ph-tune{display:block}
+.ex-cap{font-size:16px;line-height:1.4;color:var(--hypha);min-height:2.8em;display:flex;align-items:center}
+
+/* ---------- Screen 3: learn + status ---------- */
+.l-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:22px}
+.depth{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--hypha-3);flex:none;min-width:340px}
+.depth i{position:relative;flex:1;height:2px;background:linear-gradient(90deg,var(--line),var(--honey))}
+.depth i::after{content:"";position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-right:0;border-left:7px solid var(--honey)}
+.learn-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.learn{display:flex;flex-direction:column;padding:16px 18px 18px;border-radius:var(--r-lg);background:var(--loam-2);border:1px solid var(--line-soft)}
+.learn:nth-child(2){border-color:#3f3226}
+.learn:nth-child(3){border-color:rgba(242,182,79,.3)}
+.art{height:132px;border-radius:var(--r-md);background:var(--loam);display:grid;place-items:center;margin-bottom:14px}
+.art svg{width:100%;max-width:300px;height:118px;overflow:visible}
+.art *{transform-box:fill-box;transform-origin:center}
+.art text{font:600 9.5px var(--text);fill:var(--hypha-2);dominant-baseline:middle}
+.learn h3{font:600 22px/1.15 var(--display);letter-spacing:-.015em;display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px 10px}
+.learn h3 small{font:500 12px/1 var(--text);color:var(--hypha-3);letter-spacing:0}
+.learn .tl{font-size:15px;color:var(--honey-2);margin:4px 0 8px}
+.learn .what{font-size:14.5px;line-height:1.5;color:var(--hypha-2);margin-bottom:8px}
+.learn .when{font-size:14px;line-height:1.5;color:var(--hypha-3);margin-top:auto;padding-top:8px;border-top:1px solid var(--line-soft)}
+.learn .when b{color:var(--hypha);font-weight:600}
+.a-box{fill:var(--loam-3);stroke:var(--line);stroke-width:1.2}
+.a-line{fill:none;stroke:var(--hypha-3);stroke-width:1.4;stroke-linecap:round}
+.a-ink{fill:none;stroke:var(--honey-ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.learn-sec .art *{animation-play-state:paused!important}
+.learn-sec.live .art *{animation-play-state:running!important}
+/* skill */
+.pkt{fill:var(--hypha)}
+.pkt.k1{animation:pk1 3.6s var(--ease) infinite}
+.pkt.k2{animation:pk2 3.6s var(--ease) infinite}
+@keyframes pk1{0%{transform:translate(0,0);opacity:0}8%{opacity:1}28%{transform:translate(32px,21px);opacity:1}32%,100%{transform:translate(32px,21px);opacity:0}}
+@keyframes pk2{0%{transform:translate(0,0);opacity:0}8%{opacity:1}28%{transform:translate(32px,-21px);opacity:1}32%,100%{transform:translate(32px,-21px);opacity:0}}
+.rs{stroke:var(--hypha-3);stroke-width:3;stroke-linecap:round}
+.rs.s1{animation:rs 3.6s infinite}
+.rs.s2{animation:rs 3.6s .25s infinite}
+.rs.s3{animation:rs 3.6s .5s infinite}
+@keyframes rs{0%,30%{stroke:var(--hypha-3)}36%,70%{stroke:var(--honey)}80%,100%{stroke:var(--hypha-3)}}
+.out-g{animation:outIn 3.6s infinite}
+@keyframes outIn{0%,52%{opacity:0;transform:translateX(-8px)}60%,90%{opacity:1;transform:none}100%{opacity:0}}
+.pop-g{animation:popIn 3.6s infinite}
+@keyframes popIn{0%,62%{opacity:0;transform:scale(.3)}68%,90%{opacity:1;transform:scale(1)}100%{opacity:0}}
+/* strategy A/B */
+.bar-a,.bar-b{transform-origin:left center!important}
+.bar-a{fill:var(--hypha-3);animation:barA 4.4s var(--ease) infinite}
+.bar-b{fill:var(--honey);animation:barB 4.4s var(--ease) infinite}
+@keyframes barA{0%,6%{transform:scaleX(0)}30%,92%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+@keyframes barB{0%,26%{transform:scaleX(0)}54%,92%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+.va{animation:vIn 4.4s infinite}
+.vb{animation:vInB 4.4s infinite}
+@keyframes vIn{0%,28%{opacity:0}34%,92%{opacity:1}100%{opacity:0}}
+@keyframes vInB{0%,52%{opacity:0}58%,92%{opacity:1}100%{opacity:0}}
+.badge-g{animation:badge 4.4s infinite}
+@keyframes badge{0%,60%{opacity:0;transform:scale(.4)}66%,92%{opacity:1;transform:scale(1)}100%{opacity:0}}
+/* weights */
+.wd{fill:var(--hypha-3);opacity:.45}
+.wt{animation:wt 4.8s infinite}
+.wt.d1{animation-delay:.12s}.wt.d2{animation-delay:.24s}.wt.d3{animation-delay:.36s}.wt.d4{animation-delay:.48s}.wt.d5{animation-delay:.6s}
+@keyframes wt{0%,8%{fill:var(--hypha-3);opacity:.45;transform:scale(1)}20%,90%{fill:var(--honey);opacity:1;transform:scale(1.45)}100%{fill:var(--hypha-3);opacity:.45;transform:scale(1)}}
+.dl-g{animation:dIn 4.8s infinite}
+@keyframes dIn{0%,6%{opacity:0}14%,90%{opacity:1}100%{opacity:0}}
+.ck1{animation:ck 4.8s infinite}
+.ck2{animation:ck2 4.8s infinite}
+@keyframes ck{0%,40%{opacity:.25}46%,90%{opacity:1}100%{opacity:.25}}
+@keyframes ck2{0%,52%{opacity:.25}58%,90%{opacity:1}100%{opacity:.25}}
+.ckm1{animation:popC 4.8s infinite}
+.ckm2{animation:popC2 4.8s infinite}
+@keyframes popC{0%,40%{opacity:0;transform:scale(.3)}46%,90%{opacity:1;transform:scale(1)}100%{opacity:0}}
+@keyframes popC2{0%,52%{opacity:0;transform:scale(.3)}58%,90%{opacity:1;transform:scale(1)}100%{opacity:0}}
+.badge-w{animation:badgeW 4.8s infinite}
+@keyframes badgeW{0%,64%{opacity:0;transform:scale(.4)}70%,90%{opacity:1;transform:scale(1)}100%{opacity:0}}
+@keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+
+/* gates line */
+.gates-line{display:flex;align-items:center;gap:16px;margin-top:16px;padding:12px 16px 12px 20px;border-radius:var(--r-lg);border:1px solid var(--line-soft);background:var(--loam-2)}
+.gates-line>p{font-size:14px;line-height:1.4;color:var(--hypha-2);flex:0 1 330px}
+.gates-line>p b{color:var(--hypha);font-weight:600}
+.gl-wrap{position:relative;flex:1;min-width:0}
+.gl{list-style:none;margin:0;padding:0;display:flex;gap:8px}
+.gl li{flex:1;font-size:13px;line-height:1;padding:9px 10px;border-radius:99px;border:1px dashed var(--line);text-align:center;color:var(--hypha-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gchip{position:absolute;top:50%;left:0;width:30px;height:30px;margin-top:-15px;border-radius:50%;background:var(--honey);box-shadow:0 0 14px rgba(242,182,79,.6);opacity:0;pointer-events:none}
+.learn-sec.live .gchip{animation:gchip 5.2s var(--ease) infinite}
+.learn-sec.live .gl li:nth-child(1){animation:g1 5.2s infinite}
+.learn-sec.live .gl li:nth-child(2){animation:g2 5.2s infinite}
+.learn-sec.live .gl li:nth-child(3){animation:g3 5.2s infinite}
+.learn-sec.live .gl li:nth-child(4){animation:g4 5.2s infinite}
+@keyframes gchip{0%{left:0;opacity:0}6%{opacity:.9}74%{left:calc(100% - 30px);opacity:.9}84%,100%{left:calc(100% - 30px);opacity:0}}
+@keyframes g1{0%,12%{border-style:dashed;border-color:var(--line);color:var(--hypha-3)}16%,86%{border-style:solid;border-color:rgba(242,182,79,.6);color:var(--hypha)}92%,100%{border-color:var(--line);color:var(--hypha-3)}}
+@keyframes g2{0%,30%{border-style:dashed;border-color:var(--line);color:var(--hypha-3)}34%,86%{border-style:solid;border-color:rgba(242,182,79,.6);color:var(--hypha)}92%,100%{border-color:var(--line);color:var(--hypha-3)}}
+@keyframes g3{0%,48%{border-style:dashed;border-color:var(--line);color:var(--hypha-3)}52%,86%{border-style:solid;border-color:rgba(242,182,79,.6);color:var(--hypha)}92%,100%{border-color:var(--line);color:var(--hypha-3)}}
+@keyframes g4{0%,66%{border-style:dashed;border-color:var(--line);color:var(--hypha-3)}70%,86%{border-style:solid;border-color:rgba(242,182,79,.6);color:var(--hypha)}92%,100%{border-color:var(--line);color:var(--hypha-3)}}
+
+/* status */
+.status{display:grid;grid-template-columns:auto repeat(4,minmax(0,1fr));gap:20px;align-items:start;margin-top:22px;padding-top:20px;border-top:1px solid var(--line-soft)}
+.status h3{font:600 17px/1.3 var(--display);padding-top:2px}
+.st{display:flex;gap:10px;align-items:flex-start}
+.st .ic{flex:none;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px dashed var(--hypha-3);margin-top:1px}
+.st.ok .ic{border:0;background:var(--honey);color:var(--honey-ink)}
+.st .ic svg{width:12px;height:12px}
+.st b{display:block;font:600 15px/1.25 var(--display)}
+.st span{display:block;font-size:13px;line-height:1.4;color:var(--hypha-3)}
+.st.ok span{color:var(--hypha-2)}
+.st a{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
+.st a:hover{color:var(--hypha);text-decoration-color:var(--honey)}
+
+.foot{display:flex;align-items:center;gap:20px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line-soft);font-size:14px;color:var(--hypha-3)}
+.foot .brand{font-size:17px;color:var(--hypha)}
+.foot .brand svg{width:22px;height:22px}
+.foot nav{display:flex;flex-wrap:wrap;gap:6px 18px;margin-left:auto;align-items:center}
+.foot nav a{color:var(--hypha-2)}
+.foot nav a:hover{color:var(--hypha)}
+.foot .priv{font-size:12px;color:var(--hypha-3)}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1100px){
+  .links{display:none}
+  .top .btn{margin-left:auto}
+  .ex-top,.l-head{flex-direction:column;align-items:flex-start;gap:16px}
+  .depth{min-width:0;width:100%;max-width:520px}
+  .status{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .status h3{grid-column:1/-1}
+  .gates-line{flex-wrap:wrap}
+  .gates-line>p{flex:1 1 100%}
+  .gl-wrap{flex-basis:100%}
+}
+@media (max-width:960px){
+  .ex-body{grid-template-columns:minmax(0,1fr)}
+  .ex-panel{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto}
+  .ex-panel .pb:nth-child(2){border-top:0;border-left:1px solid var(--line-soft)}
+  .ex-panel .pb:nth-child(4){border-left:1px solid var(--line-soft)}
+  .learn-grid{grid-template-columns:minmax(0,1fr)}
+  .learn{display:grid;grid-template-columns:240px minmax(0,1fr);column-gap:20px}
+  .learn .art{grid-row:1/span 5;margin:0;height:100%;min-height:130px}
+  .ex-foot{flex-direction:column;align-items:flex-start;gap:10px}
+}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:minmax(0,1fr);min-height:0;gap:0}
+  .hero-copy{display:contents}
+  .hero h1{order:1;margin-bottom:8px}
+  .net{order:2;height:clamp(300px,72vw,440px);margin:0 0 28px}
+  .lead{order:3}
+  .hero-cta{order:4}
+  .pilot-note{order:5}
+}
+@media (max-width:720px){
+  body{font-size:16px}
+  .tag{display:none}
+  .hero{padding-top:36px}
+  .lead{font-size:17px}
+  .screen{min-height:0;padding:56px 0}
+  .ex-ctl{width:100%}
+  .rounds{flex:1}
+  .rounds li{flex:1}
+  .round{min-width:0;padding:8px 10px 10px}
+  .round .t{font-size:13px}
+  .myc{height:min(132vw,600px)}
+  .myc-legend{gap:4px 12px;font-size:11px}
+  .myc-note{top:auto;right:12px;left:12px;bottom:58px;font-size:11px;border-radius:10px}
+  .learn-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -24px;padding:0 24px 6px;scrollbar-width:none}
+  .learn-grid::-webkit-scrollbar{display:none}
+  .learn{flex:0 0 86%;scroll-snap-align:center}
+  .l-head .s-head p::after{content:" Swipe to compare.";color:var(--hypha-3)}
+  .ex-panel{grid-template-columns:minmax(0,1fr)}
+  .ex-panel .goal-b{display:none}
+  .ex-panel .pb:nth-child(n){border-left:0;border-top:1px solid var(--line-soft)}
+  .ex-panel .pb:nth-child(2){border-top:0}
+  .phases{flex-wrap:wrap;gap:4px}
+  .phases li{font-size:12px;padding:6px 9px}
+  .phases li+li::before{display:none}
+  .learn{display:flex}
+  .learn .art{height:118px}
+  .gl{flex-wrap:wrap}
+  .gl li{flex:1 1 40%}
+  .gchip{display:none}
+  .status{grid-template-columns:minmax(0,1fr)}
+  .foot{flex-direction:column;align-items:flex-start}
+  .foot nav{margin-left:0}
+  .legend{gap:14px;font-size:12px}
+}
+@media (max-width:420px){
+  .hero-cta .btn{flex:1}
+  .round .n{font-size:11px}
+}
+/* shorter laptop screens: keep each screen to one viewport */
+@media (min-width:961px) and (max-height:820px){
+  .screen{padding:22px 0}
+  .s-head h2{font-size:clamp(28px,3vw,38px);margin-bottom:4px}
+  .s-head p{font-size:16px}
+  .ex-top,.l-head{margin-bottom:14px}
+  .round{padding:7px 12px 9px}
+  .ex-panel .goal-b{display:none}
+  .ex-panel .pb:nth-child(2){border-top:0}
+  .pb{padding:12px 16px}
+  .big{font-size:30px}
+  .kr{min-height:46px;padding:6px 10px}
+  .ex-foot{margin-top:12px}
+  .art{height:100px;margin-bottom:10px}
+  .art svg{height:92px}
+  .learn{padding:12px 16px 14px}
+  .learn h3{font-size:20px}
+  .learn .tl{margin:2px 0 6px;font-size:14px}
+  .learn .what{font-size:14px;margin-bottom:6px}
+  .learn .when{font-size:13px}
+  .gates-line{margin-top:12px;padding:8px 12px 8px 16px}
+  .status{margin-top:14px;padding-top:14px}
+  .foot{margin-top:14px;padding-top:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.001ms!important;transition-delay:0s!important}
+  .art *{animation:none!important}
+}
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="header wrap" id="top">
-  <a class="brand" href="#top" aria-label="Mycelium home"><span class="brand-mark" aria-hidden="true">✳</span>mycelium<span class="edition">MVP / 03</span></a>
-  <nav aria-label="Main navigation"><a href="#how-it-works">How it works</a><a href="#what-learns">What learns</a><a href="#evidence">Evidence</a></nav>
-  <a class="header-cta" href="#get-started">Explore the pilot <span aria-hidden="true">→</span></a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="logo" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M16 16C13 12 10 10 5.5 10"/><path d="M16 16c3-3 5-7 5-11.5"/><path d="M16 16c4 1 7 4 9.5 8.5"/><path d="M16 16c-1 4-4 7-8.5 9"/><path d="M10.5 11.2c-1-2.2-.8-4 .3-6" opacity=".55"/><path d="M22.6 19.8c2.4-.4 4-1.6 5.2-3.6" opacity=".55"/></g><circle cx="5.5" cy="10" r="1.6" fill="currentColor"/><circle cx="21" cy="4.5" r="1.6" fill="currentColor"/><circle cx="25.5" cy="24.5" r="1.6" fill="currentColor"/><circle cx="7.5" cy="25" r="1.6" fill="currentColor"/><circle cx="16" cy="16" r="3.6" fill="#f2b650"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 12 12"><path d="M2.5 6.3l2.3 2.3 4.7-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 7.2v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="4.8" r="1" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<header class="top" id="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#main" aria-label="Mycelium, back to top"><svg aria-hidden="true"><use href="#logo"/></svg>mycelium</a>
+    <span class="tag">MVP3 research pilot</span>
+    <nav class="links" aria-label="Sections">
+      <a href="#example">How it works</a>
+      <a href="#learns">What it learns</a>
+      <a href="#status">Where it stands</a>
+    </nav>
+    <a class="btn btn-primary" href="#example">Watch the example</a>
+  </div>
 </header>
+
 <main id="main">
-  <section class="hero wrap" aria-labelledby="hero-title">
+
+<!-- ================= SCREEN 1: HERO ================= -->
+<section class="hero" id="hero" data-phase="0" aria-labelledby="hero-title">
+  <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="eyebrow"><span class="small-dot"></span> A LEARNING NETWORK, ROOTED IN EVIDENCE</p>
-      <h1 id="hero-title">One goal.<br>Many approaches.<br><em>Earned progress.</em></h1>
-      <p class="hero-lead">Explore different ways to solve a problem.<br class="desktop-break"> Check what works. Make the next attempt better.</p>
-      <p class="hero-description">Mycelium is an AI research pilot that explores how useful work can become reusable skills, tested strategies, and carefully evaluated model changes.</p>
-      <div class="actions"><a class="button primary" href="#how-it-works">See how it works <span aria-hidden="true">↓</span></a><a class="text-link" href="#get-started">Explore the code <span aria-hidden="true">→</span></a></div>
-      <p class="access-note">MVP3 research pilot <span aria-hidden="true">/</span> Not a live public network</p>
-    </div>
-    <div class="loop-card" id="loop-demo" data-stage="3" role="group" aria-label="Illustration of the learning loop">
-      <div class="card-top"><span class="mini-label">THE LEARNING CIRCUIT</span><span class="demo-tag">Illustration · not live</span></div>
-      <div class="circuit">
-        <div class="goal-node"><span class="node-icon" aria-hidden="true">◎</span><div><span class="tiny-label">ONE CLEAR GOAL</span><strong>Solve a new problem</strong></div><span class="goal-spark" aria-hidden="true">✳</span></div>
-        <div class="split-lines" aria-hidden="true"><svg viewBox="0 0 480 48" preserveAspectRatio="none"><path d="M240 0V16Q240 24 232 24H88Q80 24 80 32V48M240 0V48M240 0V16Q240 24 248 24H392Q400 24 400 32V48"/></svg></div>
-        <div class="approaches">
-          <div class="approach"><span class="path-number">PATH A</span><svg viewBox="0 0 60 32" aria-hidden="true"><path d="M4 24L22 24L36 8L56 8"/><path d="M49 3l7 5-7 5"/></svg><strong>Try directly</strong><span class="approach-note">An independent attempt</span></div>
-          <div class="approach"><span class="path-number">PATH B</span><svg viewBox="0 0 60 32" aria-hidden="true"><path d="M5 16H22M22 16L35 5H55M22 16L35 27H55"/><circle cx="22" cy="16" r="3"/></svg><strong>Break it down</strong><span class="approach-note">Smaller, checked steps</span></div>
-          <div class="approach"><span class="path-number">PATH C</span><svg viewBox="0 0 60 32" aria-hidden="true"><rect x="8" y="5" width="18" height="22" rx="3"/><path d="M13 12h8m-8 6h8M32 16H54m-7-6 7 6-7 6"/></svg><strong>Reframe it</strong><span class="approach-note">A different perspective</span></div>
-        </div>
-        <div class="checks" aria-label="Illustrative results: path A verified, path B rejected, path C verified"><span><i aria-hidden="true">✓</i> Verified</span><span class="rejected"><i aria-hidden="true">×</i> Rejected</span><span><i aria-hidden="true">✓</i> Verified</span></div>
-        <div class="join-lines" aria-hidden="true"><svg viewBox="0 0 480 39" preserveAspectRatio="none"><path d="M80 0V11Q80 19 88 19H232Q240 19 240 27V39M400 0V11Q400 19 392 19H248Q240 19 240 27V39"/><path class="rejected-stop" d="M240 0V9m-6 0h12"/></svg></div>
-        <div class="retain-node"><span aria-hidden="true">✧</span><div><strong>Keep only tested improvements</strong><span>Fresh tests · regressions · resource limits · approval</span></div></div>
+      <h1 id="hero-title"><span class="l l1">Try many ways.</span><span class="l l2">Check every one.</span><span class="l l3">Keep what works.</span></h1>
+      <p class="lead">Mycelium is an AI research pilot. It sends many workers at one goal, checks every result against real evidence, and keeps only the improvements that pass fresh tests.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#example">Watch it run a channel</a>
+        <a class="btn btn-ghost" href="#learns">What it learns</a>
       </div>
-      <div class="circuit-caption"><span id="stage-number">04 / 04</span><p id="stage-caption">A good result is a start. New learning must pass its own tests.</p></div>
-      <div class="circuit-controls js-only"><div class="stage-buttons" aria-label="Select an illustration stage"><button type="button" data-stage="0" aria-label="1. Set a goal" aria-pressed="false">01</button><button type="button" data-stage="1" aria-label="2. Explore approaches" aria-pressed="false">02</button><button type="button" data-stage="2" aria-label="3. Verify results" aria-pressed="false">03</button><button type="button" data-stage="3" aria-label="4. Retain improvements" aria-pressed="true">04</button></div><div class="playback"><button type="button" id="motion-toggle">Pause</button><button type="button" id="replay" aria-label="Replay learning illustration">↻ <span>Replay</span></button></div></div>
-      <p class="sr-only" id="loop-announcement" role="status"></p>
+      <p class="pilot-note">A research pilot, not a live public network.</p>
     </div>
-    <div class="hero-foot"><span>INDEPENDENT EXPLORATION</span><span aria-hidden="true">→</span><span>TRUSTED VERIFICATION</span><span aria-hidden="true">→</span><span>REUSABLE LEARNING</span><a href="#evidence">See what’s been tested <span aria-hidden="true">→</span></a></div>
-  </section>
-
-  <section class="section wrap" id="how-it-works" aria-labelledby="how-title">
-    <div class="section-heading"><div><p class="eyebrow">01 / HOW IT WORKS</p><h2 id="how-title">Different paths.<br><em>One standard: does it work?</em></h2></div><p class="section-intro">More answers don’t make an answer true. Mycelium checks results against the task—not against a majority vote.</p></div>
-    <ol class="process-grid">
-      <li><span class="step-number">01 <span aria-hidden="true">→</span></span><h3>Set the goal</h3><p>Define success, permissions, and a fixed resource budget before work begins.</p></li>
-      <li><span class="step-number">02 <span aria-hidden="true">→</span></span><h3>Explore different ways</h3><p>Workers try distinct strategies independently. Checked partial results can help later attempts.</p></li>
-      <li><span class="step-number">03 <span aria-hidden="true">→</span></span><h3>Verify the result</h3><p>Use trusted checks or real outcome evidence. Missing evidence stays inconclusive.</p></li>
-      <li><span class="step-number">04 <span aria-hidden="true">→</span></span><h3>Test what was learned</h3><p>Turn recurring gaps into candidates. Keep a change only after fresh tests and release approval.</p></li>
-    </ol>
-    <details class="disclosure"><summary>What actually runs on each worker?<span aria-hidden="true">+</span></summary><div class="disclosure-body"><p>MVP3 uses qualified full-model replicas for asynchronous, bounded work. Each replica serves the same complete model; different strategies change how a task is approached. This is not token-level expert routing, and the replicas do not pool GPU memory.</p><p>The offline pilot uses a symbolic worker. Model transport is tested with local HTTP fixtures; useful live pretrained-model performance and a large volunteer network are still unproven.</p></div></details>
-  </section>
-
-  <section class="learning-band" id="what-learns" aria-labelledby="learns-title"><div class="wrap section">
-    <div class="section-heading"><div><p class="eyebrow">02 / WHAT GETS BETTER</p><h2 id="learns-title">Learning you can<br><em>point to.</em></h2></div><p class="section-intro">Not a vague promise of “getting smarter.” Three kinds of reusable change, each with its own evidence.</p></div>
-    <div class="learning-grid">
-      <article class="learning-card"><div class="artifact-visual skill-visual" aria-hidden="true"><span class="artifact-line">INPUT <i>47 × 53 mod 17</i></span><div class="recipe-box"><span>ƒ</span><div>Tested recipe<small>compose → execute → check</small></div><b>✓</b></div><span class="artifact-line">OUTPUT <i>9</i></span></div><div class="learning-card-copy"><span class="mini-label">01 / EXECUTABLE TOOLS</span><h3>Skills</h3><p>A reusable procedure for a specific job. Like a tested recipe for modular arithmetic.</p><span class="card-rule">Test it before it can run.</span><details><summary>A little deeper <span aria-hidden="true">+</span></summary><p>Skills use a restricted instruction language, not arbitrary downloaded Python. Tests, dependencies, and exact versions travel with the skill.</p></details></div></article>
-      <article class="learning-card"><div class="artifact-visual strategy-visual" aria-hidden="true"><div class="strategy-note"><span>STRATEGY / 02</span><p>Split the problem.<br>Check each part.<br>Then combine.</p><i>→</i></div></div><div class="learning-card-copy"><span class="mini-label">02 / REUSABLE APPROACHES</span><h3>Thinking strategies</h3><p>Concise instructions for approaching a task. A better process—not a saved private thought stream.</p><span class="card-rule">Compare with and without it.</span><details><summary>A little deeper <span aria-hidden="true">+</span></summary><p>A strategy must help on fresh tasks with the same model and budget. The pilot has not established a useful thinking-strategy gain.</p></details></div></article>
-      <article class="learning-card"><div class="artifact-visual model-visual" aria-hidden="true"><div class="weights-row"><span class="weights-base"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><b>+</b><span class="adapter-block">Δ<small>candidate</small></span><b>→</b><span class="weight-gate">◇<small>test</small></span></div><span class="weight-caption">BASE MODEL <span>SMALL WEIGHT UPDATE</span></span></div><div class="learning-card-copy"><span class="mini-label">03 / OPTIONAL WEIGHT CHANGES</span><h3>Model improvements</h3><p>Train a candidate update, then find out whether it transfers beyond the training examples.</p><span class="card-rule">Lower training loss is not enough.</span><details><summary>A little deeper <span aria-hidden="true">+</span></summary><p>The real tiny-model experiment trained three candidates from a random base. All failed fresh and regression checks, so none replaced the stable model. Pretrained gains remain unproven.</p></details></div></article>
+    <div class="net" id="net" role="img" aria-label="Animation: threads grow from one goal toward many attempts. Each attempt reaches a check. Failed attempts wither, passing ones turn gold and carry their result to a growing store of kept improvements.">
+      <canvas aria-hidden="true"></canvas>
+      <span class="net-lbl goal" aria-hidden="true">Goal</span>
+      <span class="net-lbl check" aria-hidden="true">Check</span>
+      <span class="net-lbl kept" aria-hidden="true">Kept</span>
+      <div class="legend" aria-hidden="true">
+        <span><i></i>Trying</span>
+        <span class="lg-pass"><i></i>Passed the check</span>
+        <span class="lg-fail"><i></i>Rejected</span>
+      </div>
     </div>
-  </div></section>
+  </div>
+</section>
 
-  <section class="reliability-band" id="reliability" aria-labelledby="reliability-title"><div class="wrap section reliability-layout">
-    <div><p class="eyebrow">03 / BUILT TO KEEP ITS FOOTING</p><h2 id="reliability-title">Experiment freely.<br><em>Release carefully.</em></h2><p class="reliability-intro">The stable version keeps serving while a candidate is tested separately. A failed experiment should not become everyone’s next answer.</p><div class="safety-points"><div><span aria-hidden="true">→</span><p><strong>A complete version, not loose pieces.</strong> Skills, strategies, model references, and settings stay bound together.</p></div><div><span aria-hidden="true">↻</span><p><strong>A way back.</strong> Keep previous releases available for rollback. Already completed external actions cannot be undone by code.</p></div></div></div>
-    <div class="release-demo" role="group" aria-label="Illustrative release controls"><div class="card-top"><span class="mini-label">A SEPARATE RELEASE TRACK</span><span class="demo-tag">Illustration</span></div>
-      <div class="stable-lane"><div><span class="tiny-label">SERVING NEW REQUESTS</span><strong>Stable <span id="stable-version">v1</span></strong></div><span class="serving-badge"><i></i> Serving</span></div>
-      <div class="experiment-lane"><span class="lane-branch" aria-hidden="true">→</span><div><span class="tiny-label">SEPARATE EXPERIMENT</span><strong id="candidate-label">Candidate v2</strong><span class="candidate-checks">Fresh tasks · Regressions · Limits · Approval</span></div><span id="candidate-symbol" aria-hidden="true">◇</span></div>
-      <div class="release-status" id="release-status" role="status">A candidate is not a release. The stable version stays selected until every gate passes.</div>
-      <div class="release-controls js-only"><button type="button" data-release="fail">Test a failing candidate <span aria-hidden="true">×</span></button><button type="button" data-release="pass">Test a passing candidate <span aria-hidden="true">✓</span></button><button type="button" id="rollback" disabled>Roll back to v1 <span aria-hidden="true">↻</span></button></div>
+<!-- ================= SCREEN 2: MYCELIUM EXAMPLE ================= -->
+<section class="screen band" id="example" data-round="1" aria-labelledby="ex-title">
+  <div class="wrap">
+    <div class="ex-top">
+      <div class="s-head">
+        <h2 id="ex-title">Watch it grow a YouTube channel</h2>
+        <p>Three rounds of one loop. Threads that deliver thicken and feed the next round.</p>
+      </div>
+      <div class="ex-ctl">
+        <ol class="rounds">
+          <li><button class="round" type="button"><span class="fill"></span><span class="n">Round 1</span><span class="t">Explore</span></button></li>
+          <li><button class="round" type="button"><span class="fill"></span><span class="n">Round 2</span><span class="t">Build on wins</span></button></li>
+          <li><button class="round" type="button"><span class="fill"></span><span class="n">Round 3</span><span class="t">Make it instinct</span></button></li>
+        </ol>
+        <button class="play" id="ex-play" type="button" aria-pressed="true" aria-label="Pause the example">
+          <svg class="i-pause" viewBox="0 0 14 14" aria-hidden="true"><rect x="3" y="2" width="3" height="10" rx="1" fill="currentColor"/><rect x="8" y="2" width="3" height="10" rx="1" fill="currentColor"/></svg>
+          <svg class="i-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M4 2.2v9.6L12 7z" fill="currentColor"/></svg>
+        </button>
+      </div>
     </div>
-    <details class="disclosure dark-disclosure"><summary>What happens if a worker disappears?<span aria-hidden="true">+</span></summary><div class="disclosure-body"><p>A healthy, compatible replica can take new work. But if a request was already sent and its outcome is unknown, MVP3 does not blindly retry it elsewhere. That job stays inconclusive and its resource reservation is preserved.</p><p>Recoverable job records, checkpoints, and retained release artifacts help a trusted coordinator resume safely. They are not proof of geographic high availability, physical outage recovery, or hostile-volunteer isolation.</p></div></details>
-  </div></section>
 
-  <section class="section wrap evidence" id="evidence" aria-labelledby="evidence-title">
-    <div class="section-heading"><div><p class="eyebrow">04 / THE EVIDENCE SO FAR</p><h2 id="evidence-title">Small proofs.<br><em>Honest conclusions.</em></h2></div><p class="section-intro">MVP3 tests the learning loop and its safeguards. The ambition is broad; the demonstrated scope is deliberately narrow.</p></div>
-    <div class="evidence-list"><article><span class="evidence-label positive">DEMONSTRATED</span><div><h3>A tested skill filled a specific gap.</h3><p>The symbolic arithmetic demo improved after adding a transparent bootstrap recipe. This shows the mechanism—not a learned LLM capability gain.</p></div><span class="evidence-icon" aria-hidden="true">→</span></article><article><span class="evidence-label negative">CORRECTLY REJECTED</span><div><h3>Training did not earn a release.</h3><p>Three tiny neural candidates failed fresh and regression checks. All were rejected, and the original stable model remained selected.</p></div><span class="evidence-icon" aria-hidden="true">⊘</span></article><article><span class="evidence-label neutral">STILL TO PROVE</span><div><h3>Useful gains, in the real world.</h3><p>No measured thinking-strategy or pretrained-model gain, frontier-model superiority, volunteer-scale deployment, or live-channel outcome has been established.</p></div><span class="evidence-icon" aria-hidden="true">…</span></article></div>
-    <details class="disclosure evidence-detail"><summary>See the test snapshot and its limits<span aria-hidden="true">+</span></summary><div class="disclosure-body"><div><h3>Frozen software checks</h3><p><strong>1,204 passed · 12 inherited skips.</strong> A separate independent MVP3 review passed 238 tests. These overlap with the aggregate; they are not additional wins or intelligence scores.</p><p>Runtime frozen 27 October 2026. Local HTTP fixtures exercise transport and proposal paths, not live pretrained-model quality.</p></div><div><h3>What the small demo measured</h3><p>The symbolic worker went from <strong>4/6 to 6/6</strong> on both fixed fresh and regression samples using a handwritten bootstrap skill. No useful policy-only gain was measured. This is not statistical evidence of generalization.</p><p>The connected tiny-weight run rejected all three candidates. Docker goal execution, a live pretrained endpoint, and live platform outcomes were unavailable in this campaign.</p></div><p class="report-link"><a class="text-link" href="https://github.com/drpokerface/open-mini/blob/4390c6e818b2cdad74130c94ec9babad46c63a85/MYCELIUM_MVP3_TEST_REPORT.md">Read the pinned MVP3 test report <span aria-hidden="true">→</span></a><span>Private repository access required.</span></p></div></details>
-  </section>
+    <div class="ex-body">
+      <div class="myc" id="myc" role="img" aria-label="Animated network: from a channel node, threads grow toward video ideas. Real viewer data checks each idea. Failed threads are pruned, unclear ones go dormant, and winning threads thicken as value flows back to the channel. Later rounds grow from the winners, and after the model is tuned on its wins, new threads reach good ideas more directly.">
+        <canvas aria-hidden="true"></canvas>
+        <p class="myc-note"><svg aria-hidden="true"><use href="#i-info"/></svg>Illustrative, made-up numbers. The pilot hasn't run a live channel.</p>
+        <div class="myc-legend" aria-hidden="true">
+          <span><i class="lg-node"></i>Kept</span>
+          <span><i class="lg-x">×</i>Pruned</span>
+          <span><i class="lg-dash"></i>Dormant, unclear</span>
+          <span><i class="lg-thick"></i>Thicker means reinforced more</span>
+        </div>
+      </div>
+      <aside class="ex-panel" aria-label="Channel progress">
+        <div class="pb goal-b"><span class="pk">Goal</span><b>Grow a home-cooking channel</b><span>Success: more viewers who watch and stay</span></div>
+        <div class="pb">
+          <div class="subs-row"><span class="pk">Subscribers</span><span class="ver" id="ex-ver">Playbook v1</span></div>
+          <b class="big" id="ex-subs">12,480</b>
+        </div>
+        <div class="pb">
+          <span class="pk">Ideas that passed the check</span>
+          <div class="hit" style="--w:40%"><span>Round 1</span><i><b></b></i><em>40%</em></div>
+          <div class="hit" style="--w:50%"><span>Round 2</span><i><b></b></i><em>50%</em></div>
+          <div class="hit" style="--w:75%"><span>Round 3</span><i><b></b></i><em>75%</em></div>
+        </div>
+        <div class="pb kept-b" id="ex-kept">
+          <span class="pk">Kept so far</span>
+          <ul class="kept-l">
+            <li class="kr" data-row="skill"><span class="tg">Skill</span><b></b><span class="s"></span></li>
+            <li class="kr" data-row="strat"><span class="tg">Strategy</span><b></b><span class="s"></span></li>
+            <li class="kr" data-row="model"><span class="tg">Weights</span><b></b><span class="s"></span></li>
+          </ul>
+          <span class="kept-empty">Nothing yet. Only checked ideas get in.</span>
+        </div>
+      </aside>
+    </div>
 
-  <section class="get-started wrap" id="get-started" aria-labelledby="start-title"><div><p class="eyebrow">05 / EXPLORE THE PILOT</p><h2 id="start-title">Start with the roots.<br><em>Follow the evidence.</em></h2><p>The offline demo is the simplest way to inspect the loop. Read the setup, run a bounded session, and see exactly what was kept—or rejected.</p></div><div class="start-links"><a href="https://github.com/drpokerface/open-mini/blob/mvp3/MYCELIUM_MVP3.md"><span><small>START HERE</small><strong>MVP3 setup &amp; guide</strong></span><span aria-hidden="true">→</span></a><a href="https://github.com/drpokerface/open-mini/tree/mvp3"><span><small>LOOK UNDER THE HOOD</small><strong>Explore the code</strong></span><span aria-hidden="true">→</span></a><p>These links require access to the private repository.<br>This public page is an explanation, not a signup or live service.</p></div></section>
+    <div class="ex-foot">
+      <ol class="phases" aria-hidden="true">
+        <li class="ph-tune" data-ph="train">Tune model</li>
+        <li data-ph="exp">Explore</li>
+        <li data-ph="chk">Check</li>
+        <li data-ph="keep">Keep</li>
+        <li data-ph="rein">Reinforce</li>
+      </ol>
+      <p class="ex-cap" id="ex-cap">Round 1: five ideas grow at once, each on its own thread.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCREEN 3: LEARN + STATUS ================= -->
+<section class="screen learn-sec" id="learns" aria-labelledby="learn-title">
+  <div class="wrap">
+    <div class="l-head">
+      <div class="s-head">
+        <h2 id="learn-title">Three ways it gets better</h2>
+        <p>From a saved recipe to a change in the model itself. Deeper changes face a higher bar.</p>
+      </div>
+      <div class="depth" aria-hidden="true"><span>Easy to undo</span><i></i><span>Deep change</span></div>
+    </div>
+
+    <div class="learn-grid">
+      <article class="learn">
+        <div class="art" aria-hidden="true">
+          <svg viewBox="0 0 220 104">
+            <rect class="a-box" x="6" y="18" width="46" height="22" rx="7"/><text x="29" y="29.5" text-anchor="middle">photo</text>
+            <rect class="a-box" x="6" y="62" width="46" height="22" rx="7"/><text x="29" y="73.5" text-anchor="middle">title</text>
+            <path class="a-line" d="M52 29C68 29 70 51 84 51M52 73C68 73 70 51 84 51"/>
+            <circle class="pkt k1" cx="52" cy="29" r="3"/>
+            <circle class="pkt k2" cx="52" cy="73" r="3"/>
+            <rect class="a-box" x="84" y="19" width="64" height="64" rx="12"/>
+            <line class="rs s1" x1="98" y1="37" x2="134" y2="37"/>
+            <line class="rs s2" x1="98" y1="51" x2="126" y2="51"/>
+            <line class="rs s3" x1="98" y1="65" x2="130" y2="65"/>
+            <path class="a-line" d="M148 51H164"/>
+            <g class="out-g">
+              <rect x="166" y="31" width="48" height="40" rx="7" fill="#e5a23c"/>
+              <circle cx="180" cy="47" r="8" fill="#3a2410"/>
+              <rect x="192" y="42" width="16" height="4.5" rx="1.5" fill="#fffaf0"/>
+              <rect x="192" y="50" width="11" height="4.5" rx="1.5" fill="#fffaf0"/>
+            </g>
+            <g class="pop-g"><circle cx="212" cy="31" r="9" fill="#f2b650" stroke="#1b1410" stroke-width="2"/><path class="a-ink" d="M207.8 31.2l2.8 2.8 5-5.4"/></g>
+          </svg>
+        </div>
+        <h3>Skills <small>a saved how-to</small></h3>
+        <p class="tl">Example: the thumbnail recipe</p>
+        <p class="what">A small, tested procedure it can rerun instead of working it out again each time.</p>
+        <p class="when"><b>Kept when</b> it passes its own tests and helps on new tasks.</p>
+      </article>
+
+      <article class="learn">
+        <div class="art" aria-hidden="true">
+          <svg viewBox="0 0 220 104">
+            <text x="110" y="10" text-anchor="middle" style="fill:#988b7a">Same model, same budget, new videos</text>
+            <text x="10" y="35">Without</text>
+            <rect x="62" y="28" width="122" height="14" rx="5" fill="#30251d"/>
+            <rect class="bar-a" x="62" y="28" width="71" height="14" rx="5"/>
+            <text class="va" x="190" y="35">58%</text>
+            <text x="10" y="63">With</text>
+            <rect x="62" y="56" width="122" height="14" rx="5" fill="#30251d"/>
+            <rect class="bar-b" x="62" y="56" width="87" height="14" rx="5"/>
+            <text class="vb" x="190" y="63" style="fill:#ffd890">71%</text>
+            <g class="badge-g"><rect x="62" y="80" width="66" height="20" rx="10" fill="#f2b650"/><text x="95" y="90.5" text-anchor="middle" style="fill:#2a1b05">Kept</text></g>
+          </svg>
+        </div>
+        <h3>Thinking strategies <small>a better approach</small></h3>
+        <p class="tl">Example: “Show the finished dish first”</p>
+        <p class="what">A short written instruction it follows, like a checklist. The model itself stays the same; only its approach changes.</p>
+        <p class="when"><b>Kept when</b> the same model, on the same budget, scores higher with it than without it on new tasks.</p>
+      </article>
+
+      <article class="learn">
+        <div class="art" aria-hidden="true">
+          <svg viewBox="0 0 220 104">
+            <g class="dl-g"><text x="58" y="10" text-anchor="middle" style="fill:#ffd890">+Δ from verified wins</text></g>
+            <g>
+              <circle class="wd" cx="16" cy="26" r="3.4"/><circle class="wd wt" cx="31" cy="26" r="3.4"/><circle class="wd" cx="46" cy="26" r="3.4"/><circle class="wd" cx="61" cy="26" r="3.4"/><circle class="wd wt d3" cx="76" cy="26" r="3.4"/><circle class="wd" cx="91" cy="26" r="3.4"/><circle class="wd" cx="106" cy="26" r="3.4"/>
+              <circle class="wd" cx="16" cy="41" r="3.4"/><circle class="wd" cx="31" cy="41" r="3.4"/><circle class="wd wt d1" cx="46" cy="41" r="3.4"/><circle class="wd" cx="61" cy="41" r="3.4"/><circle class="wd" cx="76" cy="41" r="3.4"/><circle class="wd wt d4" cx="91" cy="41" r="3.4"/><circle class="wd" cx="106" cy="41" r="3.4"/>
+              <circle class="wd wt d2" cx="16" cy="56" r="3.4"/><circle class="wd" cx="31" cy="56" r="3.4"/><circle class="wd" cx="46" cy="56" r="3.4"/><circle class="wd wt d5" cx="61" cy="56" r="3.4"/><circle class="wd" cx="76" cy="56" r="3.4"/><circle class="wd" cx="91" cy="56" r="3.4"/><circle class="wd" cx="106" cy="56" r="3.4"/>
+              <circle class="wd" cx="16" cy="71" r="3.4"/><circle class="wd" cx="31" cy="71" r="3.4"/><circle class="wd wt d3" cx="46" cy="71" r="3.4"/><circle class="wd" cx="61" cy="71" r="3.4"/><circle class="wd" cx="76" cy="71" r="3.4"/><circle class="wd" cx="91" cy="71" r="3.4"/><circle class="wd wt d1" cx="106" cy="71" r="3.4"/>
+              <circle class="wd" cx="16" cy="86" r="3.4"/><circle class="wd wt d4" cx="31" cy="86" r="3.4"/><circle class="wd" cx="46" cy="86" r="3.4"/><circle class="wd" cx="61" cy="86" r="3.4"/><circle class="wd wt d2" cx="76" cy="86" r="3.4"/><circle class="wd" cx="91" cy="86" r="3.4"/><circle class="wd" cx="106" cy="86" r="3.4"/>
+            </g>
+            <line x1="124" y1="18" x2="124" y2="94" stroke="#47392d" stroke-dasharray="3 4"/>
+            <g class="ck1"><text x="136" y="33">New videos</text></g>
+            <g class="ckm1"><circle cx="206" cy="33" r="7" fill="#f2b650"/><path class="a-ink" d="M202.8 33.2l2.2 2.2 4-4.3"/></g>
+            <g class="ck2"><text x="136" y="56">Old videos</text></g>
+            <g class="ckm2"><circle cx="206" cy="56" r="7" fill="#f2b650"/><path class="a-ink" d="M202.8 56.2l2.2 2.2 4-4.3"/></g>
+            <g class="badge-w"><rect x="136" y="72" width="78" height="20" rx="10" fill="#f2b650"/><text x="175" y="82.5" text-anchor="middle" style="fill:#2a1b05">Beats current</text></g>
+          </svg>
+        </div>
+        <h3>Model weights <small>new instincts</small></h3>
+        <p class="tl">Example: tuned on the videos people finished</p>
+        <p class="what">Verified wins become training examples that nudge a copy of the model, so good choices happen without instructions.</p>
+        <p class="when"><b>Kept when</b> the copy beats the current model on new tasks without slipping on old ones. In the pilot, all 3 tries fell short.</p>
+      </article>
+    </div>
+
+    <div class="gates-line">
+      <p><b>Every change is tested on the side first.</b> The live version keeps running until it clears:</p>
+      <div class="gl-wrap">
+        <ol class="gl" aria-label="Release gates">
+          <li>Helps on new tasks</li>
+          <li>Old tasks still pass</li>
+          <li>Within budget</li>
+          <li>A person approves</li>
+        </ol>
+        <span class="gchip" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <div class="status" id="status">
+      <h3>Where the pilot stands</h3>
+      <div class="st ok"><span class="ic"><svg aria-hidden="true"><use href="#i-ok"/></svg></span><div><b>Loop built</b><span><a href="https://github.com/drpokerface/open-mini/blob/4390c6e818b2cdad74130c94ec9babad46c63a85/MYCELIUM_MVP3_TEST_REPORT.md">1,204 automated checks pass</a></span></div></div>
+      <div class="st ok"><span class="ic"><svg aria-hidden="true"><use href="#i-ok"/></svg></span><div><b>Toy task improved</b><span>4/6 to 6/6, using a hand-written skill</span></div></div>
+      <div class="st"><span class="ic"></span><div><b>Real model gains</b><span>Not yet. 3 tiny models tried, none kept</span></div></div>
+      <div class="st"><span class="ic"></span><div><b>Volunteer network</b><span>Not yet, nor live results like a real channel</span></div></div>
+    </div>
+
+    <footer class="foot">
+      <span class="brand"><svg aria-hidden="true"><use href="#logo"/></svg>mycelium</span>
+      <span>Useful work. Shared roots. Tested growth.</span>
+      <nav aria-label="Project links">
+        <a href="https://github.com/drpokerface/open-mini/blob/mvp3/MYCELIUM_MVP3.md">Setup guide</a>
+        <a href="https://github.com/drpokerface/open-mini/tree/mvp3">Browse the code</a>
+        <span class="priv">Private repo, access needed</span>
+        <a href="#main">Back to top</a>
+      </nav>
+    </footer>
+  </div>
+</section>
 </main>
-<footer class="footer wrap"><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">✳</span>mycelium</a><p>Useful work. Shared roots. Tested growth.</p><a href="#top">Back to top <span aria-hidden="true">↑</span></a></footer>
+
+<script>
+(() => {
+  'use strict';
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const css = getComputedStyle(document.documentElement);
+  const v = n => css.getPropertyValue(n).trim();
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const easeIO = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const hex = h => { h = h.replace('#', ''); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); };
+  const mix = (a, b, t) => a.map((x, i) => Math.round(x + (b[i] - x) * t));
+  const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+  const COL = { hypha: hex(v('--hypha')), honey: hex(v('--honey')), honey2: hex(v('--honey-2')), wither: hex(v('--wither')), dim: hex(v('--hypha-3')), ink: hex(v('--honey-ink')) };
+  const watch = (el, cb, threshold = 0.2) => {
+    if (!('IntersectionObserver' in window)) { cb(true); return; }
+    new IntersectionObserver(es => cb(es[0].isIntersecting), { threshold }).observe(el);
+  };
+
+  /* ---------- header ---------- */
+  const top = document.getElementById('top');
+  const onScroll = () => top.classList.toggle('scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- hero headline: each line fits on one line ---------- */
+  (() => {
+    const h1 = document.getElementById('hero-title');
+    const lines = [...h1.querySelectorAll('.l')];
+    const fit = () => {
+      h1.classList.add('fit');
+      h1.style.fontSize = '100px';
+      const w = Math.max(...lines.map(l => l.getBoundingClientRect().width));
+      const avail = h1.clientWidth;
+      h1.style.fontSize = clamp(Math.floor(100 * avail / w * 0.97), 28, 78) + 'px';
+    };
+    fit();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    let ft, lastW = 0;
+    const grid = h1.closest('.hero-grid');
+    new ResizeObserver(() => { if (grid.clientWidth === lastW) return; lastW = grid.clientWidth; clearTimeout(ft); ft = setTimeout(fit, 60); }).observe(grid);
+  })();
+
+  /* ---------- hero network ---------- */
+  (() => {
+    const hero = document.getElementById('hero');
+    const box = document.getElementById('net');
+    const cv = box.querySelector('canvas');
+    const ctx = cv.getContext('2d');
+    const CYCLE = 10400;
+    let W = 0, H = 0, dpr = 1, geo = null, bg = null, elapsed = 0, last = 0, raf = 0, visible = true, keptR = 7, phase = -1;
+
+    if (!reduce) hero.classList.add('anim');
+
+    function walk(x0, y0, x1, y1, st) {
+      const pts = [[x0, y0]];
+      let x = x0, y = y0, a = Math.atan2(y1 - y0, x1 - x0) + (Math.random() - .5) * 1.3;
+      for (let k = 0; k < 1200; k++) {
+        const dx = x1 - x, dy = y1 - y, d = Math.hypot(dx, dy);
+        if (d < st * 1.3) break;
+        let diff = Math.atan2(dy, dx) - a;
+        diff = Math.atan2(Math.sin(diff), Math.cos(diff));
+        const pull = .045 + .4 * clamp(1 - d / (W * .22));
+        a += diff * pull + (Math.random() - .5) * .36;
+        x += Math.cos(a) * st; y += Math.sin(a) * st;
+        pts.push([x, y]);
+      }
+      pts.push([x1, y1]);
+      return pts;
+    }
+    function cum(pts) {
+      const c = [0];
+      for (let i = 1; i < pts.length; i++) c.push(c[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+      return c;
+    }
+    function bez(x0, y0, x1, y1) {
+      const pts = [], c1x = x0 + (x1 - x0) * .45, c2x = x1 - (x1 - x0) * .35;
+      for (let i = 0; i <= 40; i++) {
+        const t = i / 40, u = 1 - t;
+        pts.push([u * u * u * x0 + 3 * u * u * t * c1x + 3 * u * t * t * c2x + t * t * t * x1, u * u * u * y0 + 3 * u * u * t * y0 + 3 * u * t * t * y1 + t * t * t * y1]);
+      }
+      return pts;
+    }
+    function twigs(main, st) {
+      const out = [], m = main.length, n = 3 + Math.floor(Math.random() * 3);
+      for (let j = 0; j < n; j++) {
+        const idx = Math.floor(m * (.12 + Math.random() * .68));
+        const p = main[idx], q = main[Math.min(m - 1, idx + 1)];
+        let a = Math.atan2(q[1] - p[1], q[0] - p[0]) + (Math.random() < .5 ? -1 : 1) * (.6 + Math.random() * .7);
+        const pts = [[p[0], p[1]]];
+        let x = p[0], y = p[1];
+        const len = 5 + Math.floor(Math.random() * 10);
+        for (let k = 0; k < len; k++) { a += (Math.random() - .5) * .5; x += Math.cos(a) * st * .8; y += Math.sin(a) * st * .8; pts.push([x, y]); }
+        out.push({ pts, at: idx / m });
+      }
+      return out;
+    }
+    function build() {
+      const gx = W * .07, gy = H * .5, cx = W * .66, kx = W * .92, ky = H * .5;
+      const n = W < 520 ? 5 : 7;
+      const st = Math.max(4, W / 200);
+      const order = [...Array(n).keys()].sort(() => Math.random() - .5);
+      const passSet = new Set(order.slice(0, n > 5 ? 3 : 2));
+      const branches = [];
+      for (let i = 0; i < n; i++) {
+        const ty = H * (.1 + .8 * (i / (n - 1))) + (Math.random() - .5) * H * .04;
+        const main = walk(gx, gy, cx, ty, st);
+        const pass = passSet.has(i);
+        const cont = pass ? bez(cx, ty, kx, ky) : null;
+        branches.push({
+          main, mc: cum(main), tw: twigs(main, st), pass, cont, cc: cont ? cum(cont) : null,
+          start: 420 + i * 100 + Math.random() * 220, check: 3550 + i * 140, ph: Math.random()
+        });
+      }
+      geo = { gx, gy, cx, kx, ky, branches };
+    }
+    function makeBg() {
+      bg = document.createElement('canvas');
+      bg.width = W * dpr; bg.height = H * dpr;
+      const b = bg.getContext('2d');
+      b.setTransform(dpr, 0, 0, dpr, 0, 0);
+      b.lineCap = 'round'; b.lineJoin = 'round';
+      b.strokeStyle = rgba(COL.hypha, .055);
+      b.lineWidth = .8;
+      const st = Math.max(4, W / 200);
+      for (let i = 0; i < 16; i++) {
+        const p = walk(Math.random() * W, Math.random() * H, Math.random() * W, Math.random() * H, st);
+        b.beginPath(); b.moveTo(p[0][0], p[0][1]);
+        for (let k = 1; k < p.length; k++) b.lineTo(p[k][0], p[k][1]);
+        b.stroke();
+      }
+    }
+    function partial(pts, f) {
+      const n = pts.length - 1, e = f * n, k = Math.floor(e);
+      ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+      for (let i = 1; i <= k; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+      let tip = pts[Math.min(k, n)];
+      if (k < n) { const t = e - k; tip = [pts[k][0] + (pts[k + 1][0] - pts[k][0]) * t, pts[k][1] + (pts[k + 1][1] - pts[k][1]) * t]; ctx.lineTo(tip[0], tip[1]); }
+      ctx.stroke();
+      return tip;
+    }
+    function at(pts, c, d) {
+      let i = 1;
+      while (i < c.length && c[i] < d) i++;
+      if (i >= c.length) return pts[pts.length - 1];
+      const t = (d - c[i - 1]) / (c[i] - c[i - 1] || 1);
+      return [pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * t, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * t];
+    }
+    function dot(p, r, c) { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, Math.PI * 2); ctx.fill(); }
+    function setPhase(t) {
+      const p = t < 3500 ? 0 : t < 4750 ? 1 : 2;
+      if (p !== phase) { phase = p; hero.dataset.phase = p; }
+    }
+    function frame(t) {
+      ctx.clearRect(0, 0, W, H);
+      if (bg) ctx.drawImage(bg, 0, 0, W, H);
+      const { gx, gy, cx, kx, ky, branches } = geo;
+      const fade = t > 9200 ? 1 - clamp((t - 9200) / 900) : 1;
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+
+      ctx.save();
+      ctx.setLineDash([2, 6]);
+      ctx.strokeStyle = rgba(COL.hypha, t > 3300 && t < 4900 ? .32 : .14);
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(cx, H * .06); ctx.lineTo(cx, H * .94); ctx.stroke();
+      ctx.restore();
+
+      let arrived = 0;
+      for (const b of branches) {
+        const g = easeOut(clamp((t - b.start) / 2700));
+        if (g <= 0) continue;
+        const r = clamp((t - b.check) / 450);
+        const col = b.pass ? mix(COL.hypha, COL.honey, r) : mix(COL.hypha, COL.wither, r);
+        const alpha = (b.pass ? .9 : .85 - r * .55) * fade;
+        const lw = b.pass ? 1.3 + r * .9 : 1.3 - r * .35;
+        ctx.globalAlpha = alpha;
+        ctx.strokeStyle = rgba(col, 1);
+        ctx.lineWidth = lw * .55;
+        for (const tw of b.tw) { const tg = clamp((g - tw.at) / .22); if (tg > 0) partial(tw.pts, tg); }
+        ctx.lineWidth = lw;
+        if (b.pass && r > 0) { ctx.shadowColor = rgba(COL.honey, .8); ctx.shadowBlur = 10 * r; }
+        const tip = partial(b.main, g);
+        ctx.shadowBlur = 0;
+        if (g < 1) { ctx.globalAlpha = fade; dot(tip, 2.3, rgba(COL.hypha, 1)); }
+        if (g >= 1 && r > 0) {
+          ctx.globalAlpha = fade * r;
+          if (b.pass) {
+            ctx.strokeStyle = rgba(COL.honey, 1); ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.arc(tip[0], tip[1], 5.5, 0, Math.PI * 2); ctx.stroke();
+          } else {
+            ctx.strokeStyle = rgba(COL.dim, 1); ctx.lineWidth = 1.6;
+            const s = 3.6; ctx.beginPath();
+            ctx.moveTo(tip[0] - s, tip[1] - s); ctx.lineTo(tip[0] + s, tip[1] + s);
+            ctx.moveTo(tip[0] + s, tip[1] - s); ctx.lineTo(tip[0] - s, tip[1] + s); ctx.stroke();
+          }
+        }
+        if (b.pass) {
+          const cg = easeIO(clamp((t - (b.check + 650)) / 1300));
+          if (cg > 0) {
+            ctx.globalAlpha = .95 * fade;
+            ctx.strokeStyle = rgba(COL.honey, 1); ctx.lineWidth = 2.1;
+            ctx.shadowColor = rgba(COL.honey, .8); ctx.shadowBlur = 10;
+            partial(b.cont, cg);
+            ctx.shadowBlur = 0;
+          }
+          if (cg >= 1) {
+            arrived++;
+            const L1 = b.mc[b.mc.length - 1], L2 = b.cc[b.cc.length - 1], L = L1 + L2;
+            const born = clamp((t - (b.check + 1950)) / 400);
+            for (let k = 0; k < 3; k++) {
+              const d = ((t - b.check) * .16 + (k / 3 + b.ph) * L) % L;
+              const p = d < L1 ? at(b.main, b.mc, d) : at(b.cont, b.cc, d - L1);
+              ctx.globalAlpha = fade * born;
+              ctx.shadowColor = rgba(COL.honey, 1); ctx.shadowBlur = 8;
+              dot(p, 2.2, rgba([255, 216, 144], 1));
+              ctx.shadowBlur = 0;
+            }
+          }
+        }
+      }
+
+      ctx.globalAlpha = 1;
+      const gi = easeOut(clamp(t / 600));
+      const pulse = (Math.sin(t / 380) + 1) / 2;
+      ctx.strokeStyle = rgba(COL.hypha, .25 + .2 * pulse);
+      ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.arc(gx, gy, 13 + pulse * 3, 0, Math.PI * 2); ctx.stroke();
+      dot([gx, gy], 7 * gi + 1, rgba(COL.hypha, 1));
+
+      const kr = keptR + (arrived ? 1.5 : 0);
+      ctx.shadowColor = rgba(COL.honey, .9); ctx.shadowBlur = arrived ? 26 : 12;
+      dot([kx, ky], kr, rgba(COL.honey, 1));
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = rgba(COL.honey, .35); ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.arc(kx, ky, kr + 7, 0, Math.PI * 2); ctx.stroke();
+    }
+    function size() {
+      W = box.clientWidth; H = box.clientHeight - 24;
+      if (W < 10 || H < 10) return false;
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      cv.width = W * dpr; cv.height = H * dpr;
+      cv.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      makeBg(); build();
+      return true;
+    }
+    function loop(now) {
+      if (!last) last = now;
+      elapsed += Math.min(50, now - last); last = now;
+      if (elapsed > CYCLE) { elapsed = 0; keptR = Math.min(12, keptR + .8); build(); }
+      setPhase(elapsed);
+      frame(elapsed);
+      raf = requestAnimationFrame(loop);
+    }
+    function start() { if (raf || reduce || !visible || document.hidden) return; last = 0; raf = requestAnimationFrame(loop); }
+    function stop() { cancelAnimationFrame(raf); raf = 0; }
+    function staticFrame() { keptR = 10; frame(7800); }
+
+    if (!size()) return;
+    if (reduce) staticFrame(); else start();
+    let rt;
+    new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { if (size()) { elapsed = 0; if (reduce) staticFrame(); } }, 120); }).observe(box);
+    watch(box, on => { visible = on; on ? start() : stop(); }, 0.05);
+    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+  })();
+
+  /* ---------- screen 2: mycelium YouTube example ---------- */
+  (() => {
+    const sec = document.getElementById('example');
+    const box = document.getElementById('myc');
+    const cv = box.querySelector('canvas');
+    const ctx = cv.getContext('2d');
+    const tabs = [...sec.querySelectorAll('.round')];
+    const fills = tabs.map(t => t.querySelector('.fill'));
+    const playBtn = document.getElementById('ex-play');
+    const cap = document.getElementById('ex-cap');
+    const phaseEls = [...sec.querySelectorAll('.phases li')];
+    const subsEl = document.getElementById('ex-subs');
+    const verEl = document.getElementById('ex-ver');
+    const hitEls = [...sec.querySelectorAll('.hit')];
+    const keptBox = document.getElementById('ex-kept');
+    const rowEls = {};
+    sec.querySelectorAll('.kr').forEach(li => rowEls[li.dataset.row] = li);
+    const FONT = '"Funnel Sans","Avenir Next","Segoe UI",system-ui,sans-serif';
+
+    /* the ideas each round explores: position (fx, fy), parent thread, verdict */
+    const C = { id: 'C', fx: .07, fy: .5 };
+    const IDEAS = [
+      { id: 'a1', r: 1, p: 'C', fx: .40, fy: .16, v: 'pass', name: 'Face thumbnails', res: 'Clicks +54%' },
+      { id: 'b1', r: 1, p: 'C', fx: .36, fy: .37, v: 'fail', name: 'Clickbait titles', res: 'Watch time −40%' },
+      { id: 'c1', r: 1, p: 'C', fx: .43, fy: .58, v: 'pass', name: 'Payoff-first hook', res: 'Retention +13 pts' },
+      { id: 'd1', r: 1, p: 'C', fx: .29, fy: .80, v: 'fail', name: 'Long intros', res: 'Viewers left early' },
+      { id: 'e1', r: 1, p: 'C', fx: .45, fy: .92, v: 'unclear', name: 'Saturday uploads', res: 'No clear signal' },
+      { id: 'a2', r: 2, p: 'a1', fx: .70, fy: .07, v: 'pass', name: '+ Steam shot', res: 'Clicks +12%' },
+      { id: 'b2', r: 2, p: 'a1', fx: .67, fy: .29, v: 'fail', name: 'Bright plates', res: 'No better' },
+      { id: 'c2', r: 2, p: 'c1', fx: .71, fy: .50, v: 'pass', name: 'Payoff, then a pro tip', res: 'Retention +6 pts' },
+      { id: 'd2', r: 2, p: 'c1', fx: .68, fy: .72, v: 'unclear', name: 'Recipe card at end', res: 'No clear signal' },
+      { id: 'a3', r: 3, p: 'a2', fx: .91, fy: .21, v: 'pass', name: 'Steam-shot Shorts', res: 'New viewers +18%' },
+      { id: 'b3', r: 3, p: 'c2', fx: .92, fy: .43, v: 'pass', name: '10-minute dinners', res: 'Watch time +22%' },
+      { id: 'c3', r: 3, p: 'c2', fx: .90, fy: .67, v: 'fail', name: 'Collab with a baker', res: 'Off-topic, viewers left' },
+      { id: 'd3', r: 3, p: 'c1', fx: .63, fy: .90, v: 'pass', name: 'Cook-along live', res: 'Subscribers +9%' }
+    ];
+    const byId = { C };
+    IDEAS.forEach(d => { byId[d.id] = d; d.contrib = []; d.ph = Math.random(); });
+    IDEAS.forEach(d => { d.par = byId[d.p]; });
+    [1, 2, 3].forEach(r => IDEAS.filter(d => d.r === r).forEach((d, i) => { d.i = i; }));
+    /* every verified win reinforces every thread on its way back to the channel */
+    IDEAS.filter(d => d.v === 'pass').forEach(T => { let x = T; while (x !== C) { x.contrib.push(T.r); x = x.par; } });
+    const trainers = IDEAS.filter(d => d.v === 'pass' && d.r < 3);
+
+    /* timeline */
+    const EXP = 2600, CHK = 1300, KEEP = 1200, REIN = 2600, TRAIN = 2800, FADE = 900;
+    const RD = [];
+    let acc = 0;
+    for (let r = 1; r <= 3; r++) {
+      const o = { r, t0: acc };
+      let s = acc;
+      o.train = [s, s += (r === 3 ? TRAIN : 0)];
+      o.exp = [s, s += EXP];
+      o.chk = [s, s += CHK];
+      o.keep = [s, s += KEEP];
+      o.rein = [s, s += REIN];
+      o.end = s + (r === 3 ? 2600 : 800);
+      RD.push(o);
+      acc = o.end;
+    }
+    const TOTAL = acc + FADE;
+    const SUBS = [12480, 13350, 14300, 15900];
+    const RATES = [40, 50, 75];
+    const ROWS = {
+      skill: [null, { b: 'Thumbnail recipe', s: 'Close-up face, three words' }, { b: 'Thumbnail recipe v2', s: 'Now adds a steam shot' }],
+      strat: [null, { b: 'Open with the payoff', s: 'Finished dish in the first 5s' }, { b: 'Payoff, then a pro tip', s: 'Keeps viewers past 30s' }],
+      model: [null, { b: 'Model tuned on 4 wins', s: 'Passed on new and old videos' }]
+    };
+    const CAPS = {
+      '1-exp': 'Round 1: five ideas grow at once, each on its own thread.',
+      '1-chk': 'Real viewer data checks each idea. Opinions and votes don’t count.',
+      '1-keep': 'Two ideas worked and are kept. Dead ends are pruned; unclear ones go dormant.',
+      '1-rein': 'Threads that delivered thicken, and value flows back to the channel.',
+      '2-exp': 'Round 2: new attempts grow from what worked, not from scratch.',
+      '2-chk': 'Each refinement is checked again on new videos.',
+      '2-keep': 'Two refinements pass, upgrading the kept recipe and strategy.',
+      '2-rein': 'Proven threads thicken again. More passes now: 40% became 50%.',
+      '3-train': 'Round 3: the model is tuned on every win so far, then must beat the old model on new and old videos.',
+      '3-exp': 'Shaped by its wins, it now reaches good ideas more directly.',
+      '3-chk': 'Three of four new ideas pass.',
+      '3-keep': 'The playbook moves to v4. Earlier versions stay on hand for rollback.',
+      '3-rein': 'Pass rate went 40%, 50%, 75%. Each round starts from stronger roots.'
+    };
+
+    let W = 0, H = 0, dpr = 1, portrait = false, bg = null;
+    let t = reduce ? RD[2].rein[1] + 200 : 0, last = 0, raf = 0, playing = !reduce, visible = false;
+
+    const map = (fx, fy) => portrait
+      ? [(0.07 + fy * 0.86) * W, (0.05 + fx * 0.72) * H]
+      : [(0.02 + fx * 0.96) * W, (0.07 + fy * 0.83) * H];
+
+    function walk(x0, y0, x1, y1, st, wig) {
+      const pts = [[x0, y0]];
+      const L0 = Math.hypot(x1 - x0, y1 - y0);
+      let x = x0, y = y0, a = Math.atan2(y1 - y0, x1 - x0) + (Math.random() - .5) * wig * 3;
+      for (let k = 0; k < 2000; k++) {
+        const dx = x1 - x, dy = y1 - y, d = Math.hypot(dx, dy);
+        if (d < st * 1.3) break;
+        let diff = Math.atan2(dy, dx) - a;
+        diff = Math.atan2(Math.sin(diff), Math.cos(diff));
+        a += diff * (.07 + .5 * clamp(1 - d / (L0 * .6))) + (Math.random() - .5) * wig;
+        x = clamp(x + Math.cos(a) * st, 6, W - 6);
+        y = clamp(y + Math.sin(a) * st, 6, H - 6);
+        pts.push([x, y]);
+      }
+      pts.push([x1, y1]);
+      return pts;
+    }
+    function cum(pts) { const c = [0]; for (let i = 1; i < pts.length; i++) c.push(c[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1])); return c; }
+    function twigs(main, st, n) {
+      const out = [], m = main.length;
+      for (let j = 0; j < n; j++) {
+        const idx = Math.floor(m * (.15 + Math.random() * .7));
+        const p = main[idx], q = main[Math.min(m - 1, idx + 1)];
+        let a = Math.atan2(q[1] - p[1], q[0] - p[0]) + (Math.random() < .5 ? -1 : 1) * (.6 + Math.random() * .8);
+        const pts = [[p[0], p[1]]];
+        let x = p[0], y = p[1];
+        const len = 4 + Math.floor(Math.random() * 9);
+        for (let k = 0; k < len; k++) { a += (Math.random() - .5) * .6; x += Math.cos(a) * st * .75; y += Math.sin(a) * st * .75; pts.push([x, y]); }
+        out.push({ pts, at: idx / m });
+      }
+      return out;
+    }
+    function build() {
+      const st = Math.max(4, Math.min(W, H) / 110);
+      [C.x, C.y] = map(C.fx, C.fy);
+      IDEAS.forEach(d => { [d.x, d.y] = map(d.fx, d.fy); });
+      IDEAS.forEach(d => {
+        const wig = d.r === 3 ? .13 : .34;
+        d.pts = walk(d.par.x, d.par.y, d.x, d.y, st, wig);
+        d.cum = cum(d.pts);
+        d.len = d.cum[d.cum.length - 1];
+        d.tw = twigs(d.pts, st, d.r === 3 ? 2 : 4);
+      });
+      trainers.forEach(d => {
+        let pts = [], x = d;
+        while (x !== C) { pts = pts.concat(x.pts.slice().reverse()); x = x.par; }
+        d.rpts = pts; d.rc = cum(pts);
+      });
+      bg = document.createElement('canvas');
+      bg.width = W * dpr; bg.height = H * dpr;
+      const b = bg.getContext('2d');
+      b.setTransform(dpr, 0, 0, dpr, 0, 0);
+      b.lineCap = 'round'; b.strokeStyle = rgba(COL.hypha, .05); b.lineWidth = .8;
+      for (let i = 0; i < 18; i++) {
+        const p = walk(Math.random() * W, Math.random() * H, Math.random() * W, Math.random() * H, st, .4);
+        b.beginPath(); b.moveTo(p[0][0], p[0][1]);
+        for (let k = 1; k < p.length; k++) b.lineTo(p[k][0], p[k][1]);
+        b.stroke();
+      }
+    }
+    function partial(pts, f) {
+      const n = pts.length - 1, e = clamp(f) * n, k = Math.floor(e);
+      ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+      for (let i = 1; i <= k; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+      let tip = pts[Math.min(k, n)];
+      if (k < n) { const u = e - k; tip = [pts[k][0] + (pts[k + 1][0] - pts[k][0]) * u, pts[k][1] + (pts[k + 1][1] - pts[k][1]) * u]; ctx.lineTo(tip[0], tip[1]); }
+      ctx.stroke();
+      return tip;
+    }
+    function at(pts, c, d) {
+      let i = 1;
+      while (i < c.length && c[i] < d) i++;
+      if (i >= c.length) return pts[pts.length - 1];
+      const u = (d - c[i - 1]) / (c[i] - c[i - 1] || 1);
+      return [pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * u, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * u];
+    }
+    function dot(x, y, r, c) { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill(); }
+    function rr(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+    function label(x, y, lines, alpha, above, gap = 12) {
+      if (alpha <= 0.01) return;
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      let w = 0;
+      lines.forEach(l => { ctx.font = l.f; w = Math.max(w, ctx.measureText(l.t).width); });
+      const lh = portrait ? 13 : 15, h = lines.length * lh + 8, bw = w + 14;
+      const bx = clamp(x - bw / 2, 4, W - bw - 4);
+      const by = clamp(above ? y - gap - h : y + gap, 4, H - h - 4);
+      ctx.fillStyle = 'rgba(27,20,16,.84)';
+      rr(bx, by, bw, h, 7); ctx.fill();
+      ctx.textBaseline = 'top';
+      lines.forEach((l, i) => { ctx.font = l.f; ctx.fillStyle = l.c; ctx.fillText(l.t, bx + 7, by + 5 + i * lh); });
+      ctx.restore();
+    }
+
+    function state(d, now) {
+      const R = RD[d.r - 1];
+      const gs = R.exp[0] + d.i * 170;
+      const g = easeOut(clamp((now - gs) / 2000));
+      const vt = R.chk[0] + d.i * 240;
+      const vr = clamp((now - vt) / 350);
+      const kp = clamp((now - R.keep[0]) / 1000);
+      let s = 0;
+      for (const r of d.contrib) s += easeIO(clamp((now - RD[r - 1].rein[0]) / 1700));
+      return { g, vr, kp, s, vt, R };
+    }
+
+    function draw(now) {
+      ctx.clearRect(0, 0, W, H);
+      ctx.globalAlpha = 1;
+      if (bg) ctx.drawImage(bg, 0, 0, W, H);
+      const fade = now > TOTAL - FADE ? 1 - clamp((now - (TOTAL - FADE)) / FADE) : 1;
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      const S = IDEAS.map(d => state(d, now));
+
+      /* threads */
+      IDEAS.forEach((d, k) => {
+        const { g, vr, kp, s } = S[k];
+        if (g <= 0) return;
+        let frac = g, col, alpha, lw, dash = null, glow = 0;
+        if (d.v === 'pass') { col = mix(COL.hypha, COL.honey, vr); alpha = .92; lw = 1.2 + vr * .5 + s * 1.3; glow = vr; }
+        else if (d.v === 'fail') { col = mix(COL.hypha, COL.wither, vr); alpha = .85 - vr * .3; lw = 1.2; frac = g * (1 - easeIO(kp)); if (frac < .002) return; }
+        else { col = mix(COL.hypha, COL.dim, vr); alpha = .85 - vr * .25 - kp * .25; lw = 1.2 - kp * .3; if (kp > 0) dash = [3, 5]; }
+        ctx.globalAlpha = alpha * fade;
+        ctx.strokeStyle = rgba(col, 1);
+        ctx.setLineDash([]);
+        ctx.lineWidth = .7;
+        d.tw.forEach(tw => { const tg = clamp((frac - tw.at) / .2); if (tg > 0) partial(tw.pts, tg); });
+        ctx.lineWidth = lw;
+        if (dash) ctx.setLineDash(dash);
+        if (glow) { ctx.shadowColor = rgba(COL.honey, .7); ctx.shadowBlur = 6 + 5 * Math.min(1, s); }
+        const tip = partial(d.pts, frac);
+        ctx.shadowBlur = 0; ctx.setLineDash([]);
+        if (g < 1 || (d.v === 'fail' && kp > 0)) { ctx.globalAlpha = fade * (d.v === 'fail' ? 1 - kp : 1); dot(tip[0], tip[1], 2.2, rgba(COL.hypha, 1)); }
+      });
+
+      /* nutrients flowing back along reinforced threads */
+      IDEAS.forEach((d, k) => {
+        const { s } = S[k];
+        if (d.v !== 'pass' || s < .05) return;
+        const n = Math.ceil(s) + 1;
+        for (let j = 0; j < n; j++) {
+          const dd = d.len - ((now * .07 + (j / n + d.ph) * d.len) % d.len);
+          const p = at(d.pts, d.cum, dd);
+          ctx.globalAlpha = fade * Math.min(1, s) * .95;
+          ctx.shadowColor = rgba(COL.honey, 1); ctx.shadowBlur = 8;
+          dot(p[0], p[1], 1.6 + Math.min(1.2, s * .3), rgba(COL.honey2, 1));
+          ctx.shadowBlur = 0;
+        }
+      });
+
+      /* round 3: wins travel back to the channel to tune the model */
+      const R3 = RD[2];
+      if (now >= R3.train[0] && now < R3.exp[1]) {
+        const p = easeIO(clamp((now - R3.train[0]) / (TRAIN - 1100)));
+        const out = clamp((now - (R3.train[0] + TRAIN - 1100)) / 300);
+        trainers.forEach(d => {
+          const L = d.rc[d.rc.length - 1];
+          for (let k = 0; k < 6; k++) {
+            const q = at(d.rpts, d.rc, clamp(p * L - k * 6, 0, L));
+            ctx.globalAlpha = fade * (1 - k / 6) * (1 - out);
+            ctx.shadowColor = rgba(COL.honey, 1); ctx.shadowBlur = 12;
+            dot(q[0], q[1], 3.8 - k * .45, rgba(COL.honey2, 1));
+            ctx.shadowBlur = 0;
+          }
+        });
+      }
+
+      /* idea nodes and labels */
+      const small = portrait;
+      const fName = `600 ${small ? 10.5 : 12}px ${FONT}`;
+      const fRes = `500 ${small ? 10 : 11}px ${FONT}`;
+      IDEAS.forEach((d, k) => {
+        const { g, vr, kp, s, vt, R } = S[k];
+        if (g < .98) return;
+        const x = d.x, y = d.y;
+        const pr = clamp((now - vt) / 650);
+        if (pr > 0 && pr < 1) {
+          const c = d.v === 'pass' ? COL.honey : COL.dim;
+          ctx.globalAlpha = fade * (1 - pr);
+          ctx.strokeStyle = rgba(c, 1); ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.arc(x, y, 4 + pr * 16, 0, Math.PI * 2); ctx.stroke();
+        }
+        let nodeAlpha = fade;
+        if (d.v === 'pass') {
+          if (vr > 0) {
+            const r = 4.5 + vr * 1.5 + Math.min(4, s * 1.1);
+            ctx.globalAlpha = fade;
+            ctx.shadowColor = rgba(COL.honey, 1); ctx.shadowBlur = 10 + s * 4;
+            dot(x, y, r, rgba(COL.honey, 1));
+            ctx.shadowBlur = 0;
+            ctx.globalAlpha = fade * .35;
+            ctx.strokeStyle = rgba(COL.honey, 1); ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.arc(x, y, r + 5, 0, Math.PI * 2); ctx.stroke();
+            if (r >= 6) {
+              ctx.globalAlpha = fade * vr;
+              ctx.strokeStyle = rgba(COL.ink, 1); ctx.lineWidth = 1.6;
+              ctx.beginPath(); ctx.moveTo(x - r * .4, y + r * .02); ctx.lineTo(x - r * .1, y + r * .32); ctx.lineTo(x + r * .42, y - r * .3); ctx.stroke();
+            }
+          } else { ctx.globalAlpha = fade; dot(x, y, 3, rgba(COL.hypha, 1)); }
+        } else if (d.v === 'fail') {
+          nodeAlpha = fade * (1 - kp);
+          if (nodeAlpha <= 0) return;
+          ctx.globalAlpha = nodeAlpha;
+          if (vr > 0) {
+            ctx.strokeStyle = rgba(COL.dim, 1); ctx.lineWidth = 1.8;
+            const z = 4; ctx.beginPath();
+            ctx.moveTo(x - z, y - z); ctx.lineTo(x + z, y + z); ctx.moveTo(x + z, y - z); ctx.lineTo(x - z, y + z); ctx.stroke();
+          } else dot(x, y, 3, rgba(COL.hypha, 1));
+        } else {
+          ctx.globalAlpha = fade * (1 - kp * .4);
+          if (vr > 0) {
+            ctx.setLineDash([2, 3]); ctx.strokeStyle = rgba(COL.dim, 1); ctx.lineWidth = 1.3;
+            ctx.beginPath(); ctx.arc(x, y, 5.5, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+            dot(x, y, 1.6, rgba(COL.dim, 1));
+          } else dot(x, y, 3, rgba(COL.hypha, 1));
+        }
+        /* label */
+        const inRound = now < R.end + 300;
+        const nameIn = clamp((g - .98) / .02);
+        let la = nodeAlpha * nameIn;
+        if (d.v === 'pass' && !inRound) la *= .62;
+        if (d.v === 'unclear' && kp > 0) la *= (1 - kp * .55);
+        if (small && !(d.v === 'pass' && vr > 0)) return;
+        const lines = [{ t: d.name, f: fName, c: rgba(d.v === 'pass' && vr > 0 ? COL.hypha : COL.hypha, d.v === 'pass' || vr === 0 ? 1 : .8) }];
+        if (!small && vr > 0 && inRound) {
+          const rc = d.v === 'pass' ? COL.honey2 : COL.dim;
+          const mark = d.v === 'pass' ? '✓ ' : d.v === 'fail' ? '× ' : '? ';
+          lines.push({ t: mark + d.res, f: fRes, c: rgba(rc, Math.min(1, vr * 1.5)) });
+        }
+        const above = y > H * .82;
+        label(x, y, lines, la, above, 12);
+      });
+
+      /* the channel itself */
+      const grow = subsProgress(now);
+      const cr = 8 + grow * 6;
+      const reinforcing = RD.some(R => now >= R.rein[0] && now < R.rein[1]);
+      const pulse = (Math.sin(now / 420) + 1) / 2;
+      /* one growth ring per round of reinforcement */
+      let rings = 0;
+      RD.forEach((R, i) => {
+        const p = easeOut(clamp((now - R.rein[0]) / REIN));
+        if (p <= 0) return;
+        rings = i + 1;
+        ctx.globalAlpha = fade * (.35 + .5 * p);
+        ctx.shadowColor = rgba(COL.honey, .9); ctx.shadowBlur = reinforcing ? 14 : 6;
+        ctx.strokeStyle = rgba(COL.honey, 1); ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.arc(C.x, C.y, cr + 5 + i * 5, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * p); ctx.stroke();
+        ctx.shadowBlur = 0;
+      });
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = rgba(COL.hypha, .2 + .2 * pulse); ctx.lineWidth = 1.1;
+      ctx.beginPath(); ctx.arc(C.x, C.y, cr + 10 + rings * 5 + pulse * 3, 0, Math.PI * 2); ctx.stroke();
+      if (reinforcing) { ctx.shadowColor = rgba(COL.honey, .9); ctx.shadowBlur = 22; }
+      dot(C.x, C.y, cr, rgba(COL.hypha, 1));
+      ctx.shadowBlur = 0;
+      label(C.x, C.y + cr, [{ t: 'Your channel', f: `600 ${small ? 11 : 12.5}px ${FONT}`, c: rgba(COL.hypha, 1) }], 1, false, 12 + rings * 5);
+
+      /* tuning notes beside the channel in round 3 */
+      if (now >= R3.train[0] && now < R3.chk[1]) {
+        const a1 = clamp((now - R3.train[0]) / 300) * (1 - clamp((now - (R3.train[1] - 700)) / 250));
+        const a2 = clamp((now - (R3.train[1] - 420)) / 300) * (1 - clamp((now - (R3.chk[1] - 400)) / 400));
+        const lx = portrait ? C.x : C.x + 70;
+        const ly = portrait ? C.y + cr + 30 : C.y - cr - 8;
+        const f = `600 ${small ? 10.5 : 12}px ${FONT}`;
+        label(lx, ly, [{ t: 'Tuning the model on 4 wins', f, c: rgba(COL.honey2, 1) }], a1 * fade, !portrait, 14);
+        label(lx, ly, [
+          { t: '✓ Better on new videos', f, c: rgba(COL.honey2, 1) },
+          { t: '✓ No worse on old videos', f, c: rgba(COL.honey2, 1) }
+        ], a2 * fade, !portrait, 14);
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function subsValue(now) {
+      let v = SUBS[0];
+      RD.forEach((R, i) => { v += (SUBS[i + 1] - SUBS[i]) * easeOut(clamp((now - R.rein[0]) / REIN)); });
+      return now > TOTAL - FADE ? v : v;
+    }
+    function subsProgress(now) { return (subsValue(now) - SUBS[0]) / (SUBS[3] - SUBS[0]); }
+
+    /* side panel, round tabs, phase chips and caption all follow the same clock */
+    let lastKey = '', lastSubs = -1, lastVer = -1;
+    const rowState = { skill: 0, strat: 0, model: 0 };
+    function ui(now) {
+      const ri = now >= RD[2].t0 ? 2 : now >= RD[1].t0 ? 1 : 0;
+      const R = RD[ri];
+      const ph = now < R.train[1] ? 'train' : now < R.exp[1] ? 'exp' : now < R.chk[1] ? 'chk' : now < R.keep[1] ? 'keep' : 'rein';
+      tabs.forEach((b, i) => {
+        b.classList.toggle('cur', i === ri);
+        b.classList.toggle('done', i < ri);
+        if (i === ri) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+        fills[i].style.width = (i < ri ? 100 : i > ri ? 0 : clamp((now - RD[i].t0) / (RD[i].end - RD[i].t0)) * 100) + '%';
+      });
+      const key = (ri + 1) + '-' + ph;
+      if (key !== lastKey) {
+        lastKey = key;
+        sec.dataset.round = ri + 1;
+        cap.textContent = CAPS[key];
+        const order = ['train', 'exp', 'chk', 'keep', 'rein'];
+        const cur = order.indexOf(ph);
+        phaseEls.forEach(li => { const k = order.indexOf(li.dataset.ph); li.classList.toggle('on', k === cur); li.classList.toggle('done', k < cur); });
+      }
+      const sv = Math.round(subsValue(now));
+      if (sv !== lastSubs) { lastSubs = sv; subsEl.textContent = sv.toLocaleString('en-US'); }
+      const ver = 1 + RD.filter(R => now > R.keep[0] + 400).length;
+      if (ver !== lastVer) {
+        const bump = lastVer > 0 && ver > lastVer;
+        lastVer = ver; verEl.textContent = 'Playbook v' + ver;
+        if (bump && !reduce) { verEl.classList.remove('bump'); void verEl.offsetWidth; verEl.classList.add('bump'); }
+      }
+      hitEls.forEach((h, i) => h.classList.toggle('on', now > RD[i].chk[1] - 200));
+      const want = {
+        skill: now > RD[1].keep[0] + 400 ? 2 : now > RD[0].keep[0] + 400 ? 1 : 0,
+        strat: now > RD[1].keep[0] + 600 ? 2 : now > RD[0].keep[0] + 600 ? 1 : 0,
+        model: now > RD[2].train[1] - 200 ? 1 : 0
+      };
+      let any = false;
+      Object.keys(want).forEach(k => {
+        const n = want[k];
+        if (n) any = true;
+        if (n === rowState[k]) return;
+        const up = n > rowState[k];
+        rowState[k] = n;
+        const li = rowEls[k];
+        li.classList.toggle('on', n > 0);
+        li.querySelector('b').textContent = n ? ROWS[k][n].b : '';
+        li.querySelector('.s').textContent = n ? ROWS[k][n].s : '';
+        if (up && !reduce) { li.classList.remove('bump'); void li.offsetWidth; li.classList.add('bump'); }
+      });
+      keptBox.classList.toggle('has', any);
+    }
+
+    function size() {
+      W = box.clientWidth; H = box.clientHeight;
+      if (W < 10 || H < 10) return false;
+      portrait = W < 640;
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      cv.width = W * dpr; cv.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      build();
+      return true;
+    }
+    function render() { draw(t); ui(t); }
+    function loop(nowMs) {
+      if (!last) last = nowMs;
+      const dt = Math.min(50, nowMs - last); last = nowMs;
+      if (playing) { t += dt; if (t >= TOTAL) t = 0; }
+      render();
+      raf = playing ? requestAnimationFrame(loop) : 0;
+    }
+    function start() { if (raf || !visible || document.hidden) return; last = 0; raf = requestAnimationFrame(loop); }
+    function stop() { cancelAnimationFrame(raf); raf = 0; }
+    function syncBtn() {
+      playBtn.setAttribute('aria-pressed', String(playing));
+      playBtn.setAttribute('aria-label', playing ? 'Pause the example' : 'Play the example');
+    }
+
+    tabs.forEach((b, i) => b.addEventListener('click', () => {
+      t = reduce ? RD[i].rein[1] + 200 : RD[i].t0 + 1;
+      if (!reduce) playing = true;
+      syncBtn(); render(); start();
+    }));
+    playBtn.addEventListener('click', () => { playing = !playing; syncBtn(); if (playing) start(); else { stop(); render(); } });
+    if (reduce) playBtn.hidden = true;
+
+    if (!size()) return;
+    render(); syncBtn();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(render);
+    let rt;
+    new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { if (size()) render(); }, 120); }).observe(box);
+    watch(box, on => { visible = on; if (on) { if (playing) start(); else render(); } else stop(); }, 0.2);
+    document.addEventListener('visibilitychange', () => document.hidden ? stop() : (playing && start()));
+  })();
+
+  /* ---------- screen 3: run the small explainer loops only while visible ---------- */
+  (() => {
+    const sec = document.getElementById('learns');
+    if (reduce) return;
+    watch(sec, on => sec.classList.toggle('live', on), 0.1);
+  })();
+})();
+</script>
 </body>
 </html>
