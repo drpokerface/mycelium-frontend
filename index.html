@@ -6,7 +6,7 @@
 <title>Mycelium — Try many ways. Keep what works.</title>
 <meta name="description" content="Mycelium is an AI research pilot. It sends many workers at one goal, checks every result against real evidence, and keeps only improvements that pass fresh tests.">
 <meta property="og:title" content="Mycelium — Try many ways. Keep what works.">
-<meta property="og:description" content="Many attempts, honest checks, and only tested improvements kept. A quick look inside the MVP3 learning-network pilot.">
+<meta property="og:description" content="Many attempts, honest checks, and only tested improvements kept. A quick look inside the MVP4 learning-network pilot.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#1b1410">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231b1410'/%3E%3Cg fill='none' stroke='%23f3ece1' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M16 16C13 12 10 10 6 10'/%3E%3Cpath d='M16 16c3-3 5-7 5-11'/%3E%3Cpath d='M16 16c4 1 7 4 9 8'/%3E%3Cpath d='M16 16c-1 4-4 7-8 9'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3.6' fill='%23f2b650'/%3E%3C/svg%3E">
@@ -274,6 +274,14 @@ h1,h2,h3,h4,p{margin:0}
 @keyframes g3{0%,48%{border-style:dashed;border-color:var(--line);color:var(--hypha-3)}52%,86%{border-style:solid;border-color:rgba(242,182,79,.6);color:var(--hypha)}92%,100%{border-color:var(--line);color:var(--hypha-3)}}
 @keyframes g4{0%,66%{border-style:dashed;border-color:var(--line);color:var(--hypha-3)}70%,86%{border-style:solid;border-color:rgba(242,182,79,.6);color:var(--hypha)}92%,100%{border-color:var(--line);color:var(--hypha-3)}}
 
+/* Contribution credit, distinct from future financial functionality. */
+.karma-strip{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;margin-top:26px;padding:22px 24px;border:1px solid var(--line);border-radius:18px;background:rgba(242,182,79,.045)}
+.karma-strip h3{font:600 23px/1.2 var(--display);margin:0 0 9px;color:var(--hypha)}
+.karma-strip p{font-size:14px;line-height:1.55;color:var(--hypha-2);margin:0}
+.karma-strip .karma-future{padding-left:22px;border-left:1px solid var(--line-soft)}
+.karma-label{display:inline-block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--honey);margin-bottom:9px}
+.karma-strip small{display:block;color:var(--hypha-3);font-size:12px;line-height:1.5;margin-top:8px}
+@media(max-width:640px){.karma-strip{grid-template-columns:minmax(0,1fr);padding:20px}.karma-strip .karma-future{padding:18px 0 0;border-left:0;border-top:1px solid var(--line-soft)}}
 /* status */
 .status{display:grid;grid-template-columns:auto repeat(4,minmax(0,1fr));gap:20px;align-items:start;margin-top:22px;padding-top:20px;border-top:1px solid var(--line-soft)}
 .status h3{font:600 17px/1.3 var(--display);padding-top:2px}
@@ -410,10 +418,11 @@ h1,h2,h3,h4,p{margin:0}
 <header class="top" id="top">
   <div class="wrap top-in">
     <a class="brand" href="#main" aria-label="Mycelium, back to top"><svg aria-hidden="true"><use href="#logo"/></svg>mycelium</a>
-    <span class="tag">MVP3 research pilot</span>
+    <span class="tag">MVP4 research pilot</span>
     <nav class="links" aria-label="Sections">
       <a href="#example">How it works</a>
       <a href="#learns">What it learns</a>
+      <a href="#karma">Earn karma</a>
       <a href="#status">Where it stands</a>
     </nav>
     <a class="btn btn-primary" href="#example">Watch the example</a>
@@ -573,7 +582,7 @@ h1,h2,h3,h4,p{margin:0}
           </svg>
         </div>
         <h3>Thinking strategies <small>a better approach</small></h3>
-        <p class="tl">Example: “Show the finished dish first”</p>
+        <p class="tl">Illustrative comparison: “Show the finished dish first”</p>
         <p class="what">A short written instruction it follows, like a checklist. The model itself stays the same; only its approach changes.</p>
         <p class="when"><b>Kept when</b> the same model, on the same budget, scores higher with it than without it on new tasks.</p>
       </article>
@@ -598,9 +607,9 @@ h1,h2,h3,h4,p{margin:0}
           </svg>
         </div>
         <h3>Model weights <small>new instincts</small></h3>
-        <p class="tl">Example: tuned on the videos people finished</p>
+        <p class="tl">Illustrative example: tuned on the videos people finished</p>
         <p class="what">Verified wins become training examples that nudge a copy of the model, so good choices happen without instructions.</p>
-        <p class="when"><b>Kept when</b> the copy beats the current model on new tasks without slipping on old ones. In the pilot, all 3 tries fell short.</p>
+        <p class="when"><b>Kept when</b> the copy beats the current model on new tasks without slipping on old ones. Useful pretrained-model gains have not been demonstrated.</p>
       </article>
     </div>
 
@@ -617,20 +626,35 @@ h1,h2,h3,h4,p{margin:0}
       </div>
     </div>
 
+    <aside class="karma-strip" id="karma" aria-labelledby="karma-title">
+      <div>
+        <span class="karma-label">Contribution credit</span>
+        <h3 id="karma-title">Useful work earns karma.</h3>
+        <p>In the trusted MVP4 pilot, admitted work earns karma after independent verification. Awards are recorded, and each trusted ledger blocks duplicate credit.</p>
+        <small>Verification is operator-controlled. Karma is not money; an open, permissionless rewards network is not live.</small>
+      </div>
+      <div class="karma-future">
+        <span class="karma-label">Future roadmap</span>
+        <h3>From karma to crypto tokens.</h3>
+        <p>Planned: redeem crypto tokens based on earned karma.</p>
+        <small>Redemption is not available today. No conversion rate, token value or launch date is promised.</small>
+      </div>
+    </aside>
+
     <div class="status" id="status">
       <h3>Where the pilot stands</h3>
-      <div class="st ok"><span class="ic"><svg aria-hidden="true"><use href="#i-ok"/></svg></span><div><b>Loop built</b><span><a href="https://github.com/drpokerface/open-mini/blob/4390c6e818b2cdad74130c94ec9babad46c63a85/MYCELIUM_MVP3_TEST_REPORT.md">1,204 automated checks pass</a></span></div></div>
-      <div class="st ok"><span class="ic"><svg aria-hidden="true"><use href="#i-ok"/></svg></span><div><b>Toy task improved</b><span>4/6 to 6/6, using a hand-written skill</span></div></div>
-      <div class="st"><span class="ic"></span><div><b>Real model gains</b><span>Not yet. 3 tiny models tried, none kept</span></div></div>
-      <div class="st"><span class="ic"></span><div><b>Volunteer network</b><span>Not yet, nor live results like a real channel</span></div></div>
+      <div class="st ok"><span class="ic"><svg aria-hidden="true"><use href="#i-ok"/></svg></span><div><b>MVP4 mechanisms</b><span><a href="https://github.com/drpokerface/open-mini/blob/mvp4/MYCELIUM_MVP4_TEST_REPORT.md">Read the tests and limitations</a> (access required)</span></div></div>
+      <div class="st ok"><span class="ic"><svg aria-hidden="true"><use href="#i-ok"/></svg></span><div><b>Verified contribution credit</b><span>Karma in a trusted pilot, not a live token economy</span></div></div>
+      <div class="st"><span class="ic"></span><div><b>Pretrained model gains</b><span>Not demonstrated. Training code is not proof of improvement</span></div></div>
+      <div class="st"><span class="ic"></span><div><b>Public network</b><span>Not live. Real channel outcomes remain unproven</span></div></div>
     </div>
 
     <footer class="foot">
       <span class="brand"><svg aria-hidden="true"><use href="#logo"/></svg>mycelium</span>
       <span>Useful work. Shared roots. Tested growth.</span>
       <nav aria-label="Project links">
-        <a href="https://github.com/drpokerface/open-mini/blob/mvp3/MYCELIUM_MVP3.md">Setup guide</a>
-        <a href="https://github.com/drpokerface/open-mini/tree/mvp3">Browse the code</a>
+        <a href="https://github.com/drpokerface/open-mini/blob/mvp4/MYCELIUM_MVP4.md">Setup guide</a>
+        <a href="https://github.com/drpokerface/open-mini/tree/mvp4">Browse the code</a>
         <span class="priv">Private repo, access needed</span>
         <a href="#main">Back to top</a>
       </nav>
@@ -1380,3 +1404,4 @@ h1,h2,h3,h4,p{margin:0}
 </script>
 </body>
 </html>
+
