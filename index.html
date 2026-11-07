@@ -6,7 +6,7 @@
 <title>Mycelium — Try many ways. Keep what works.</title>
 <meta name="description" content="Mycelium is an AI research pilot. It sends many workers at one goal, checks every result against real evidence, and keeps only improvements that pass fresh tests.">
 <meta property="og:title" content="Mycelium — Try many ways. Keep what works.">
-<meta property="og:description" content="Many attempts, honest checks, and only tested improvements kept. A quick look inside the MVP4 learning-network pilot.">
+<meta property="og:description" content="Many attempts, honest checks, and only tested improvements kept. A quick look inside the MVP3 learning-network pilot.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#1b1410">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231b1410'/%3E%3Cg fill='none' stroke='%23f3ece1' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M16 16C13 12 10 10 6 10'/%3E%3Cpath d='M16 16c3-3 5-7 5-11'/%3E%3Cpath d='M16 16c4 1 7 4 9 8'/%3E%3Cpath d='M16 16c-1 4-4 7-8 9'/%3E%3C/g%3E%3Ccircle cx='16' cy='16' r='3.6' fill='%23f2b650'/%3E%3C/svg%3E">
@@ -109,7 +109,7 @@ h1,h2,h3,h4,p{margin:0}
 /* ---------- Screen 2: mycelium example ---------- */
 .ex-top{display:flex;justify-content:space-between;align-items:flex-end;gap:28px;margin-bottom:22px}
 .ex-top .s-head{flex:1;min-width:0}
-.ex-top .s-head p{max-width:none}
+.ex-top .s-head p{max-width:64ch}
 .ex-top .s-head h2{font-size:clamp(30px,3vw,42px)}
 .ex-ctl{display:flex;align-items:stretch;gap:8px;flex:none}
 .rounds{list-style:none;margin:0;padding:0;display:flex;gap:8px}
@@ -130,60 +130,103 @@ h1,h2,h3,h4,p{margin:0}
 .play[aria-pressed="false"] .i-play{display:block}
 .play[aria-pressed="false"] .i-pause{display:none}
 
-.ex-body{display:grid;grid-template-columns:minmax(0,1fr) 296px;gap:16px}
-.myc-note{position:absolute;right:14px;top:12px;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--hypha-3);background:rgba(27,20,16,.8);padding:5px 10px;border-radius:99px;border:1px solid var(--line-soft);pointer-events:none;z-index:1}
-.myc-note svg{width:13px;height:13px;flex:none}
+.ex-body{display:grid;grid-template-columns:minmax(0,1fr) 288px;gap:16px}
 .myc{position:relative;height:clamp(380px,calc(100svh - 300px),560px);border-radius:var(--r-xl);background:var(--loam);border:1px solid var(--line-soft);overflow:hidden}
 .myc canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.myc-legend{position:absolute;left:16px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--hypha-3);pointer-events:none}
+.myc-legend{position:absolute;left:16px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--hypha-3);pointer-events:none}
 .myc-legend span{display:inline-flex;align-items:center;gap:7px}
+.myc-legend svg{width:24px;height:12px;flex:none;overflow:visible}
 .lg-node{width:10px;height:10px;border-radius:50%;background:var(--honey);box-shadow:0 0 6px var(--honey)}
 .lg-x{font-style:normal;font-weight:700;color:var(--hypha-3);line-height:1}
-.lg-dash{width:18px;height:0;border-top:1.5px dashed var(--hypha-3)}
-.lg-thick{width:22px;height:5px;border-radius:3px;background:linear-gradient(90deg,var(--honey) 0 30%,transparent 30% 38%,var(--honey) 38%);clip-path:polygon(0 35%,30% 35%,30% 0,100% 0,100% 100%,30% 100%,30% 65%,0 65%)}
 
-.ex-panel{display:grid;grid-template-rows:auto auto auto 1fr;border-radius:var(--r-xl);background:var(--loam);border:1px solid var(--line-soft);overflow:hidden}
-.pb{padding:15px 18px;border-top:1px solid var(--line-soft)}
-.pb:first-child{border-top:0}
-.pk{display:block;font:600 12px/1.2 var(--text);color:var(--hypha-3);margin-bottom:6px}
+.ex-panel{display:flex;flex-direction:column;gap:1px;border-radius:var(--r-xl);background:var(--line-soft);border:1px solid var(--line-soft);overflow:hidden}
+.pb{padding:14px 18px;background:var(--loam)}
+.pb.grow{flex:1}
+.pk{display:block;font:600 12px/1.2 var(--text);color:var(--hypha-3);margin-bottom:9px}
+.goal-b .pk{margin-bottom:4px}
 .goal-b b{display:block;font:600 16px/1.25 var(--display)}
-.goal-b span{display:block;font-size:13px;line-height:1.4;color:var(--hypha-2);margin-top:2px}
-.subs-row{display:flex;justify-content:space-between;align-items:center}
-.subs-row .pk{margin:0}
-.ver{font:600 12px/1 var(--text);padding:5px 9px;border-radius:99px;background:var(--honey);color:var(--honey-ink)}
-.ver.bump{animation:pop .4s both}
-.big{display:block;font:700 34px/1.1 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:4px}
-.hit{display:grid;grid-template-columns:58px minmax(0,1fr) 36px;align-items:center;gap:8px;font-size:12px;color:var(--hypha-3);margin-top:5px}
-.hit i{position:relative;height:8px;border-radius:4px;background:var(--loam-3);overflow:hidden}
-.hit i b{position:absolute;inset:0 auto 0 0;width:0;border-radius:4px;background:var(--honey);transition:width 1s var(--ease)}
-.hit em{font:700 13px/1 var(--display);font-style:normal;color:var(--hypha);text-align:right;opacity:0;transition:opacity .4s .5s;font-variant-numeric:tabular-nums}
-.hit.on b{width:var(--w)}
-.hit.on em{opacity:1}
-.hit.on span{color:var(--hypha-2)}
-.kept-l{list-style:none;margin:0;padding:0;display:grid;gap:7px}
-.kr{position:relative;padding:8px 10px;border-radius:var(--r-sm);border:1px dashed var(--line);min-height:52px;transition:background .4s,border-color .4s}
-.kr>*{visibility:hidden}
-.kr.on{border:1px solid var(--line-soft);background:var(--loam-3)}
-.kr.on>*{visibility:visible}
-.kr.bump{animation:bump .9s var(--ease)}
-@keyframes bump{0%{box-shadow:0 0 0 0 rgba(242,182,79,.6);border-color:var(--honey)}100%{box-shadow:0 0 0 8px rgba(242,182,79,0)}}
-.kr .tg{float:right;font:600 10.5px/1 var(--text);color:var(--honey);border:1px solid rgba(242,182,79,.4);border-radius:99px;padding:3px 7px;margin-left:6px}
-.kr b{display:block;font:600 14px/1.25 var(--display)}
-.kr .s{display:block;font-size:12px;line-height:1.3;color:var(--hypha-2)}
-.kept-empty{position:absolute;left:12px;top:15px;font-size:12px;color:var(--hypha-3)}
-.kept-b{position:relative}
-.kept-b .kept-empty{left:28px;top:44px}
-.kept-b.has .kept-empty{display:none}
+.crit-2{display:none}
+[data-round="2"] .crit-1,[data-round="3"] .crit-1{display:none}
+[data-round="2"] .crit-2,[data-round="3"] .crit-2{display:block;animation:critIn .5s var(--ease) both}
+@keyframes critIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.checks li{display:flex;align-items:center;gap:9px;font-size:13.5px;line-height:1.3;color:var(--hypha-3);transition:color .3s}
+.checks li::before{content:"";flex:none;width:16px;height:16px;border-radius:50%;border:1.5px dashed var(--hypha-3);box-sizing:border-box;transition:background-color .3s,border-color .3s}
+.checks li.on{color:var(--hypha)}
+.checks li.on::before{border:0;background:var(--honey) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.3l2.3 2.3 4.7-5' fill='none' stroke='%232a1b05' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/10px no-repeat}
+.met{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:7px 10px;font-size:13px;color:var(--hypha-2)}
+.met em{font:700 15px/1 var(--display);font-style:normal;color:var(--hypha);font-variant-numeric:tabular-nums}
+.met i{grid-column:1/-1;position:relative;height:8px;border-radius:4px;background:var(--loam-3);overflow:hidden}
+.met i b{position:absolute;inset:0 auto 0 0;width:34%;border-radius:4px;background:var(--honey)}
+.subs{display:flex;align-items:baseline;gap:8px;margin-top:12px}
+.subs .big{font:700 30px/1 var(--display);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.subs span{font-size:13px;color:var(--hypha-3)}
+.wk-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px}
+.wk-row .pk{margin:0}
+.wk-txt{font-size:12.5px;color:var(--hypha-2);font-variant-numeric:tabular-nums}
+.wk-dots{display:flex;gap:8px}
+.wk-dots i{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line);transition:background-color .3s,border-color .3s,box-shadow .3s}
+.wk-dots i.busy{background:var(--hypha-2);border-color:var(--hypha-2);box-shadow:0 0 6px rgba(243,236,225,.3)}
+.wk-dots i.freed{animation:freed .9s var(--ease)}
+@keyframes freed{0%{box-shadow:0 0 0 0 rgba(242,182,79,.85);border-color:var(--honey)}100%{box-shadow:0 0 0 8px rgba(242,182,79,0)}}
+.path-l{list-style:none;margin:0;padding:0}
+.path-l li{display:grid;grid-template-columns:56px 12px minmax(0,1fr);align-items:center;gap:0 9px;padding:3px 0;font-size:13.5px;line-height:1.35}
+.path-l .sg{font-size:11.5px;color:var(--hypha-3)}
+.path-l i{position:relative;justify-self:center;width:10px;height:10px;border-radius:50%;background:var(--honey);box-shadow:0 0 6px rgba(242,182,79,.6)}
+.path-l li+li i::before{content:"";position:absolute;left:4px;bottom:10px;width:2px;height:14px;background:var(--honey);opacity:.65}
+.path-l b{font-weight:600;color:var(--hypha);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.path-l li.new{animation:pathIn .55s var(--ease) both}
+.path-l li.new b{animation:pathGlow 2.6s both}
+@keyframes pathIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+@keyframes pathGlow{0%,55%{color:var(--honey-2)}100%{color:var(--hypha)}}
+.path-empty{font-size:13px;line-height:1.4;color:var(--hypha-3)}
+.path.has .path-empty{display:none}
+.fn{font-size:12px;line-height:1.4;color:var(--hypha-3)}
 
 .ex-foot{display:flex;align-items:center;gap:22px;margin-top:16px}
 .phases{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:6px;flex:none}
-.phases li{position:relative;font:600 13px/1 var(--text);color:var(--hypha-3);padding:8px 12px;border-radius:99px;border:1px solid var(--line-soft);transition:background .3s,color .3s,border-color .3s}
+.phases li{position:relative;font:600 13px/1 var(--text);color:var(--hypha-3);padding:8px 12px;border-radius:99px;border:1px solid var(--line-soft);transition:background-color .3s,color .3s,border-color .3s}
 .phases li+li::before{content:"";position:absolute;left:-7px;top:50%;width:6px;height:1px;background:var(--line)}
 .phases li.done{color:var(--hypha-2);border-color:var(--line)}
 .phases li.on{background:var(--honey);border-color:var(--honey);color:var(--honey-ink)}
-.ph-tune{display:none}
-[data-round="3"] .ph-tune{display:block}
 .ex-cap{font-size:16px;line-height:1.4;color:var(--hypha);min-height:2.8em;display:flex;align-items:center}
+
+@media (max-width:1100px){
+  .ex-top{flex-direction:column;align-items:flex-start;gap:16px}
+}
+@media (max-width:960px){
+  .ex-body{grid-template-columns:minmax(0,1fr)}
+  .ex-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ex-panel .fn{grid-column:1/-1}
+  .ex-foot{flex-direction:column;align-items:flex-start;gap:10px}
+}
+@media (max-width:720px){
+  .ex-ctl{width:100%}
+  .rounds{flex:1}
+  .round{min-width:0;padding:8px 10px 10px}
+  .round .t{font-size:13px}
+  .myc{height:min(150vw,640px)}
+  .myc-legend{left:12px;right:12px;gap:4px 14px;font-size:11px}
+  .ex-panel{grid-template-columns:minmax(0,1fr)}
+  .ex-panel .goal-b{display:none}
+  .phases{flex-wrap:wrap;gap:4px}
+  .phases li{font-size:12px;padding:6px 9px}
+  .phases li+li::before{display:none}
+}
+@media (max-width:420px){
+  .round .n{font-size:11px}
+}
+@media (min-width:961px) and (max-height:820px){
+  .ex-top{margin-bottom:14px}
+  .round{padding:7px 12px 9px}
+  .ex-panel .goal-b{display:none}
+  .pb{padding:11px 16px}
+  .checks{gap:5px}
+  .subs{margin-top:8px}
+  .subs .big{font-size:26px}
+  .path-l li{padding:2px 0}
+  .ex-foot{margin-top:12px}
+}
 
 /* ---------- Screen 3: learn + status ---------- */
 .l-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:22px}
@@ -274,14 +317,6 @@ h1,h2,h3,h4,p{margin:0}
 @keyframes g3{0%,48%{border-style:dashed;border-color:var(--line);color:var(--hypha-3)}52%,86%{border-style:solid;border-color:rgba(242,182,79,.6);color:var(--hypha)}92%,100%{border-color:var(--line);color:var(--hypha-3)}}
 @keyframes g4{0%,66%{border-style:dashed;border-color:var(--line);color:var(--hypha-3)}70%,86%{border-style:solid;border-color:rgba(242,182,79,.6);color:var(--hypha)}92%,100%{border-color:var(--line);color:var(--hypha-3)}}
 
-/* Contribution credit, distinct from future financial functionality. */
-.karma-strip{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;margin-top:26px;padding:22px 24px;border:1px solid var(--line);border-radius:18px;background:rgba(242,182,79,.045)}
-.karma-strip h3{font:600 23px/1.2 var(--display);margin:0 0 9px;color:var(--hypha)}
-.karma-strip p{font-size:14px;line-height:1.55;color:var(--hypha-2);margin:0}
-.karma-strip .karma-future{padding-left:22px;border-left:1px solid var(--line-soft)}
-.karma-label{display:inline-block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--honey);margin-bottom:9px}
-.karma-strip small{display:block;color:var(--hypha-3);font-size:12px;line-height:1.5;margin-top:8px}
-@media(max-width:640px){.karma-strip{grid-template-columns:minmax(0,1fr);padding:20px}.karma-strip .karma-future{padding:18px 0 0;border-left:0;border-top:1px solid var(--line-soft)}}
 /* status */
 .status{display:grid;grid-template-columns:auto repeat(4,minmax(0,1fr));gap:20px;align-items:start;margin-top:22px;padding-top:20px;border-top:1px solid var(--line-soft)}
 .status h3{font:600 17px/1.3 var(--display);padding-top:2px}
@@ -307,7 +342,7 @@ h1,h2,h3,h4,p{margin:0}
 @media (max-width:1100px){
   .links{display:none}
   .top .btn{margin-left:auto}
-  .ex-top,.l-head{flex-direction:column;align-items:flex-start;gap:16px}
+  .l-head{flex-direction:column;align-items:flex-start;gap:16px}
   .depth{min-width:0;width:100%;max-width:520px}
   .status{grid-template-columns:repeat(2,minmax(0,1fr))}
   .status h3{grid-column:1/-1}
@@ -316,14 +351,9 @@ h1,h2,h3,h4,p{margin:0}
   .gl-wrap{flex-basis:100%}
 }
 @media (max-width:960px){
-  .ex-body{grid-template-columns:minmax(0,1fr)}
-  .ex-panel{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto}
-  .ex-panel .pb:nth-child(2){border-top:0;border-left:1px solid var(--line-soft)}
-  .ex-panel .pb:nth-child(4){border-left:1px solid var(--line-soft)}
   .learn-grid{grid-template-columns:minmax(0,1fr)}
   .learn{display:grid;grid-template-columns:240px minmax(0,1fr);column-gap:20px}
   .learn .art{grid-row:1/span 5;margin:0;height:100%;min-height:130px}
-  .ex-foot{flex-direction:column;align-items:flex-start;gap:10px}
 }
 @media (max-width:900px){
   .hero-grid{grid-template-columns:minmax(0,1fr);min-height:0;gap:0}
@@ -340,25 +370,10 @@ h1,h2,h3,h4,p{margin:0}
   .hero{padding-top:36px}
   .lead{font-size:17px}
   .screen{min-height:0;padding:56px 0}
-  .ex-ctl{width:100%}
-  .rounds{flex:1}
-  .rounds li{flex:1}
-  .round{min-width:0;padding:8px 10px 10px}
-  .round .t{font-size:13px}
-  .myc{height:min(132vw,600px)}
-  .myc-legend{gap:4px 12px;font-size:11px}
-  .myc-note{top:auto;right:12px;left:12px;bottom:58px;font-size:11px;border-radius:10px}
   .learn-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -24px;padding:0 24px 6px;scrollbar-width:none}
   .learn-grid::-webkit-scrollbar{display:none}
   .learn{flex:0 0 86%;scroll-snap-align:center}
   .l-head .s-head p::after{content:" Swipe to compare.";color:var(--hypha-3)}
-  .ex-panel{grid-template-columns:minmax(0,1fr)}
-  .ex-panel .goal-b{display:none}
-  .ex-panel .pb:nth-child(n){border-left:0;border-top:1px solid var(--line-soft)}
-  .ex-panel .pb:nth-child(2){border-top:0}
-  .phases{flex-wrap:wrap;gap:4px}
-  .phases li{font-size:12px;padding:6px 9px}
-  .phases li+li::before{display:none}
   .learn{display:flex}
   .learn .art{height:118px}
   .gl{flex-wrap:wrap}
@@ -371,21 +386,13 @@ h1,h2,h3,h4,p{margin:0}
 }
 @media (max-width:420px){
   .hero-cta .btn{flex:1}
-  .round .n{font-size:11px}
 }
 /* shorter laptop screens: keep each screen to one viewport */
 @media (min-width:961px) and (max-height:820px){
   .screen{padding:22px 0}
   .s-head h2{font-size:clamp(28px,3vw,38px);margin-bottom:4px}
   .s-head p{font-size:16px}
-  .ex-top,.l-head{margin-bottom:14px}
-  .round{padding:7px 12px 9px}
-  .ex-panel .goal-b{display:none}
-  .ex-panel .pb:nth-child(2){border-top:0}
-  .pb{padding:12px 16px}
-  .big{font-size:30px}
-  .kr{min-height:46px;padding:6px 10px}
-  .ex-foot{margin-top:12px}
+  .l-head{margin-bottom:14px}
   .art{height:100px;margin-bottom:10px}
   .art svg{height:92px}
   .learn{padding:12px 16px 14px}
@@ -418,11 +425,10 @@ h1,h2,h3,h4,p{margin:0}
 <header class="top" id="top">
   <div class="wrap top-in">
     <a class="brand" href="#main" aria-label="Mycelium, back to top"><svg aria-hidden="true"><use href="#logo"/></svg>mycelium</a>
-    <span class="tag">MVP4 research pilot</span>
+    <span class="tag">MVP3 research pilot</span>
     <nav class="links" aria-label="Sections">
       <a href="#example">How it works</a>
       <a href="#learns">What it learns</a>
-      <a href="#karma">Earn karma</a>
       <a href="#status">Where it stands</a>
     </nav>
     <a class="btn btn-primary" href="#example">Watch the example</a>
@@ -463,13 +469,13 @@ h1,h2,h3,h4,p{margin:0}
     <div class="ex-top">
       <div class="s-head">
         <h2 id="ex-title">Watch it grow a YouTube channel</h2>
-        <p>Three rounds of one loop. Threads that deliver thicken and feed the next round.</p>
+        <p>First it finds one route that works. Then it keeps improving that route: the best version thickens, the rest dissolve.</p>
       </div>
       <div class="ex-ctl">
         <ol class="rounds">
-          <li><button class="round" type="button"><span class="fill"></span><span class="n">Round 1</span><span class="t">Explore</span></button></li>
-          <li><button class="round" type="button"><span class="fill"></span><span class="n">Round 2</span><span class="t">Build on wins</span></button></li>
-          <li><button class="round" type="button"><span class="fill"></span><span class="n">Round 3</span><span class="t">Make it instinct</span></button></li>
+          <li><button class="round" type="button"><span class="fill"></span><span class="n">Round 1</span><span class="t">Find a path</span></button></li>
+          <li><button class="round" type="button"><span class="fill"></span><span class="n">Round 2</span><span class="t">Optimize</span></button></li>
+          <li><button class="round" type="button"><span class="fill"></span><span class="n">Round 3</span><span class="t">Keep optimizing</span></button></li>
         </ol>
         <button class="play" id="ex-play" type="button" aria-pressed="true" aria-label="Pause the example">
           <svg class="i-pause" viewBox="0 0 14 14" aria-hidden="true"><rect x="3" y="2" width="3" height="10" rx="1" fill="currentColor"/><rect x="8" y="2" width="3" height="10" rx="1" fill="currentColor"/></svg>
@@ -479,49 +485,49 @@ h1,h2,h3,h4,p{margin:0}
     </div>
 
     <div class="ex-body">
-      <div class="myc" id="myc" role="img" aria-label="Animated network: from a channel node, threads grow toward video ideas. Real viewer data checks each idea. Failed threads are pruned, unclear ones go dormant, and winning threads thicken as value flows back to the channel. Later rounds grow from the winners, and after the model is tuned on its wins, new threads reach good ideas more directly.">
+      <div class="myc" id="myc" role="img" aria-label="Animated network. Round 1: from your channel, threads try different research, creation and upload approaches in parallel. Dead ends dissolve and one branch backtracks, until a single route reaches a live video and becomes the pathway. Rounds 2 and 3: threads branch off the pathway to try improvements, including music and sound effects merged into one test. Viewer data picks the best option, which joins the pathway and thickens it, while the other branches dissolve and free their workers.">
         <canvas aria-hidden="true"></canvas>
-        <p class="myc-note"><svg aria-hidden="true"><use href="#i-info"/></svg>Illustrative, made-up numbers. The pilot hasn't run a live channel.</p>
         <div class="myc-legend" aria-hidden="true">
-          <span><i class="lg-node"></i>Kept</span>
-          <span><i class="lg-x">×</i>Pruned</span>
-          <span><i class="lg-dash"></i>Dormant, unclear</span>
-          <span><i class="lg-thick"></i>Thicker means reinforced more</span>
+          <span><i class="lg-node"></i>Works</span>
+          <span><i class="lg-x">×</i>Dead end, dissolves</span>
+          <span><svg viewBox="0 0 24 12"><path d="M1 2C8 2 9 6 14 6M1 10C8 10 9 6 14 6H23" fill="none" stroke="#cbbfae" stroke-width="1.4" stroke-linecap="round"/><circle cx="14" cy="6" r="2.6" fill="#f2b650"/></svg>Combined</span>
+          <span><svg viewBox="0 0 24 12"><path d="M1 6C8 1 16 11 23 6M1 6C8 11 16 1 23 6M1 6H23" fill="none" stroke="#f2b650" stroke-width="1.3" stroke-linecap="round"/></svg>More strands, more reinforced</span>
         </div>
       </div>
       <aside class="ex-panel" aria-label="Channel progress">
-        <div class="pb goal-b"><span class="pk">Goal</span><b>Grow a home-cooking channel</b><span>Success: more viewers who watch and stay</span></div>
-        <div class="pb">
-          <div class="subs-row"><span class="pk">Subscribers</span><span class="ver" id="ex-ver">Playbook v1</span></div>
-          <b class="big" id="ex-subs">12,480</b>
+        <div class="pb goal-b"><span class="pk">Goal</span><b>Grow a home-cooking channel</b></div>
+        <div class="pb crit">
+          <div class="crit-1">
+            <span class="pk">Round 1 only needs</span>
+            <ul class="checks">
+              <li>A topic people search for</li>
+              <li>A watchable video</li>
+              <li>An upload with no errors</li>
+              <li>The video is live</li>
+            </ul>
+          </div>
+          <div class="crit-2">
+            <span class="pk">Now success means viewers who stay</span>
+            <div class="met"><span>Still watching at 1 minute</span><em id="ex-ret">34%</em><i><b id="ex-retbar"></b></i></div>
+            <div class="subs"><b class="big" id="ex-subs">240</b><span>subscribers</span></div>
+          </div>
         </div>
-        <div class="pb">
-          <span class="pk">Ideas that passed the check</span>
-          <div class="hit" style="--w:40%"><span>Round 1</span><i><b></b></i><em>40%</em></div>
-          <div class="hit" style="--w:50%"><span>Round 2</span><i><b></b></i><em>50%</em></div>
-          <div class="hit" style="--w:75%"><span>Round 3</span><i><b></b></i><em>75%</em></div>
+        <div class="pb wk">
+          <div class="wk-row"><span class="pk">Workers</span><span class="wk-txt" id="ex-wk">All 8 free</span></div>
+          <div class="wk-dots" id="ex-dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         </div>
-        <div class="pb kept-b" id="ex-kept">
-          <span class="pk">Kept so far</span>
-          <ul class="kept-l">
-            <li class="kr" data-row="skill"><span class="tg">Skill</span><b></b><span class="s"></span></li>
-            <li class="kr" data-row="strat"><span class="tg">Strategy</span><b></b><span class="s"></span></li>
-            <li class="kr" data-row="model"><span class="tg">Weights</span><b></b><span class="s"></span></li>
-          </ul>
-          <span class="kept-empty">Nothing yet. Only checked ideas get in.</span>
+        <div class="pb path grow" id="ex-pathbox">
+          <span class="pk">Pathway</span>
+          <ol class="path-l" id="ex-path"></ol>
+          <p class="path-empty">Not found yet. Workers are still searching.</p>
         </div>
+        <p class="pb fn">Illustrative scenario with made-up numbers. The pilot hasn't run a live channel.</p>
       </aside>
     </div>
 
     <div class="ex-foot">
-      <ol class="phases" aria-hidden="true">
-        <li class="ph-tune" data-ph="train">Tune model</li>
-        <li data-ph="exp">Explore</li>
-        <li data-ph="chk">Check</li>
-        <li data-ph="keep">Keep</li>
-        <li data-ph="rein">Reinforce</li>
-      </ol>
-      <p class="ex-cap" id="ex-cap">Round 1: five ideas grow at once, each on its own thread.</p>
+      <ol class="phases" id="ex-phases" aria-hidden="true"></ol>
+      <p class="ex-cap" id="ex-cap">Round 1 has a modest goal: get one video live.</p>
     </div>
   </div>
 </section>
@@ -541,7 +547,7 @@ h1,h2,h3,h4,p{margin:0}
       <article class="learn">
         <div class="art" aria-hidden="true">
           <svg viewBox="0 0 220 104">
-            <rect class="a-box" x="6" y="18" width="46" height="22" rx="7"/><text x="29" y="29.5" text-anchor="middle">photo</text>
+            <rect class="a-box" x="6" y="18" width="46" height="22" rx="7"/><text x="29" y="29.5" text-anchor="middle">video</text>
             <rect class="a-box" x="6" y="62" width="46" height="22" rx="7"/><text x="29" y="73.5" text-anchor="middle">title</text>
             <path class="a-line" d="M52 29C68 29 70 51 84 51M52 73C68 73 70 51 84 51"/>
             <circle class="pkt k1" cx="52" cy="29" r="3"/>
@@ -552,16 +558,14 @@ h1,h2,h3,h4,p{margin:0}
             <line class="rs s3" x1="98" y1="65" x2="130" y2="65"/>
             <path class="a-line" d="M148 51H164"/>
             <g class="out-g">
-              <rect x="166" y="31" width="48" height="40" rx="7" fill="#e5a23c"/>
-              <circle cx="180" cy="47" r="8" fill="#3a2410"/>
-              <rect x="192" y="42" width="16" height="4.5" rx="1.5" fill="#fffaf0"/>
-              <rect x="192" y="50" width="11" height="4.5" rx="1.5" fill="#fffaf0"/>
+              <rect x="166" y="31" width="48" height="40" rx="7" fill="#30251d" stroke="#f2b650" stroke-width="1.4"/>
+              <path d="M185 43.5v15l12-7.5z" fill="#f2b650"/>
             </g>
             <g class="pop-g"><circle cx="212" cy="31" r="9" fill="#f2b650" stroke="#1b1410" stroke-width="2"/><path class="a-ink" d="M207.8 31.2l2.8 2.8 5-5.4"/></g>
           </svg>
         </div>
         <h3>Skills <small>a saved how-to</small></h3>
-        <p class="tl">Example: the thumbnail recipe</p>
+        <p class="tl">Example: export at 1080p, then upload</p>
         <p class="what">A small, tested procedure it can rerun instead of working it out again each time.</p>
         <p class="when"><b>Kept when</b> it passes its own tests and helps on new tasks.</p>
       </article>
@@ -582,7 +586,7 @@ h1,h2,h3,h4,p{margin:0}
           </svg>
         </div>
         <h3>Thinking strategies <small>a better approach</small></h3>
-        <p class="tl">Illustrative comparison: “Show the finished dish first”</p>
+        <p class="tl">Example: “Open with a stronger hook”</p>
         <p class="what">A short written instruction it follows, like a checklist. The model itself stays the same; only its approach changes.</p>
         <p class="when"><b>Kept when</b> the same model, on the same budget, scores higher with it than without it on new tasks.</p>
       </article>
@@ -607,9 +611,9 @@ h1,h2,h3,h4,p{margin:0}
           </svg>
         </div>
         <h3>Model weights <small>new instincts</small></h3>
-        <p class="tl">Illustrative example: tuned on the videos people finished</p>
+        <p class="tl">Example: tuned on the routes that won</p>
         <p class="what">Verified wins become training examples that nudge a copy of the model, so good choices happen without instructions.</p>
-        <p class="when"><b>Kept when</b> the copy beats the current model on new tasks without slipping on old ones. Useful pretrained-model gains have not been demonstrated.</p>
+        <p class="when"><b>Kept when</b> the copy beats the current model on new tasks without slipping on old ones. In the pilot, all 3 tries fell short.</p>
       </article>
     </div>
 
@@ -626,35 +630,20 @@ h1,h2,h3,h4,p{margin:0}
       </div>
     </div>
 
-    <aside class="karma-strip" id="karma" aria-labelledby="karma-title">
-      <div>
-        <span class="karma-label">Contribution credit</span>
-        <h3 id="karma-title">Useful work earns karma.</h3>
-        <p>In the trusted MVP4 pilot, admitted work earns karma after independent verification. Awards are recorded, and each trusted ledger blocks duplicate credit.</p>
-        <small>Verification is operator-controlled. Karma is not money; an open, permissionless rewards network is not live.</small>
-      </div>
-      <div class="karma-future">
-        <span class="karma-label">Future roadmap</span>
-        <h3>From karma to crypto tokens.</h3>
-        <p>Planned: redeem crypto tokens based on earned karma.</p>
-        <small>Redemption is not available today. No conversion rate, token value or launch date is promised.</small>
-      </div>
-    </aside>
-
     <div class="status" id="status">
       <h3>Where the pilot stands</h3>
-      <div class="st ok"><span class="ic"><svg aria-hidden="true"><use href="#i-ok"/></svg></span><div><b>MVP4 mechanisms</b><span><a href="https://github.com/drpokerface/open-mini/blob/mvp4/MYCELIUM_MVP4_TEST_REPORT.md">Read the tests and limitations</a> (access required)</span></div></div>
-      <div class="st ok"><span class="ic"><svg aria-hidden="true"><use href="#i-ok"/></svg></span><div><b>Verified contribution credit</b><span>Karma in a trusted pilot, not a live token economy</span></div></div>
-      <div class="st"><span class="ic"></span><div><b>Pretrained model gains</b><span>Not demonstrated. Training code is not proof of improvement</span></div></div>
-      <div class="st"><span class="ic"></span><div><b>Public network</b><span>Not live. Real channel outcomes remain unproven</span></div></div>
+      <div class="st ok"><span class="ic"><svg aria-hidden="true"><use href="#i-ok"/></svg></span><div><b>Loop built</b><span><a href="https://github.com/drpokerface/open-mini/blob/4390c6e818b2cdad74130c94ec9babad46c63a85/MYCELIUM_MVP3_TEST_REPORT.md">1,204 automated checks pass</a></span></div></div>
+      <div class="st ok"><span class="ic"><svg aria-hidden="true"><use href="#i-ok"/></svg></span><div><b>Toy task improved</b><span>4/6 to 6/6, using a hand-written skill</span></div></div>
+      <div class="st"><span class="ic"></span><div><b>Real model gains</b><span>Not yet. 3 tiny models tried, none kept</span></div></div>
+      <div class="st"><span class="ic"></span><div><b>Volunteer network</b><span>Not yet, nor live results like a real channel</span></div></div>
     </div>
 
     <footer class="foot">
       <span class="brand"><svg aria-hidden="true"><use href="#logo"/></svg>mycelium</span>
       <span>Useful work. Shared roots. Tested growth.</span>
       <nav aria-label="Project links">
-        <a href="https://github.com/drpokerface/open-mini/blob/mvp4/MYCELIUM_MVP4.md">Setup guide</a>
-        <a href="https://github.com/drpokerface/open-mini/tree/mvp4">Browse the code</a>
+        <a href="https://github.com/drpokerface/open-mini/blob/mvp3/MYCELIUM_MVP3.md">Setup guide</a>
+        <a href="https://github.com/drpokerface/open-mini/tree/mvp3">Browse the code</a>
         <span class="priv">Private repo, access needed</span>
         <a href="#main">Back to top</a>
       </nav>
@@ -934,424 +923,579 @@ h1,h2,h3,h4,p{margin:0}
     const box = document.getElementById('myc');
     const cv = box.querySelector('canvas');
     const ctx = cv.getContext('2d');
+    const legendEl = box.querySelector('.myc-legend');
     const tabs = [...sec.querySelectorAll('.round')];
-    const fills = tabs.map(t => t.querySelector('.fill'));
+    const fills = tabs.map(b => b.querySelector('.fill'));
     const playBtn = document.getElementById('ex-play');
-    const cap = document.getElementById('ex-cap');
-    const phaseEls = [...sec.querySelectorAll('.phases li')];
+    const capEl = document.getElementById('ex-cap');
+    const chipsEl = document.getElementById('ex-phases');
+    const checkEls = [...sec.querySelectorAll('.checks li')];
+    const retEl = document.getElementById('ex-ret');
+    const retBar = document.getElementById('ex-retbar');
     const subsEl = document.getElementById('ex-subs');
-    const verEl = document.getElementById('ex-ver');
-    const hitEls = [...sec.querySelectorAll('.hit')];
-    const keptBox = document.getElementById('ex-kept');
-    const rowEls = {};
-    sec.querySelectorAll('.kr').forEach(li => rowEls[li.dataset.row] = li);
+    const wkEl = document.getElementById('ex-wk');
+    const dotEls = [...document.getElementById('ex-dots').children];
+    const pathBox = document.getElementById('ex-pathbox');
+    const pathEl = document.getElementById('ex-path');
     const FONT = '"Funnel Sans","Avenir Next","Segoe UI",system-ui,sans-serif';
+    const ease = (now, t0, d) => easeIO(clamp((now - t0) / d));
 
-    /* the ideas each round explores: position (fx, fy), parent thread, verdict */
-    const C = { id: 'C', fx: .07, fy: .5 };
-    const IDEAS = [
-      { id: 'a1', r: 1, p: 'C', fx: .40, fy: .16, v: 'pass', name: 'Face thumbnails', res: 'Clicks +54%' },
-      { id: 'b1', r: 1, p: 'C', fx: .36, fy: .37, v: 'fail', name: 'Clickbait titles', res: 'Watch time −40%' },
-      { id: 'c1', r: 1, p: 'C', fx: .43, fy: .58, v: 'pass', name: 'Payoff-first hook', res: 'Retention +13 pts' },
-      { id: 'd1', r: 1, p: 'C', fx: .29, fy: .80, v: 'fail', name: 'Long intros', res: 'Viewers left early' },
-      { id: 'e1', r: 1, p: 'C', fx: .45, fy: .92, v: 'unclear', name: 'Saturday uploads', res: 'No clear signal' },
-      { id: 'a2', r: 2, p: 'a1', fx: .70, fy: .07, v: 'pass', name: '+ Steam shot', res: 'Clicks +12%' },
-      { id: 'b2', r: 2, p: 'a1', fx: .67, fy: .29, v: 'fail', name: 'Bright plates', res: 'No better' },
-      { id: 'c2', r: 2, p: 'c1', fx: .71, fy: .50, v: 'pass', name: 'Payoff, then a pro tip', res: 'Retention +6 pts' },
-      { id: 'd2', r: 2, p: 'c1', fx: .68, fy: .72, v: 'unclear', name: 'Recipe card at end', res: 'No clear signal' },
-      { id: 'a3', r: 3, p: 'a2', fx: .91, fy: .21, v: 'pass', name: 'Steam-shot Shorts', res: 'New viewers +18%' },
-      { id: 'b3', r: 3, p: 'c2', fx: .92, fy: .43, v: 'pass', name: '10-minute dinners', res: 'Watch time +22%' },
-      { id: 'c3', r: 3, p: 'c2', fx: .90, fy: .67, v: 'fail', name: 'Collab with a baker', res: 'Off-topic, viewers left' },
-      { id: 'd3', r: 3, p: 'c1', fx: .63, fy: .90, v: 'pass', name: 'Cook-along live', res: 'Subscribers +9%' }
+    /* ---- timeline (ms) ---- */
+    const T2 = 13600, T3 = 25600, END = 39100, FADE = 900, TOTAL = END + FADE;
+    const ROUNDS = [[0, T2], [T2, T3], [T3, END]];
+    const PATH_AT = 11300, LIVE_AT = 11200;
+    const MOVE_D = 1100, MOVE_B = T2 + 10000, MOVE_C = T3 + 10000;
+    /* where the pathway's nodes sit as it gains steps (x as a fraction of the width) */
+    const LA = { S: .05, R: .275, C: .5, U: .725, L: .95 };
+    const LB = { R: .23, C: .41, Mx: .59, U: .77 };
+    const LC = { R: .2, C: .35, Hk: .5, Mx: .65, U: .8 };
+
+    /* ---- nodes (positions are fractions of a landscape canvas) ---- */
+    const N = {};
+    const node = (id, o) => { N[id] = Object.assign({ id, kind: 'cand', moves: [] }, o); };
+    node('S', { x: LA.S, y: .5, kind: 'start', show: 0 });
+    node('L', { x: LA.L, y: .5, kind: 'goal', show: 0 });
+    // round 1: find any route that works, end to end
+    node('Rr', { x: .24, y: .22, name: 'Reddit threads', res: [2300, 'pass', 'Clear topic'], cut: 7250 });
+    node('R', { x: LA.R, y: .5, name: 'Trending searches', res: [2450, 'pass', '40k searches a month'], trunk: PATH_AT });
+    node('Rg', { x: .22, y: .8, name: 'Gut feeling', res: [2600, 'fail', 'No search demand'], cut: 3100 });
+    node('Ct', { x: .48, y: .2, name: 'One long take', res: [5700, 'fail', '38 min, no cuts'], cut: 6600 });
+    node('C', { x: LA.C, y: .5, name: 'Script, film, edit', res: [5850, 'pass', '9 min, clean audio'], trunk: PATH_AT });
+    node('Cs', { x: .46, y: .8, name: 'Slideshow only', res: [6000, 'fail', 'Not watchable'], cut: 6500 });
+    node('Ux', { x: .7, y: .22, name: 'Upload raw 4K', res: [9400, 'fail', 'Processing failed'], cut: 9900 });
+    node('U', { x: LA.U, y: .5, name: 'Export 1080p', res: [9550, 'pass', 'Uploads cleanly'], trunk: PATH_AT });
+    node('Uz', { x: .69, y: .8, name: 'Phone upload', res: [9700, 'fail', 'Timed out'], cut: 10200 });
+    // round 2: improve on top of the pathway
+    node('Rc', { x: .3, y: .2, name: 'Top comments as source', res: [T2 + 5600, 'fail', 'Views −8%'], cut: T2 + 9000 });
+    node('Sb', { x: .61, y: .2, name: 'Subtitles', res: [T2 + 5800, 'weak', '+2 pts, weaker'], cut: T2 + 9000 });
+    node('Mu', { x: .59, y: .66, name: 'Background music', res: [T2 + 6000, 'weak', '+1 pt, weaker'], cut: T2 + 9500 });
+    node('Sf', { x: .55, y: .9, name: 'Sound effects', res: [T2 + 6200, 'fail', 'Too noisy'], cut: T2 + 9500 });
+    node('Mx', { x: .7, y: .8, name: 'Music + light SFX', res: [T2 + 6600, 'best', '+7 pts, best'], trunk: T2 + 8000 });
+    // round 3: improve again from the stronger pathway
+    node('Hk', { x: .49, y: .7, name: 'Stronger hook', res: [T3 + 6600, 'best', '+9 pts, best'], trunk: T3 + 8000 });
+    node('Fc', { x: .34, y: .76, name: 'Faster cuts', res: [T3 + 5600, 'fail', 'Felt rushed'], cut: T3 + 9500 });
+    node('HF', { x: .42, y: .9, name: 'Hook + faster cuts', res: [T3 + 6100, 'weak', '+4 pts, weaker'], cut: T3 + 9000 });
+    node('Pt', { x: .84, y: .22, name: 'Post at 6 pm', res: [T3 + 5800, 'weak', '+1%, weaker'], cut: T3 + 9000 });
+    // the next round is already sprouting as the loop ends
+    node('n1', { x: .57, y: .2, kind: 'ghost' });
+    node('n2', { x: .87, y: .78, kind: 'ghost' });
+    node('n3', { x: .27, y: .8, kind: 'ghost' });
+    const move = (id, at, x, y) => N[id].moves.push([at, x, y]);
+    ['R', 'C', 'U'].forEach(id => { move(id, MOVE_B, LB[id], .5); move(id, MOVE_C, LC[id], .5); });
+    move('Mx', MOVE_B, LB.Mx, .5); move('Mx', MOVE_C, LC.Mx, .5);
+    move('Hk', MOVE_C, LC.Hk, .5);
+
+    /* ---- threads: states are grow, pass, weak, fail, trunk ---- */
+    const TH = [], TK = {};
+    const th = (a, b, g0, gd, o = {}) => {
+      const t = Object.assign({ a, b, g0, gd, st: [[g0, 'grow']], key: a + '>' + b }, o);
+      TH.push(t); TK[t.key] = t;
+    };
+    th('S', 'Rr', 300, 1800, { st: [[300, 'grow'], [2300, 'pass'], [7250, 'fail']], cut: [7250, 750], bt: 1 });
+    th('S', 'R', 420, 1800, { st: [[420, 'grow'], [2450, 'pass'], [PATH_AT, 'trunk']] });
+    th('S', 'Rg', 540, 1800, { st: [[540, 'grow'], [2600, 'fail']], cut: [3100, 800] });
+    th('Rr', 'Ct', 3800, 1700, { st: [[3800, 'grow'], [5700, 'fail']], cut: [6600, 650], bt: 1 });
+    th('R', 'C', 3900, 1700, { st: [[3900, 'grow'], [5850, 'pass'], [PATH_AT, 'trunk']] });
+    th('R', 'Cs', 4000, 1700, { st: [[4000, 'grow'], [6000, 'fail']], cut: [6500, 700] });
+    th('C', 'Ux', 7800, 1500, { st: [[7800, 'grow'], [9400, 'fail']], cut: [9900, 700] });
+    th('C', 'U', 7900, 1500, { st: [[7900, 'grow'], [9550, 'pass'], [PATH_AT, 'trunk']], fade: [T2 + 9200, 900] });
+    th('C', 'Uz', 8000, 1500, { st: [[8000, 'grow'], [9700, 'fail']], cut: [10200, 700] });
+    th('U', 'L', 10100, 1100, { st: [[10100, 'grow'], [LIVE_AT, 'pass'], [PATH_AT, 'trunk']] });
+    th('R', 'Rc', T2 + 300, 1700, { st: [[T2 + 300, 'grow'], [T2 + 5600, 'fail']], cut: [T2 + 9000, 800] });
+    th('C', 'Sb', T2 + 420, 1700, { st: [[T2 + 420, 'grow'], [T2 + 5800, 'weak']], cut: [T2 + 9000, 800] });
+    th('C', 'Mu', T2 + 540, 1700, { st: [[T2 + 540, 'grow'], [T2 + 6000, 'weak']], cut: [T2 + 9500, 700] });
+    th('C', 'Sf', T2 + 660, 1700, { st: [[T2 + 660, 'grow'], [T2 + 6200, 'fail']], cut: [T2 + 9500, 700] });
+    th('Mu', 'Mx', T2 + 3300, 1300, { st: [[T2 + 3300, 'grow'], [T2 + 6600, 'pass']], cut: [T2 + 9000, 600] });
+    th('Sf', 'Mx', T2 + 3380, 1300, { st: [[T2 + 3380, 'grow'], [T2 + 6600, 'pass']], cut: [T2 + 9000, 600] });
+    th('C', 'Mx', T2 + 8000, 1000, { st: [[T2 + 8000, 'trunk']], re: 1, fade: [T3 + 9200, 900] });
+    th('Mx', 'U', T2 + 8100, 1000, { st: [[T2 + 8100, 'trunk']], re: 1 });
+    th('C', 'Hk', T3 + 300, 1700, { st: [[T3 + 300, 'grow'], [T3 + 6600, 'pass'], [T3 + 8000, 'trunk']] });
+    th('C', 'Fc', T3 + 420, 1700, { st: [[T3 + 420, 'grow'], [T3 + 5600, 'fail']], cut: [T3 + 9500, 700] });
+    th('U', 'Pt', T3 + 540, 1700, { st: [[T3 + 540, 'grow'], [T3 + 5800, 'weak']], cut: [T3 + 9000, 800] });
+    th('Fc', 'HF', T3 + 3300, 1300, { st: [[T3 + 3300, 'grow'], [T3 + 6100, 'weak']], cut: [T3 + 9000, 600] });
+    th('Hk', 'HF', T3 + 3380, 1300, { st: [[T3 + 3380, 'grow'], [T3 + 6100, 'weak']], cut: [T3 + 9000, 600] });
+    th('Hk', 'Mx', T3 + 8000, 1000, { st: [[T3 + 8000, 'trunk']], re: 1 });
+    th('Hk', 'n1', T3 + 11300, 2600, { ghost: 1 });
+    th('U', 'n2', T3 + 11500, 2600, { ghost: 1 });
+    th('R', 'n3', T3 + 11700, 2600, { ghost: 1 });
+
+    const NP = 40;
+    const smooth = (n, amp) => {
+      const raw = Array.from({ length: n + 1 }, () => Math.random() * 2 - 1);
+      return raw.map((_, i) => { let s = 0, c = 0; for (let k = -2; k <= 2; k++) if (raw[i + k] != null) { s += raw[i + k]; c++; } return s / c * amp; });
+    };
+    TH.forEach(t => {
+      t.trunkish = t.st.some(s => s[1] === 'trunk');
+      t.amp = (Math.random() < .5 ? -1 : 1) * ((t.trunkish ? .03 : .055) + Math.random() * (t.trunkish ? .025 : .045));
+      t.f1 = .5 + Math.random() * .7; t.f2 = 1.5 + Math.random() * 1.3;
+      t.p1 = Math.random() * 6.283; t.p2 = Math.random() * 6.283;
+      t.jit = smooth(NP, 3);
+      t.tw = Array.from({ length: t.trunkish ? 9 : 4 }, () => ({ u: .12 + Math.random() * .76, side: Math.random() < .5 ? -1 : 1, ang: .55 + Math.random() * .8, len: 6 + Math.random() * 13, bend: (Math.random() - .5) * .9 }));
+      t.sp = [0, 1, 2, 3].map(() => Math.random() * 6.283);
+    });
+    Object.values(N).forEach(n => {
+      const inc = TH.filter(t => t.b === n.id && !t.re);
+      if (n.show == null) n.show = n.kind === 'ghost' ? Infinity : Math.max(...inc.map(t => t.g0 + t.gd));
+      n.birth = inc.length ? Math.min(...inc.map(t => t.g0)) : 0;
+      n.death = Math.min(n.cut ?? Infinity, n.trunk ?? Infinity);
+    });
+
+    const NAMES = { R: 'Trending searches', C: 'Script, film, edit', Hk: 'Stronger hook', Mx: 'Music + light SFX', U: 'Export 1080p' };
+    const STAGE = { R: 'Research', C: 'Create', Hk: 'Create', Mx: 'Create', U: 'Upload' };
+    const chain = now => {
+      const c = ['S', 'R', 'C'];
+      if (now >= T3 + 8000) c.push('Hk');
+      if (now >= T2 + 8000) c.push('Mx');
+      c.push('U', 'L');
+      return c;
+    };
+    const level = now => ease(now, PATH_AT, 1000) + ease(now, T2 + 8000, 1500) + ease(now, T3 + 8000, 1500);
+    const retAt = now => 34 + 7 * ease(now, T2 + 8000, 2000) + 9 * ease(now, T3 + 8000, 2000);
+    const subsAt = now => 240 + 1660 * ease(now, T2 + 8000, 2400) + 4900 * ease(now, T3 + 8000, 2400);
+    const CHECKS = [2450, 5850, 9550, LIVE_AT];
+    const STEPS = [
+      [['Research', 0], ['Create', 3800], ['Upload', 7800], ['Path found', 10100]],
+      [['Branch out', T2], ['Combine', T2 + 3200], ['Measure', T2 + 5300], ['Reinforce', T2 + 8000], ['Dissolve', T2 + 9000]],
+      [['Branch out', T3], ['Combine', T3 + 3200], ['Measure', T3 + 5300], ['Reinforce', T3 + 8000], ['Dissolve', T3 + 9000]]
     ];
-    const byId = { C };
-    IDEAS.forEach(d => { byId[d.id] = d; d.contrib = []; d.ph = Math.random(); });
-    IDEAS.forEach(d => { d.par = byId[d.p]; });
-    [1, 2, 3].forEach(r => IDEAS.filter(d => d.r === r).forEach((d, i) => { d.i = i; }));
-    /* every verified win reinforces every thread on its way back to the channel */
-    IDEAS.filter(d => d.v === 'pass').forEach(T => { let x = T; while (x !== C) { x.contrib.push(T.r); x = x.par; } });
-    const trainers = IDEAS.filter(d => d.v === 'pass' && d.r < 3);
+    const CAPS = [
+      [0, 'Round 1 has a modest goal: get one video live. Three research approaches start at once.'],
+      [2450, 'Every step is checked. “Gut feeling” has no search demand, so its thread dissolves.'],
+      [3800, 'Both good topics now try to become a video, in parallel.'],
+      [5800, 'The long take is unwatchable, so the thread backtracks and drops the whole Reddit route.'],
+      [7800, 'From the edit that worked, three ways to upload are tried.'],
+      [9500, 'Only the 1080p export uploads cleanly.'],
+      [10100, 'One complete route, from idea to live video. That route becomes the pathway.'],
+      [T2, 'Round 2 raises the bar to viewers who stay. Free workers branch off the pathway to try improvements.'],
+      [T2 + 3200, 'Promising ideas are tried together too: music and sound effects merge into one test.'],
+      [T2 + 5300, 'Real viewer data scores every option, alone and combined.'],
+      [T2 + 8000, 'The best option, music with light effects, joins the pathway. Feedback thickens it.'],
+      [T2 + 9000, 'Weaker branches dissolve, and their workers are freed for the next round.'],
+      [T3, 'Round 3 starts from the stronger pathway. Freed workers try new ideas.'],
+      [T3 + 3200, 'The hook and faster cuts are also tried as a pair.'],
+      [T3 + 5300, 'The pair does worse than the hook on its own.'],
+      [T3 + 8000, 'The stronger hook joins the pathway, which thickens again.'],
+      [T3 + 9000, 'Everything else dissolves. Freed workers are already starting the next round.']
+    ];
+    const RES_END = at => (ROUNDS.find(r => at >= r[0] && at < r[1]) || ROUNDS[2])[1];
 
-    /* timeline */
-    const EXP = 2600, CHK = 1300, KEEP = 1200, REIN = 2600, TRAIN = 2800, FADE = 900;
-    const RD = [];
-    let acc = 0;
-    for (let r = 1; r <= 3; r++) {
-      const o = { r, t0: acc };
-      let s = acc;
-      o.train = [s, s += (r === 3 ? TRAIN : 0)];
-      o.exp = [s, s += EXP];
-      o.chk = [s, s += CHK];
-      o.keep = [s, s += KEEP];
-      o.rein = [s, s += REIN];
-      o.end = s + (r === 3 ? 2600 : 800);
-      RD.push(o);
-      acc = o.end;
-    }
-    const TOTAL = acc + FADE;
-    const SUBS = [12480, 13350, 14300, 15900];
-    const RATES = [40, 50, 75];
-    const ROWS = {
-      skill: [null, { b: 'Thumbnail recipe', s: 'Close-up face, three words' }, { b: 'Thumbnail recipe v2', s: 'Now adds a steam shot' }],
-      strat: [null, { b: 'Open with the payoff', s: 'Finished dish in the first 5s' }, { b: 'Payoff, then a pro tip', s: 'Keeps viewers past 30s' }],
-      model: [null, { b: 'Model tuned on 4 wins', s: 'Passed on new and old videos' }]
-    };
-    const CAPS = {
-      '1-exp': 'Round 1: five ideas grow at once, each on its own thread.',
-      '1-chk': 'Real viewer data checks each idea. Opinions and votes don’t count.',
-      '1-keep': 'Two ideas worked and are kept. Dead ends are pruned; unclear ones go dormant.',
-      '1-rein': 'Threads that delivered thicken, and value flows back to the channel.',
-      '2-exp': 'Round 2: new attempts grow from what worked, not from scratch.',
-      '2-chk': 'Each refinement is checked again on new videos.',
-      '2-keep': 'Two refinements pass, upgrading the kept recipe and strategy.',
-      '2-rein': 'Proven threads thicken again. More passes now: 40% became 50%.',
-      '3-train': 'Round 3: the model is tuned on every win so far, then must beat the old model on new and old videos.',
-      '3-exp': 'Shaped by its wins, it now reaches good ideas more directly.',
-      '3-chk': 'Three of four new ideas pass.',
-      '3-keep': 'The playbook moves to v4. Earlier versions stay on hand for rollback.',
-      '3-rein': 'Pass rate went 40%, 50%, 75%. Each round starts from stronger roots.'
-    };
-
-    let W = 0, H = 0, dpr = 1, portrait = false, bg = null;
-    let t = reduce ? RD[2].rein[1] + 200 : 0, last = 0, raf = 0, playing = !reduce, visible = false;
+    let W = 0, H = 0, dpr = 1, portrait = false, bg = null, legendRect = [0, 0, 0, 0];
+    let t = reduce ? END - 50 : 0, last = 0, raf = 0, playing = !reduce, visible = false;
 
     const map = (fx, fy) => portrait
-      ? [(0.07 + fy * 0.86) * W, (0.05 + fx * 0.72) * H]
-      : [(0.02 + fx * 0.96) * W, (0.07 + fy * 0.83) * H];
-
-    function walk(x0, y0, x1, y1, st, wig) {
-      const pts = [[x0, y0]];
-      const L0 = Math.hypot(x1 - x0, y1 - y0);
-      let x = x0, y = y0, a = Math.atan2(y1 - y0, x1 - x0) + (Math.random() - .5) * wig * 3;
-      for (let k = 0; k < 2000; k++) {
-        const dx = x1 - x, dy = y1 - y, d = Math.hypot(dx, dy);
-        if (d < st * 1.3) break;
-        let diff = Math.atan2(dy, dx) - a;
-        diff = Math.atan2(Math.sin(diff), Math.cos(diff));
-        a += diff * (.07 + .5 * clamp(1 - d / (L0 * .6))) + (Math.random() - .5) * wig;
-        x = clamp(x + Math.cos(a) * st, 6, W - 6);
-        y = clamp(y + Math.sin(a) * st, 6, H - 6);
-        pts.push([x, y]);
+      ? [(0.1 + fy * 0.8) * W, (0.06 + fx * 0.8) * H]
+      : [(0.02 + fx * 0.96) * W, (0.12 + fy * 0.74) * H];
+    function pos(n, now) {
+      let x = n.x, y = n.y;
+      for (const [at, tx, ty] of n.moves) {
+        if (now <= at) break;
+        const k = easeIO(clamp((now - at) / MOVE_D));
+        x += (tx - x) * k; y += (ty - y) * k;
       }
-      pts.push([x1, y1]);
+      return map(x, y);
+    }
+    function geom(th_, now) {
+      const P = pos(N[th_.a], now), Q = pos(N[th_.b], now);
+      const dx = Q[0] - P[0], dy = Q[1] - P[1], L = Math.hypot(dx, dy) || 1;
+      const nx = -dy / L, ny = dx / L, pts = new Array(NP + 1);
+      for (let i = 0; i <= NP; i++) {
+        const u = i / NP, env = Math.sin(Math.PI * u);
+        const off = env * (L * th_.amp * (Math.sin(6.283 * th_.f1 * u + th_.p1) * .65 + Math.sin(6.283 * th_.f2 * u + th_.p2) * .35) + th_.jit[i] * Math.min(1, L / 80));
+        pts[i] = [P[0] + dx * u + nx * off, P[1] + dy * u + ny * off];
+      }
+      pts.nx = nx; pts.ny = ny;
       return pts;
     }
-    function cum(pts) { const c = [0]; for (let i = 1; i < pts.length; i++) c.push(c[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1])); return c; }
-    function twigs(main, st, n) {
-      const out = [], m = main.length;
-      for (let j = 0; j < n; j++) {
-        const idx = Math.floor(m * (.15 + Math.random() * .7));
-        const p = main[idx], q = main[Math.min(m - 1, idx + 1)];
-        let a = Math.atan2(q[1] - p[1], q[0] - p[0]) + (Math.random() < .5 ? -1 : 1) * (.6 + Math.random() * .8);
-        const pts = [[p[0], p[1]]];
-        let x = p[0], y = p[1];
-        const len = 4 + Math.floor(Math.random() * 9);
-        for (let k = 0; k < len; k++) { a += (Math.random() - .5) * .6; x += Math.cos(a) * st * .75; y += Math.sin(a) * st * .75; pts.push([x, y]); }
-        out.push({ pts, at: idx / m });
-      }
-      return out;
+    function ptAt(pts, f) {
+      const e = clamp(f) * NP, k = Math.min(NP - 1, Math.floor(e)), u = e - k;
+      return [pts[k][0] + (pts[k + 1][0] - pts[k][0]) * u, pts[k][1] + (pts[k + 1][1] - pts[k][1]) * u];
     }
-    function build() {
-      const st = Math.max(4, Math.min(W, H) / 110);
-      [C.x, C.y] = map(C.fx, C.fy);
-      IDEAS.forEach(d => { [d.x, d.y] = map(d.fx, d.fy); });
-      IDEAS.forEach(d => {
-        const wig = d.r === 3 ? .13 : .34;
-        d.pts = walk(d.par.x, d.par.y, d.x, d.y, st, wig);
-        d.cum = cum(d.pts);
-        d.len = d.cum[d.cum.length - 1];
-        d.tw = twigs(d.pts, st, d.r === 3 ? 2 : 4);
-      });
-      trainers.forEach(d => {
-        let pts = [], x = d;
-        while (x !== C) { pts = pts.concat(x.pts.slice().reverse()); x = x.par; }
-        d.rpts = pts; d.rc = cum(pts);
-      });
-      bg = document.createElement('canvas');
-      bg.width = W * dpr; bg.height = H * dpr;
-      const b = bg.getContext('2d');
-      b.setTransform(dpr, 0, 0, dpr, 0, 0);
-      b.lineCap = 'round'; b.strokeStyle = rgba(COL.hypha, .05); b.lineWidth = .8;
-      for (let i = 0; i < 18; i++) {
-        const p = walk(Math.random() * W, Math.random() * H, Math.random() * W, Math.random() * H, st, .4);
-        b.beginPath(); b.moveTo(p[0][0], p[0][1]);
-        for (let k = 1; k < p.length; k++) b.lineTo(p[k][0], p[k][1]);
-        b.stroke();
+    function stroke(pts, f, off) {
+      const e = clamp(f) * NP, k = Math.floor(e);
+      ctx.beginPath();
+      for (let i = 0; i <= Math.min(k, NP); i++) {
+        const o = off ? off(i / NP) : 0;
+        const x = pts[i][0] + pts.nx * o, y = pts[i][1] + pts.ny * o;
+        if (i) ctx.lineTo(x, y); else ctx.moveTo(x, y);
       }
-    }
-    function partial(pts, f) {
-      const n = pts.length - 1, e = clamp(f) * n, k = Math.floor(e);
-      ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
-      for (let i = 1; i <= k; i++) ctx.lineTo(pts[i][0], pts[i][1]);
-      let tip = pts[Math.min(k, n)];
-      if (k < n) { const u = e - k; tip = [pts[k][0] + (pts[k + 1][0] - pts[k][0]) * u, pts[k][1] + (pts[k + 1][1] - pts[k][1]) * u]; ctx.lineTo(tip[0], tip[1]); }
+      if (k < NP) {
+        const u = e - k, o = off ? off(e / NP) : 0;
+        ctx.lineTo(pts[k][0] + (pts[k + 1][0] - pts[k][0]) * u + pts.nx * o, pts[k][1] + (pts[k + 1][1] - pts[k][1]) * u + pts.ny * o);
+      }
       ctx.stroke();
-      return tip;
     }
-    function at(pts, c, d) {
-      let i = 1;
-      while (i < c.length && c[i] < d) i++;
-      if (i >= c.length) return pts[pts.length - 1];
-      const u = (d - c[i - 1]) / (c[i] - c[i - 1] || 1);
-      return [pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * u, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * u];
+    function hairs(th_, pts, f, count, scale) {
+      for (let i = 0; i < count; i++) {
+        const w = th_.tw[i];
+        if (f <= w.u) continue;
+        const gk = clamp((f - w.u) / .14);
+        const p = ptAt(pts, w.u), q = ptAt(pts, Math.min(1, w.u + .02));
+        const a = Math.atan2(q[1] - p[1], q[0] - p[0]) + w.side * w.ang, len = w.len * gk * scale;
+        ctx.beginPath(); ctx.moveTo(p[0], p[1]);
+        ctx.quadraticCurveTo(p[0] + Math.cos(a + w.bend) * len * .55, p[1] + Math.sin(a + w.bend) * len * .55, p[0] + Math.cos(a) * len, p[1] + Math.sin(a) * len);
+        ctx.stroke();
+      }
     }
     function dot(x, y, r, c) { ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill(); }
+    function ring(x, y, r, c, w = 1.2) { ctx.strokeStyle = c; ctx.lineWidth = w; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.stroke(); }
+    function tick(x, y, r) {
+      ctx.strokeStyle = rgba(COL.ink, 1); ctx.lineWidth = Math.max(1.4, r * .3);
+      ctx.beginPath(); ctx.moveTo(x - r * .42, y + r * .02); ctx.lineTo(x - r * .1, y + r * .33); ctx.lineTo(x + r * .44, y - r * .32); ctx.stroke();
+    }
     function rr(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
-    function label(x, y, lines, alpha, above, gap = 12) {
-      if (alpha <= 0.01) return;
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      let w = 0;
-      lines.forEach(l => { ctx.font = l.f; w = Math.max(w, ctx.measureText(l.t).width); });
-      const lh = portrait ? 13 : 15, h = lines.length * lh + 8, bw = w + 14;
-      const bx = clamp(x - bw / 2, 4, W - bw - 4);
-      const by = clamp(above ? y - gap - h : y + gap, 4, H - h - 4);
-      ctx.fillStyle = 'rgba(27,20,16,.84)';
-      rr(bx, by, bw, h, 7); ctx.fill();
-      ctx.textBaseline = 'top';
-      lines.forEach((l, i) => { ctx.font = l.f; ctx.fillStyle = l.c; ctx.fillText(l.t, bx + 7, by + 5 + i * lh); });
-      ctx.restore();
+    const SC = { grow: COL.hypha, pass: COL.honey, trunk: COL.honey, weak: COL.dim, fail: COL.wither };
+    const SP = { grow: [1.2, .85, 0], pass: [1.7, .95, 7], weak: [1.1, .55, 0], fail: [1.1, .6, 0], trunk: [2, 1, 9] };
+    function tstate(th_, now) {
+      let i = 0;
+      while (i + 1 < th_.st.length && now >= th_.st[i + 1][0]) i++;
+      const cur = th_.st[i][1], prev = i ? th_.st[i - 1][1] : cur, k = i ? clamp((now - th_.st[i][0]) / 400) : 1;
+      return { cur, prev, k };
     }
 
-    function state(d, now) {
-      const R = RD[d.r - 1];
-      const gs = R.exp[0] + d.i * 170;
-      const g = easeOut(clamp((now - gs) / 2000));
-      const vt = R.chk[0] + d.i * 240;
-      const vr = clamp((now - vt) / 350);
-      const kp = clamp((now - R.keep[0]) / 1000);
-      let s = 0;
-      for (const r of d.contrib) s += easeIO(clamp((now - RD[r - 1].rein[0]) / 1700));
-      return { g, vr, kp, s, vt, R };
-    }
+    /* text width cache for labels */
+    const wc = new Map();
+    const tw = (s, f) => { const key = f + '|' + s; let w = wc.get(key); if (w == null) { ctx.font = f; w = ctx.measureText(s).width; wc.set(key, w); } return w; };
+    const hit = (a, b) => a[0] < b[0] + b[2] + 3 && b[0] < a[0] + a[2] + 3 && a[1] < b[1] + b[3] + 3 && b[1] < a[1] + a[3] + 3;
 
     function draw(now) {
       ctx.clearRect(0, 0, W, H);
       ctx.globalAlpha = 1;
       if (bg) ctx.drawImage(bg, 0, 0, W, H);
-      const fade = now > TOTAL - FADE ? 1 - clamp((now - (TOTAL - FADE)) / FADE) : 1;
+      const fade = now > END ? 1 - clamp((now - END) / FADE) : 1;
+      const lv = level(now);
+      const G = new Map();
+      const gp = th_ => { let p = G.get(th_); if (!p) { p = geom(th_, now); G.set(th_, p); } return p; };
+      const subsP = (subsAt(now) - 240) / 6560;
+      const obstacles = [];
+      const labels = [];
       ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-      const S = IDEAS.map(d => state(d, now));
 
-      /* threads */
-      IDEAS.forEach((d, k) => {
-        const { g, vr, kp, s } = S[k];
-        if (g <= 0) return;
-        let frac = g, col, alpha, lw, dash = null, glow = 0;
-        if (d.v === 'pass') { col = mix(COL.hypha, COL.honey, vr); alpha = .92; lw = 1.2 + vr * .5 + s * 1.3; glow = vr; }
-        else if (d.v === 'fail') { col = mix(COL.hypha, COL.wither, vr); alpha = .85 - vr * .3; lw = 1.2; frac = g * (1 - easeIO(kp)); if (frac < .002) return; }
-        else { col = mix(COL.hypha, COL.dim, vr); alpha = .85 - vr * .25 - kp * .25; lw = 1.2 - kp * .3; if (kp > 0) dash = [3, 5]; }
-        ctx.globalAlpha = alpha * fade;
+      headers(now, obstacles);
+
+      /* threads: dead ends first, the pathway on top */
+      const tips = [];
+      const order = TH.slice().sort((a, b) => (tstate(a, now).cur === 'trunk') - (tstate(b, now).cur === 'trunk'));
+      for (const th_ of order) {
+        if (now < th_.g0) continue;
+        let f = easeOut(clamp((now - th_.g0) / th_.gd)), cutK = 0, fadeK = 0;
+        if (th_.cut && now >= th_.cut[0]) { cutK = easeIO(clamp((now - th_.cut[0]) / th_.cut[1])); f *= 1 - cutK; if (f < .004) continue; }
+        if (th_.fade && now >= th_.fade[0]) { fadeK = ease(now, th_.fade[0], th_.fade[1]); if (fadeK >= 1) continue; }
+        const s = tstate(th_, now), A = SP[s.prev], B = SP[s.cur];
+        let w = A[0] + (B[0] - A[0]) * s.k, al = A[1] + (B[1] - A[1]) * s.k, gl = A[2] + (B[2] - A[2]) * s.k;
+        let col = mix(SC[s.prev], SC[s.cur], s.k);
+        const tk = s.cur === 'trunk' ? s.k : 0, lvT = lv * tk;
+        if (cutK) { col = mix(col, COL.wither, Math.min(1, cutK * 2)); al *= 1 - cutK * .3; }
+        if (fadeK) { col = mix(col, COL.wither, fadeK); al *= 1 - fadeK; w *= 1 - fadeK * .5; }
+        if (th_.ghost) al *= .75;
+        const pts = gp(th_);
+        ctx.globalAlpha = al * fade * .7;
         ctx.strokeStyle = rgba(col, 1);
-        ctx.setLineDash([]);
         ctx.lineWidth = .7;
-        d.tw.forEach(tw => { const tg = clamp((frac - tw.at) / .2); if (tg > 0) partial(tw.pts, tg); });
-        ctx.lineWidth = lw;
-        if (dash) ctx.setLineDash(dash);
-        if (glow) { ctx.shadowColor = rgba(COL.honey, .7); ctx.shadowBlur = 6 + 5 * Math.min(1, s); }
-        const tip = partial(d.pts, frac);
-        ctx.shadowBlur = 0; ctx.setLineDash([]);
-        if (g < 1 || (d.v === 'fail' && kp > 0)) { ctx.globalAlpha = fade * (d.v === 'fail' ? 1 - kp : 1); dot(tip[0], tip[1], 2.2, rgba(COL.hypha, 1)); }
-      });
+        hairs(th_, pts, f, th_.trunkish ? Math.min(9, 4 + Math.round(lvT * 1.7)) : 4, 1 + .25 * lvT);
+        ctx.globalAlpha = al * fade;
+        ctx.lineWidth = w + lvT * .55;
+        if (gl > 0) { ctx.shadowColor = rgba(COL.honey, .7); ctx.shadowBlur = gl + lvT * 2; }
+        stroke(pts, f);
+        /* reinforcement bundles more strands around the core, like a mycelial cord */
+        if (lvT > .05) {
+          const spread = 1.6 + lvT * 1.3;
+          ctx.lineWidth = .9 + lvT * .2;
+          for (let j = 0; j < 4; j++) {
+            const sk = clamp(lvT * 1.34 - j);
+            if (sk <= 0) break;
+            const sg = j % 2 ? -1 : 1, ph = th_.sp[j], fr = 1.1 + j * .45, amp = spread * (.7 + .3 * j);
+            ctx.globalAlpha = al * fade * .8 * sk;
+            stroke(pts, f, u => sg * amp * Math.pow(Math.sin(Math.PI * u), .6) * Math.sin(6.283 * fr * u + ph));
+          }
+        }
+        ctx.shadowBlur = 0;
+        if ((f < 1 && !cutK) || cutK) tips.push({ p: ptAt(pts, f), back: cutK > 0, bt: th_.bt && cutK > 0 && cutK < 1, al: fade * (cutK ? .6 : 1) });
+      }
 
-      /* nutrients flowing back along reinforced threads */
-      IDEAS.forEach((d, k) => {
-        const { s } = S[k];
-        if (d.v !== 'pass' || s < .05) return;
-        const n = Math.ceil(s) + 1;
-        for (let j = 0; j < n; j++) {
-          const dd = d.len - ((now * .07 + (j / n + d.ph) * d.len) % d.len);
-          const p = at(d.pts, d.cum, dd);
-          ctx.globalAlpha = fade * Math.min(1, s) * .95;
-          ctx.shadowColor = rgba(COL.honey, 1); ctx.shadowBlur = 8;
-          dot(p[0], p[1], 1.6 + Math.min(1.2, s * .3), rgba(COL.honey2, 1));
+      /* the first complete route lights up end to end */
+      if (now >= PATH_AT && now < PATH_AT + 1900) {
+        const c = chain(PATH_AT), segs = [];
+        for (let i = 0; i < c.length - 1; i++) { const s = TK[c[i] + '>' + c[i + 1]]; if (s) segs.push(gp(s)); }
+        const p = easeIO(clamp((now - PATH_AT) / 1500)) * segs.length, out = 1 - clamp((now - PATH_AT - 1500) / 400);
+        for (let k = 0; k < 10; k++) {
+          const q = p - k * .035;
+          if (q < 0) break;
+          const si = Math.min(segs.length - 1, Math.floor(q)), pt = ptAt(segs[si], q - si);
+          ctx.globalAlpha = fade * out * (1 - k / 10);
+          ctx.shadowColor = rgba(COL.honey, 1); ctx.shadowBlur = 14;
+          dot(pt[0], pt[1], 4.2 - k * .3, rgba(COL.honey2, 1));
           ctx.shadowBlur = 0;
         }
-      });
-
-      /* round 3: wins travel back to the channel to tune the model */
-      const R3 = RD[2];
-      if (now >= R3.train[0] && now < R3.exp[1]) {
-        const p = easeIO(clamp((now - R3.train[0]) / (TRAIN - 1100)));
-        const out = clamp((now - (R3.train[0] + TRAIN - 1100)) / 300);
-        trainers.forEach(d => {
-          const L = d.rc[d.rc.length - 1];
-          for (let k = 0; k < 6; k++) {
-            const q = at(d.rpts, d.rc, clamp(p * L - k * 6, 0, L));
-            ctx.globalAlpha = fade * (1 - k / 6) * (1 - out);
-            ctx.shadowColor = rgba(COL.honey, 1); ctx.shadowBlur = 12;
-            dot(q[0], q[1], 3.8 - k * .45, rgba(COL.honey2, 1));
+      }
+      /* viewer feedback flows back along the pathway and feeds it */
+      if (now >= T2) {
+        const c = chain(now), on = ease(now, T2, 900);
+        for (let i = 0; i < c.length - 1; i++) {
+          const s = TK[c[i] + '>' + c[i + 1]];
+          if (!s || now < s.g0 + s.gd) continue;
+          const pts = gp(s), n = 2 + Math.round(lv);
+          for (let k = 0; k < n; k++) {
+            const u = 1 - (((now * .00042) + k / n + i * .37) % 1);
+            const pt = ptAt(pts, u);
+            ctx.globalAlpha = fade * on * (.45 + .15 * lv);
+            ctx.shadowColor = rgba(COL.honey, 1); ctx.shadowBlur = 8;
+            dot(pt[0], pt[1], 1.5 + lv * .25, rgba(COL.honey2, 1));
             ctx.shadowBlur = 0;
           }
-        });
+        }
       }
-
-      /* idea nodes and labels */
-      const small = portrait;
-      const fName = `600 ${small ? 10.5 : 12}px ${FONT}`;
-      const fRes = `500 ${small ? 10 : 11}px ${FONT}`;
-      IDEAS.forEach((d, k) => {
-        const { g, vr, kp, s, vt, R } = S[k];
-        if (g < .98) return;
-        const x = d.x, y = d.y;
-        const pr = clamp((now - vt) / 650);
-        if (pr > 0 && pr < 1) {
-          const c = d.v === 'pass' ? COL.honey : COL.dim;
-          ctx.globalAlpha = fade * (1 - pr);
-          ctx.strokeStyle = rgba(c, 1); ctx.lineWidth = 1.5;
-          ctx.beginPath(); ctx.arc(x, y, 4 + pr * 16, 0, Math.PI * 2); ctx.stroke();
-        }
-        let nodeAlpha = fade;
-        if (d.v === 'pass') {
-          if (vr > 0) {
-            const r = 4.5 + vr * 1.5 + Math.min(4, s * 1.1);
-            ctx.globalAlpha = fade;
-            ctx.shadowColor = rgba(COL.honey, 1); ctx.shadowBlur = 10 + s * 4;
-            dot(x, y, r, rgba(COL.honey, 1));
-            ctx.shadowBlur = 0;
-            ctx.globalAlpha = fade * .35;
-            ctx.strokeStyle = rgba(COL.honey, 1); ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.arc(x, y, r + 5, 0, Math.PI * 2); ctx.stroke();
-            if (r >= 6) {
-              ctx.globalAlpha = fade * vr;
-              ctx.strokeStyle = rgba(COL.ink, 1); ctx.lineWidth = 1.6;
-              ctx.beginPath(); ctx.moveTo(x - r * .4, y + r * .02); ctx.lineTo(x - r * .1, y + r * .32); ctx.lineTo(x + r * .42, y - r * .3); ctx.stroke();
-            }
-          } else { ctx.globalAlpha = fade; dot(x, y, 3, rgba(COL.hypha, 1)); }
-        } else if (d.v === 'fail') {
-          nodeAlpha = fade * (1 - kp);
-          if (nodeAlpha <= 0) return;
-          ctx.globalAlpha = nodeAlpha;
-          if (vr > 0) {
-            ctx.strokeStyle = rgba(COL.dim, 1); ctx.lineWidth = 1.8;
-            const z = 4; ctx.beginPath();
-            ctx.moveTo(x - z, y - z); ctx.lineTo(x + z, y + z); ctx.moveTo(x + z, y - z); ctx.lineTo(x - z, y + z); ctx.stroke();
-          } else dot(x, y, 3, rgba(COL.hypha, 1));
-        } else {
-          ctx.globalAlpha = fade * (1 - kp * .4);
-          if (vr > 0) {
-            ctx.setLineDash([2, 3]); ctx.strokeStyle = rgba(COL.dim, 1); ctx.lineWidth = 1.3;
-            ctx.beginPath(); ctx.arc(x, y, 5.5, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
-            dot(x, y, 1.6, rgba(COL.dim, 1));
-          } else dot(x, y, 3, rgba(COL.hypha, 1));
-        }
-        /* label */
-        const inRound = now < R.end + 300;
-        const nameIn = clamp((g - .98) / .02);
-        let la = nodeAlpha * nameIn;
-        if (d.v === 'pass' && !inRound) la *= .62;
-        if (d.v === 'unclear' && kp > 0) la *= (1 - kp * .55);
-        if (small && !(d.v === 'pass' && vr > 0)) return;
-        const lines = [{ t: d.name, f: fName, c: rgba(d.v === 'pass' && vr > 0 ? COL.hypha : COL.hypha, d.v === 'pass' || vr === 0 ? 1 : .8) }];
-        if (!small && vr > 0 && inRound) {
-          const rc = d.v === 'pass' ? COL.honey2 : COL.dim;
-          const mark = d.v === 'pass' ? '✓ ' : d.v === 'fail' ? '× ' : '? ';
-          lines.push({ t: mark + d.res, f: fRes, c: rgba(rc, Math.min(1, vr * 1.5)) });
-        }
-        const above = y > H * .82;
-        label(x, y, lines, la, above, 12);
-      });
-
-      /* the channel itself */
-      const grow = subsProgress(now);
-      const cr = 8 + grow * 6;
-      const reinforcing = RD.some(R => now >= R.rein[0] && now < R.rein[1]);
-      const pulse = (Math.sin(now / 420) + 1) / 2;
-      /* one growth ring per round of reinforcement */
-      let rings = 0;
-      RD.forEach((R, i) => {
-        const p = easeOut(clamp((now - R.rein[0]) / REIN));
-        if (p <= 0) return;
-        rings = i + 1;
-        ctx.globalAlpha = fade * (.35 + .5 * p);
-        ctx.shadowColor = rgba(COL.honey, .9); ctx.shadowBlur = reinforcing ? 14 : 6;
-        ctx.strokeStyle = rgba(COL.honey, 1); ctx.lineWidth = 1.6;
-        ctx.beginPath(); ctx.arc(C.x, C.y, cr + 5 + i * 5, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * p); ctx.stroke();
+      /* growing tips are the workers */
+      for (const tp of tips) {
+        ctx.globalAlpha = tp.al;
+        ctx.shadowColor = rgba(COL.hypha, .9); ctx.shadowBlur = tp.back ? 0 : 8;
+        dot(tp.p[0], tp.p[1], tp.back ? 1.8 : 2.4, rgba(tp.back ? COL.dim : COL.hypha, 1));
         ctx.shadowBlur = 0;
-      });
-      ctx.globalAlpha = 1;
-      ctx.strokeStyle = rgba(COL.hypha, .2 + .2 * pulse); ctx.lineWidth = 1.1;
-      ctx.beginPath(); ctx.arc(C.x, C.y, cr + 10 + rings * 5 + pulse * 3, 0, Math.PI * 2); ctx.stroke();
-      if (reinforcing) { ctx.shadowColor = rgba(COL.honey, .9); ctx.shadowBlur = 22; }
-      dot(C.x, C.y, cr, rgba(COL.hypha, 1));
-      ctx.shadowBlur = 0;
-      label(C.x, C.y + cr, [{ t: 'Your channel', f: `600 ${small ? 11 : 12.5}px ${FONT}`, c: rgba(COL.hypha, 1) }], 1, false, 12 + rings * 5);
+        if (tp.bt) labels.push({ x: tp.p[0], y: tp.p[1], lines: [{ t: '↩ Backtracking', f: lf(1), c: COL.hypha }], al: tp.al, prio: 4, sides: ['right', 'below', 'above', 'left'] });
+      }
 
-      /* tuning notes beside the channel in round 3 */
-      if (now >= R3.train[0] && now < R3.chk[1]) {
-        const a1 = clamp((now - R3.train[0]) / 300) * (1 - clamp((now - (R3.train[1] - 700)) / 250));
-        const a2 = clamp((now - (R3.train[1] - 420)) / 300) * (1 - clamp((now - (R3.chk[1] - 400)) / 400));
-        const lx = portrait ? C.x : C.x + 70;
-        const ly = portrait ? C.y + cr + 30 : C.y - cr - 8;
-        const f = `600 ${small ? 10.5 : 12}px ${FONT}`;
-        label(lx, ly, [{ t: 'Tuning the model on 4 wins', f, c: rgba(COL.honey2, 1) }], a1 * fade, !portrait, 14);
-        label(lx, ly, [
-          { t: '✓ Better on new videos', f, c: rgba(COL.honey2, 1) },
-          { t: '✓ No worse on old videos', f, c: rgba(COL.honey2, 1) }
-        ], a2 * fade, !portrait, 14);
+      /* nodes */
+      const ch = chain(now);
+      const measuring = (now >= T2 + 5300 && now < T2 + 8000) || (now >= T3 + 5300 && now < T3 + 8000);
+      for (const n of Object.values(N)) {
+        if (n.kind === 'ghost' || now < n.show) continue;
+        const [x, y] = pos(n, now);
+        if (n.kind === 'start') {
+          const pulse = (Math.sin(now / 420) + 1) / 2, r = 8 + subsP * 3;
+          ctx.globalAlpha = fade;
+          ring(x, y, r + 7 + pulse * 3, rgba(COL.hypha, .2 + .2 * pulse));
+          dot(x, y, r, rgba(COL.hypha, 1));
+          obstacles.push([x - r - 4, y - r - 4, 2 * r + 8, 2 * r + 8, n.id]);
+          labels.push({ id: n.id, x, y, r, lines: [{ t: 'Your channel', f: lf(0), c: COL.hypha }], al: fade, prio: 3, sides: portrait ? ['right', 'left'] : ['below', 'above'] });
+          continue;
+        }
+        if (n.kind === 'goal') {
+          const reached = now >= LIVE_AT, r = reached ? 7 + subsP * 7 : 9;
+          ctx.globalAlpha = fade;
+          if (!reached) {
+            ctx.setLineDash([3, 4]); ring(x, y, r, rgba(COL.hypha, .55), 1.4); ctx.setLineDash([]);
+            dot(x, y, 2, rgba(COL.dim, 1));
+          } else {
+            const pk = clamp((now - LIVE_AT) / 300);
+            ctx.shadowColor = rgba(COL.honey, 1); ctx.shadowBlur = 16 + (measuring ? 10 : 0);
+            dot(x, y, r * (.6 + .4 * pk), rgba(COL.honey, 1));
+            ctx.shadowBlur = 0;
+            ring(x, y, r + 6, rgba(COL.honey, .35));
+            if (measuring) {
+              for (let k = 0; k < 2; k++) {
+                const q = ((now / 900) + k / 2) % 1;
+                ctx.globalAlpha = fade * (1 - q) * .7;
+                ring(x, y, r + 6 + q * 36, rgba(COL.honey, 1), 1.4);
+              }
+              ctx.globalAlpha = fade;
+            }
+          }
+          obstacles.push([x - r - 6, y - r - 6, 2 * r + 12, 2 * r + 12, n.id]);
+          const lines = !reached ? [{ t: 'Goal: video live', f: lf(0), c: COL.hypha2 }]
+            : now < T2 ? [{ t: 'Video live', f: lf(0), c: COL.hypha }, { t: '✓ Goal met', f: lf(1), c: COL.honey2 }]
+            : [{ t: 'Viewers', f: lf(0), c: COL.hypha }, ...(measuring ? [{ t: 'Sending feedback', f: lf(1), c: COL.honey2 }] : [])];
+          labels.push({ id: n.id, x, y, r: r + 4, lines, al: fade, prio: 3, sides: portrait ? ['left', 'right', 'above'] : ['below', 'above'] });
+          continue;
+        }
+        let al = fade * clamp((now - n.show) / 250);
+        if (n.cut && now >= n.cut) { al *= 1 - clamp((now - n.cut) / 300); if (al <= .01) continue; }
+        const v = n.trunk && now >= n.trunk ? 'trunk' : n.res && now >= n.res[0] ? n.res[1] : null;
+        const pop = n.res && now >= n.res[0] ? .6 + .4 * easeOut(clamp((now - n.res[0]) / 250)) : 1;
+        ctx.globalAlpha = al;
+        /* each result lands with a ring */
+        if (n.res && now >= n.res[0] && now < n.res[0] + 700) {
+          const q = (now - n.res[0]) / 700, good = n.res[1] === 'pass' || n.res[1] === 'best';
+          ctx.globalAlpha = al * (1 - q);
+          ring(x, y, 5 + q * 18, rgba(good ? COL.honey : COL.dim, 1), 1.5);
+          ctx.globalAlpha = al;
+        }
+        let r = 3.2;
+        if (!v) dot(x, y, 3.2, rgba(COL.hypha, 1));
+        else if (v === 'fail') {
+          const z = 4.2 * pop;
+          ctx.strokeStyle = rgba(COL.dim, 1); ctx.lineWidth = 1.8;
+          ctx.beginPath(); ctx.moveTo(x - z, y - z); ctx.lineTo(x + z, y + z); ctx.moveTo(x + z, y - z); ctx.lineTo(x - z, y + z); ctx.stroke();
+        } else if (v === 'weak') {
+          r = 5 * pop;
+          ring(x, y, r, rgba(COL.dim, 1), 1.4);
+          dot(x, y, 1.8, rgba(COL.dim, 1));
+        } else {
+          r = (v === 'best' ? 6.5 : v === 'trunk' ? 5.5 + lv * .4 : 5) * pop;
+          ctx.shadowColor = rgba(COL.honey, 1); ctx.shadowBlur = v === 'best' ? 16 : 10;
+          dot(x, y, r, rgba(COL.honey, 1));
+          ctx.shadowBlur = 0;
+          if (r > 4.5) tick(x, y, r);
+          if (v === 'best') {
+            const q = (now / 800) % 1;
+            ctx.globalAlpha = al * (1 - q) * .8;
+            ring(x, y, r + 3 + q * 10, rgba(COL.honey, 1), 1.3);
+            ctx.globalAlpha = al;
+          } else ring(x, y, r + 5, rgba(COL.honey, .3), 1);
+        }
+        obstacles.push([x - r - 4, y - r - 4, 2 * r + 8, 2 * r + 8, n.id]);
+        /* label */
+        const inTrunk = v === 'trunk';
+        const focal = n.res && now < RES_END(n.res[0]) && (!n.trunk || now < n.trunk + 2600);
+        const showRes = v && v !== 'trunk' ? true : v === 'trunk' && now < RES_END(n.res[0]);
+        const lines = [{ t: n.name, f: lf(0), c: v === 'fail' || v === 'weak' ? COL.hypha2 : COL.hypha }];
+        if (showRes && (!portrait || focal)) {
+          const kind = n.res[1];
+          const mark = kind === 'fail' ? '✗ ' : kind === 'weak' ? '' : '✓ ';
+          lines.push({ t: mark + n.res[2], f: lf(1), c: kind === 'fail' || kind === 'weak' ? COL.dim : COL.honey2 });
+        }
+        const idx = ch.indexOf(n.id);
+        let sides;
+        if (portrait) sides = inTrunk ? (idx % 2 ? ['right', 'left'] : ['left', 'right']) : x > W * .5 ? ['right', 'left', 'below', 'above'] : ['left', 'right', 'below', 'above'];
+        else if (inTrunk) sides = idx % 2 ? ['above', 'below', 'right', 'left'] : ['below', 'above', 'right', 'left'];
+        else sides = y < H * .45 ? ['above', 'below', 'right', 'left'] : ['below', 'above', 'right', 'left'];
+        labels.push({ id: n.id, x, y, r, lines, al: al * (inTrunk && !focal ? .8 : 1), prio: v === 'best' || (focal && !inTrunk) ? 2 : inTrunk ? 1 : 0, sides });
+      }
+
+      /* labels: most important first, never on top of each other */
+      obstacles.push(legendRect);
+      labels.sort((a, b) => b.prio - a.prio);
+      const placed = obstacles.slice();
+      const lh = portrait ? 13.5 : 15, minX = portrait ? 30 : 3;
+      for (const L of labels) {
+        let w = 0;
+        L.lines.forEach(l => { w = Math.max(w, tw(l.t, l.f)); });
+        const bw = w + 14, bh = L.lines.length * lh + 9, gap = (L.r || 3) + 8;
+        let rect = null;
+        for (const sd of L.sides) {
+          const c = sd === 'above' ? [L.x - bw / 2, L.y - gap - bh] : sd === 'below' ? [L.x - bw / 2, L.y + gap] : sd === 'right' ? [L.x + gap, L.y - bh / 2] : [L.x - gap - bw, L.y - bh / 2];
+          const cand = [c[0], c[1], bw, bh];
+          if (cand[0] < minX || cand[1] < 3 || cand[0] + bw > W - 3 || cand[1] + bh > H - 3) continue;
+          if (placed.some(p => !(p[4] && p[4] === L.id) && hit(cand, p))) continue;
+          rect = cand; break;
+        }
+        if (!rect) {
+          if (L.prio < 2) continue;
+          /* important labels still show: pick the spot that covers the least */
+          let best = Infinity;
+          for (const sd of L.sides) {
+            const c = sd === 'above' ? [L.x - bw / 2, L.y - gap - bh] : sd === 'below' ? [L.x - bw / 2, L.y + gap] : sd === 'right' ? [L.x + gap, L.y - bh / 2] : [L.x - gap - bw, L.y - bh / 2];
+            const cand = [clamp(c[0], minX, W - bw - 3), clamp(c[1], 3, H - bh - 3), bw, bh];
+            let cover = 0;
+            for (const p of placed) {
+              if (p[4] && p[4] === L.id) continue;
+              const ox = Math.min(cand[0] + bw, p[0] + p[2]) - Math.max(cand[0], p[0]), oy = Math.min(cand[1] + bh, p[1] + p[3]) - Math.max(cand[1], p[1]);
+              if (ox > 0 && oy > 0) cover += ox * oy;
+            }
+            if (cover < best) { best = cover; rect = cand; }
+          }
+        }
+        placed.push(rect);
+        ctx.globalAlpha = L.al;
+        ctx.fillStyle = 'rgba(27,20,16,.86)';
+        rr(rect[0], rect[1], bw, bh, 7); ctx.fill();
+        ctx.textBaseline = 'top';
+        L.lines.forEach((l, i) => { ctx.font = l.f; ctx.fillStyle = rgba(l.c, 1); ctx.fillText(l.t, rect[0] + 7, rect[1] + 5 + i * lh); });
       }
       ctx.globalAlpha = 1;
     }
+    const lf = k => k === 0 ? `600 ${portrait ? 11 : 12}px ${FONT}` : `500 ${portrait ? 10.5 : 11}px ${FONT}`;
+    COL.hypha2 = hex(v('--hypha-2'));
 
-    function subsValue(now) {
-      let v = SUBS[0];
-      RD.forEach((R, i) => { v += (SUBS[i + 1] - SUBS[i]) * easeOut(clamp((now - R.rein[0]) / REIN)); });
-      return now > TOTAL - FADE ? v : v;
+    /* stage names along the pathway, with the active stage lit in round 1 */
+    function headers(now, obstacles) {
+      const A = portrait ? 1 : 0;
+      const r = pos(N.R, now)[A], u = pos(N.U, now)[A];
+      const cg = [pos(N.C, now)[A]];
+      if (now >= MOVE_B) cg.push(pos(N.Mx, now)[A]);
+      if (now >= MOVE_C) cg.push(pos(N.Hk, now)[A]);
+      const cMin = Math.min(...cg), cMax = Math.max(...cg);
+      const act = now < 3800 ? 0 : now < 7800 ? 1 : now < 10100 ? 2 : -1;
+      const fade = now > END ? 1 - clamp((now - END) / FADE) : 1;
+      ctx.save();
+      ctx.setLineDash([2, 6]); ctx.lineWidth = 1; ctx.strokeStyle = rgba(COL.hypha, .1);
+      ctx.globalAlpha = fade;
+      [(r + cMin) / 2, (cMax + u) / 2].forEach(s => {
+        ctx.beginPath();
+        if (portrait) { ctx.moveTo(30, s); ctx.lineTo(W - 12, s); } else { ctx.moveTo(s, 36); ctx.lineTo(s, legendRect[1] - 10); }
+        ctx.stroke();
+      });
+      ctx.setLineDash([]);
+      const font = `600 ${portrait ? 11 : 12}px ${FONT}`;
+      [['Research', r], ['Create', (cMin + cMax) / 2], ['Upload', u]].forEach(([name, m], i) => {
+        const w = tw(name, font), on = i === act;
+        ctx.font = font; ctx.textBaseline = 'middle'; ctx.textAlign = 'center';
+        ctx.fillStyle = on ? rgba(COL.honey, 1) : rgba(COL.dim, 1);
+        if (portrait) {
+          ctx.save(); ctx.translate(15, m); ctx.rotate(-Math.PI / 2); ctx.fillText(name, 0, 0); ctx.restore();
+          if (on) { ctx.fillStyle = rgba(COL.honey, 1); ctx.fillRect(23, m - w / 2, 2, w); }
+          obstacles.push([6, m - w / 2 - 4, 22, w + 8]);
+        } else {
+          ctx.fillText(name, m, 20);
+          if (on) { ctx.fillStyle = rgba(COL.honey, 1); ctx.fillRect(m - w / 2, 30, w, 2); }
+          obstacles.push([m - w / 2 - 4, 10, w + 8, 24]);
+        }
+      });
+      ctx.textAlign = 'left';
+      ctx.restore();
     }
-    function subsProgress(now) { return (subsValue(now) - SUBS[0]) / (SUBS[3] - SUBS[0]); }
 
-    /* side panel, round tabs, phase chips and caption all follow the same clock */
-    let lastKey = '', lastSubs = -1, lastVer = -1;
-    const rowState = { skill: 0, strat: 0, model: 0 };
+    /* side panel, tabs, steps and caption follow the same clock */
+    let lastRound = -1, lastChip = -1, lastCap = '', lastBusy = -1, lastPath = null;
     function ui(now) {
-      const ri = now >= RD[2].t0 ? 2 : now >= RD[1].t0 ? 1 : 0;
-      const R = RD[ri];
-      const ph = now < R.train[1] ? 'train' : now < R.exp[1] ? 'exp' : now < R.chk[1] ? 'chk' : now < R.keep[1] ? 'keep' : 'rein';
+      const ri = now >= T3 ? 2 : now >= T2 ? 1 : 0;
       tabs.forEach((b, i) => {
-        b.classList.toggle('cur', i === ri);
-        b.classList.toggle('done', i < ri);
+        b.classList.toggle('cur', i === ri); b.classList.toggle('done', i < ri);
         if (i === ri) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
-        fills[i].style.width = (i < ri ? 100 : i > ri ? 0 : clamp((now - RD[i].t0) / (RD[i].end - RD[i].t0)) * 100) + '%';
+        fills[i].style.width = (i < ri ? 100 : i > ri ? 0 : clamp((now - ROUNDS[i][0]) / (ROUNDS[i][1] - ROUNDS[i][0])) * 100) + '%';
       });
-      const key = (ri + 1) + '-' + ph;
-      if (key !== lastKey) {
-        lastKey = key;
+      if (ri !== lastRound) {
+        lastRound = ri; lastChip = -1;
         sec.dataset.round = ri + 1;
-        cap.textContent = CAPS[key];
-        const order = ['train', 'exp', 'chk', 'keep', 'rein'];
-        const cur = order.indexOf(ph);
-        phaseEls.forEach(li => { const k = order.indexOf(li.dataset.ph); li.classList.toggle('on', k === cur); li.classList.toggle('done', k < cur); });
+        chipsEl.innerHTML = STEPS[ri].map(s => `<li>${s[0]}</li>`).join('');
       }
-      const sv = Math.round(subsValue(now));
-      if (sv !== lastSubs) { lastSubs = sv; subsEl.textContent = sv.toLocaleString('en-US'); }
-      const ver = 1 + RD.filter(R => now > R.keep[0] + 400).length;
-      if (ver !== lastVer) {
-        const bump = lastVer > 0 && ver > lastVer;
-        lastVer = ver; verEl.textContent = 'Playbook v' + ver;
-        if (bump && !reduce) { verEl.classList.remove('bump'); void verEl.offsetWidth; verEl.classList.add('bump'); }
+      const steps = STEPS[ri];
+      let ci = 0; while (ci + 1 < steps.length && now >= steps[ci + 1][1]) ci++;
+      if (ci !== lastChip) { lastChip = ci; [...chipsEl.children].forEach((li, i) => { li.classList.toggle('on', i === ci); li.classList.toggle('done', i < ci); }); }
+      let cap = CAPS[0][1]; for (const [at, s] of CAPS) if (now >= at) cap = s;
+      if (cap !== lastCap) { lastCap = cap; capEl.textContent = cap; }
+      CHECKS.forEach((at, i) => checkEls[i].classList.toggle('on', now >= at));
+      const ret = Math.round(retAt(now));
+      retEl.textContent = ret + '%'; retBar.style.width = ret + '%';
+      subsEl.textContent = Math.round(subsAt(now)).toLocaleString('en-US');
+      let busy = 0;
+      for (const n of Object.values(N)) if ((n.kind === 'cand' || n.kind === 'ghost') && now >= n.birth && now < n.death) busy++;
+      busy = Math.min(8, busy);
+      if (busy !== lastBusy) {
+        dotEls.forEach((d, i) => {
+          const was = d.classList.contains('busy'), is = i < busy;
+          d.classList.toggle('busy', is);
+          if (was && !is && !reduce) { d.classList.remove('freed'); void d.offsetWidth; d.classList.add('freed'); }
+        });
+        wkEl.textContent = busy ? `${busy} exploring, ${8 - busy} free` : 'All 8 free';
+        lastBusy = busy;
       }
-      hitEls.forEach((h, i) => h.classList.toggle('on', now > RD[i].chk[1] - 200));
-      const want = {
-        skill: now > RD[1].keep[0] + 400 ? 2 : now > RD[0].keep[0] + 400 ? 1 : 0,
-        strat: now > RD[1].keep[0] + 600 ? 2 : now > RD[0].keep[0] + 600 ? 1 : 0,
-        model: now > RD[2].train[1] - 200 ? 1 : 0
-      };
-      let any = false;
-      Object.keys(want).forEach(k => {
-        const n = want[k];
-        if (n) any = true;
-        if (n === rowState[k]) return;
-        const up = n > rowState[k];
-        rowState[k] = n;
-        const li = rowEls[k];
-        li.classList.toggle('on', n > 0);
-        li.querySelector('b').textContent = n ? ROWS[k][n].b : '';
-        li.querySelector('.s').textContent = n ? ROWS[k][n].s : '';
-        if (up && !reduce) { li.classList.remove('bump'); void li.offsetWidth; li.classList.add('bump'); }
-      });
-      keptBox.classList.toggle('has', any);
+      const ids = now >= PATH_AT ? chain(now).slice(1, -1) : [];
+      const key = ids.join(',');
+      if (key !== lastPath) {
+        const prev = new Set(lastPath ? lastPath.split(',') : []);
+        pathEl.innerHTML = ids.map((id, i) => {
+          const tag = i === 0 || STAGE[ids[i - 1]] !== STAGE[id] ? STAGE[id] : '';
+          const fresh = !reduce && lastPath !== null && !prev.has(id);
+          return `<li class="${fresh ? 'new' : ''}" style="animation-delay:${fresh && !prev.size ? i * 90 : 0}ms"><span class="sg">${tag}</span><i></i><b>${NAMES[id]}</b></li>`;
+        }).join('');
+        pathBox.classList.toggle('has', ids.length > 0);
+        lastPath = key;
+      }
     }
 
+    function makeBg() {
+      bg = document.createElement('canvas');
+      bg.width = W * dpr; bg.height = H * dpr;
+      const b = bg.getContext('2d');
+      b.setTransform(dpr, 0, 0, dpr, 0, 0);
+      b.lineCap = 'round'; b.strokeStyle = rgba(COL.hypha, .045); b.lineWidth = .8;
+      for (let i = 0; i < 22; i++) {
+        let x = Math.random() * W, y = Math.random() * H, a = Math.random() * 6.283;
+        b.beginPath(); b.moveTo(x, y);
+        const n = 30 + Math.random() * 60;
+        for (let k = 0; k < n; k++) { a += (Math.random() - .5) * .5; x += Math.cos(a) * 5; y += Math.sin(a) * 5; b.lineTo(x, y); }
+        b.stroke();
+      }
+    }
     function size() {
       W = box.clientWidth; H = box.clientHeight;
       if (W < 10 || H < 10) return false;
@@ -1359,13 +1503,16 @@ h1,h2,h3,h4,p{margin:0}
       dpr = Math.min(2, window.devicePixelRatio || 1);
       cv.width = W * dpr; cv.height = H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      build();
+      const b = box.getBoundingClientRect(), l = legendEl.getBoundingClientRect();
+      legendRect = [l.left - b.left - 4, l.top - b.top - 4, l.width + 8, l.height + 8];
+      wc.clear();
+      makeBg();
       return true;
     }
     function render() { draw(t); ui(t); }
-    function loop(nowMs) {
-      if (!last) last = nowMs;
-      const dt = Math.min(50, nowMs - last); last = nowMs;
+    function loop(ms) {
+      if (!last) last = ms;
+      const dt = Math.min(50, ms - last); last = ms;
       if (playing) { t += dt; if (t >= TOTAL) t = 0; }
       render();
       raf = playing ? requestAnimationFrame(loop) : 0;
@@ -1376,9 +1523,8 @@ h1,h2,h3,h4,p{margin:0}
       playBtn.setAttribute('aria-pressed', String(playing));
       playBtn.setAttribute('aria-label', playing ? 'Pause the example' : 'Play the example');
     }
-
     tabs.forEach((b, i) => b.addEventListener('click', () => {
-      t = reduce ? RD[i].rein[1] + 200 : RD[i].t0 + 1;
+      t = reduce ? ROUNDS[i][1] - 50 : ROUNDS[i][0] + 1;
       if (!reduce) playing = true;
       syncBtn(); render(); start();
     }));
@@ -1387,7 +1533,7 @@ h1,h2,h3,h4,p{margin:0}
 
     if (!size()) return;
     render(); syncBtn();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(render);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { wc.clear(); render(); });
     let rt;
     new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { if (size()) render(); }, 120); }).observe(box);
     watch(box, on => { visible = on; if (on) { if (playing) start(); else render(); } else stop(); }, 0.2);
@@ -1404,4 +1550,3 @@ h1,h2,h3,h4,p{margin:0}
 </script>
 </body>
 </html>
-
